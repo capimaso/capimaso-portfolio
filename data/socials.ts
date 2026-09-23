@@ -7,8 +7,8 @@ export type Social = {
 };
 
 export const socials: Social[] = [
-  { id: 'email', name: 'EMAIL', value: 'YOUR_EMAIL_HERE', href: 'mailto:YOUR_EMAIL_HERE', copyable: true },
-  { id: 'instagram', name: 'INSTAGRAM', value: 'YOUR_INSTAGRAM_HERE', href: 'https://instagram.com/YOUR_INSTAGRAM_HERE' },
-  { id: 'discord', name: 'DISCORD', value: 'YOUR_DISCORD_HERE', href: '#', copyable: true },
-  { id: 'youtube', name: 'YOUTUBE', value: 'YOUR_YOUTUBE_HERE', href: 'https://youtube.com/@YOUR_YOUTUBE_HERE' }
+  { id: 'email', name: 'EMAIL', value: 'tduartedacunha@gmail.com', href: 'mailto:tduartedacunha@gmail.com', copyable: true },
+  { id: 'instagram', name: 'INSTAGRAM', value: '@capimaso', href: 'https://instagram.com/capimaso' },
+  { id: 'discord', name: 'DISCORD', value: 'capimaso', href: '#', copyable: true },
+  { id: 'youtube', name: 'YOUTUBE', value: 'capimaso', href: 'https://youtube.com/@capimaso' }
 ];
