@@ -69,12 +69,12 @@ export function WelcomeContent({ actions }: { actions: ContentActions }) {
               actions.open('player', {
                 ...projects[0],
                 id: 'showreel',
-                filename: 'CAPIMASO_REEL.mp4',
+                filename: 'CAPIMASO_REEL',
                 title: 'CAPIMASO REEL',
                 category: 'SHOWREEL',
-                description: 'ADD YOUR SHOWREEL DESCRIPTION HERE.',
+                description: 'ADD YOUR PROJECT DESCRIPTION HERE.',
                 thumbnail: media.showreel.thumbnail,
-                video: media.showreel.video
+                video: 'https://www.youtube.com/watch?v=Mj67WzDsaP4&t=1s'
               })
             }
           >
