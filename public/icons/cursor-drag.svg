@@ -1,1 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M10 4v8M16 3v9M22 5v8M7 13v7c0 5 4 8 9 8s9-3 9-8v-5c0-2-3-2-3 0v3M10 12v5M16 12v5M22 13v5" fill="none" stroke="#102331" stroke-width="2" stroke-linecap="round"/><path d="M10 4v8M16 3v9M22 5v8" stroke="#fff" stroke-width="1"/></svg>
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+ "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+ width="32.000000pt" height="32.000000pt" viewBox="0 0 32.000000 32.000000"
+ preserveAspectRatio="xMidYMid meet">
+
+<g transform="translate(0.000000,32.000000) scale(0.100000,-0.100000)"
+fill="#000000" stroke="none">
+<path d="M85 290 c-16 -18 -16 -20 -2 -20 11 0 17 -8 17 -25 0 -20 -5 -25 -25
+-25 -17 0 -25 6 -25 17 0 14 -2 14 -20 -2 -19 -17 -19 -19 -3 -38 16 -17 18
+-17 21 -3 2 9 13 16 28 16 19 0 24 -5 24 -24 0 -15 -7 -26 -16 -28 -14 -3 -14
+-5 3 -21 19 -16 21 -16 38 3 16 18 16 20 2 20 -11 0 -17 8 -17 25 0 20 5 25
+24 25 15 0 26 -7 28 -16 3 -14 5 -14 21 3 16 19 16 21 -3 38 -18 16 -20 16
+-20 2 0 -11 -8 -17 -25 -17 -20 0 -25 5 -25 24 0 15 7 26 16 28 14 3 14 5 -3
+21 -19 16 -21 16 -38 -3z"/>
+</g>
+</svg>
