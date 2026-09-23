@@ -16,7 +16,7 @@
 html, body { margin: 0; min-height: 100%; }
 body { background: #111; overflow: hidden; font-family: Tahoma, Verdana, Arial, sans-serif; color: var(--xp-text); cursor: url('/icons/cursor.svg') 5 2, default; }
 button, textarea, input { font: inherit; }
-button { cursor: url('/icons/cursor-pointer.svg') 4 2, pointer; }
+button { cursor: url('/icons/cursor-pointer.svg') 6 3, pointer; }
 textarea { cursor: url('/icons/cursor-text.svg') 12 12, text; }
 code, .monospace { font-family: 'Courier New', monospace; }
 
@@ -38,8 +38,8 @@ code, .monospace { font-family: 'Courier New', monospace; }
 
 .os-window { position: absolute; min-width: 320px; min-height: 220px; border: 1px solid #31506a; background: #edf3f7; box-shadow: 6px 8px 22px rgba(0,0,0,.32), 1px 1px 0 rgba(255,255,255,.9) inset; display: flex; flex-direction: column; overflow: hidden; border-radius: 6px 6px 3px 3px; }
 .os-window::before { content: ''; pointer-events: none; position: absolute; inset: 0; border: 1px solid rgba(255,255,255,.55); z-index: 5; }
-.os-window-maximized { right: 6px !important; bottom: 6px !important; width: auto !important; height: auto !important; }
-.window-titlebar { cursor: url('/icons/cursor-drag.svg') 12 12, grab; height: 34px; flex: 0 0 34px; padding: 0 5px 0 8px; display: flex; align-items: center; justify-content: space-between; color: #fff; background: linear-gradient(180deg, #1a79b8 0%, #07538b 53%, #0b4774 100%); border-bottom: 1px solid #1a3e57; box-shadow: inset 0 1px 0 rgba(255,255,255,.35); }
+.os-window-maximized { inset: 0 !important; width: 100% !important; height: 100% !important; border-radius: 0; }
+.window-titlebar { touch-action: none; cursor: url('/icons/cursor-drag.svg') 12 12, grab; height: 34px; flex: 0 0 34px; padding: 0 5px 0 8px; display: flex; align-items: center; justify-content: space-between; color: #fff; background: linear-gradient(180deg, #1a79b8 0%, #07538b 53%, #0b4774 100%); border-bottom: 1px solid #1a3e57; box-shadow: inset 0 1px 0 rgba(255,255,255,.35); }
 .window-titlebar:active { cursor: url('/icons/cursor-drag.svg') 12 12, grabbing; }
 .window-title { display: flex; align-items: center; gap: 7px; min-width: 0; font-size: 13px; font-weight: 700; text-shadow: 1px 1px 1px rgba(0,0,0,.5); }
 .window-title span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -197,10 +197,17 @@ code, .monospace { font-family: 'Courier New', monospace; }
 .service-row b { white-space: nowrap; color: #1d6089; font: 11px 'Courier New', monospace; }
 .packages { margin-top: 14px; }
 .package-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.short-packages-grid { grid-template-columns: repeat(5, 1fr); }
 .package-card { min-height: 145px; padding: 10px; border: 1px solid #b0c0c8; background: linear-gradient(#fff, #e8eef2); display: flex; flex-direction: column; gap: 5px; }
 .package-card strong { color: #184a66; font-size: 12px; }
 .package-card span { color: #28698f; font: 12px 'Courier New', monospace; }
 .package-card small { color: #687e8b; font-size: 9px; }
+.pricing-note { margin: 7px 0 0; color: #758792; font: 9px/1.4 'Courier New', monospace; }
+.long-form-box { margin-top: 12px; padding: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border: 1px solid #9db4c2; background: linear-gradient(135deg, #f8fbfd, #dce8ee); box-shadow: inset 0 1px 0 #fff; }
+.long-form-box > div { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.long-form-box strong { color: #174b69; font-size: 17px; }
+.long-form-box p { margin: 0; color: #6c7f8b; font-size: 9px; line-height: 1.4; }
+.custom-quote-tag { flex: 0 0 auto; padding: 5px 7px; border: 1px solid #7ca0b5; background: #e7f2f8; color: #2d698b; font: 9px 'Courier New', monospace; }
 
 /* contact */
 .outlook { min-height: 100%; background: #fff; }
@@ -237,7 +244,7 @@ code, .monospace { font-family: 'Courier New', monospace; }
 .taskbar { position: absolute; z-index: 1000; inset: auto 0 0; height: var(--taskbar); display: flex; align-items: center; gap: 5px; padding: 3px 4px; background: linear-gradient(#1b76a8, #075485 56%, #073f66); border-top: 1px solid rgba(255,255,255,.55); box-shadow: 0 -2px 5px rgba(0,0,0,.15); }
 .start-button { height: 34px; min-width: 93px; padding: 0 10px; display: flex; align-items: center; gap: 7px; border: 1px solid #063652; border-radius: 0 10px 10px 0; color: #fff; background: linear-gradient(#69bf73, #258a4b 52%, #1c6b3c); box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 2px 0 4px rgba(0,0,0,.2); text-shadow: 1px 1px 1px rgba(0,0,0,.4); font-size: 12px; font-weight: 900; font-style: italic; }
 .start-button.pressed { filter: brightness(.93); transform: translateY(1px); }
-.start-orb { width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #fff, #8fe091 38%, #20713b 75%); color: #0e5530; font-size: 10px; font-style: normal; }
+.start-orb { width: 27px; height: 27px; display: grid; place-items: center; flex: 0 0 27px; border-radius: 6px; background: rgba(255,255,255,.1); box-shadow: inset 0 1px 0 rgba(255,255,255,.3); font-style: normal; }
 .taskbar-divider { width: 2px; height: 29px; background: rgba(0,0,0,.18); box-shadow: 1px 0 rgba(255,255,255,.15); }
 .taskbar-apps { min-width: 0; flex: 1; display: flex; align-items: center; gap: 4px; overflow: hidden; }
 .task-button { min-width: 130px; max-width: 190px; height: 29px; display: flex; align-items: center; gap: 6px; padding: 0 8px; color: #fff; border: 1px solid #0a456b; background: linear-gradient(#3b92c2, #146795 58%, #0d5984); box-shadow: inset 0 1px 0 rgba(255,255,255,.22); font-size: 10px; overflow: hidden; }
@@ -317,7 +324,7 @@ code, .monospace { font-family: 'Courier New', monospace; }
   .reel-panel { align-items: flex-start; flex-direction: column; }
   .projects-grid { grid-template-columns: 1fr; padding: 10px; }
   .player-info { grid-template-columns: 1fr; }
-  .package-grid { grid-template-columns: 1fr 1fr; }
+  .package-grid, .short-packages-grid { grid-template-columns: 1fr 1fr; }
   .contact-row { grid-template-columns: 1fr; gap: 5px; }
   .contact-actions { justify-content: flex-start; }
   .start-menu { left: 6px; right: 6px; width: auto; bottom: calc(var(--taskbar) + 3px); }

@@ -1,6 +1,7 @@
 'use client';
 
-import { AnimatePresence, motion, useDragControls } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useRef } from 'react';
 import type { ComponentProps, PointerEvent as ReactPointerEvent, ReactNode, MouseEvent as ReactMouseEvent } from 'react';
 import XPIcon from './XPIcon';
 
@@ -25,60 +26,107 @@ export type AppWindowProps = {
   children: ReactNode;
 };
 
+type DragState = {
+  pointerId: number;
+  startX: number;
+  startY: number;
+  originX: number;
+  originY: number;
+};
+
 export default function Window({
-  title, icon = 'program', open, minimized, maximized, x, y, width, height, zIndex, mobile,
+  id, title, icon = 'program', open, minimized, maximized, x, y, width, height, zIndex, mobile,
   onClose, onMinimize, onMaximize, onFocus, onMove, children
 }: AppWindowProps) {
-  const dragControls = useDragControls();
+  const dragState = useRef<DragState | null>(null);
 
-  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: { offset: { x: number; y: number } }) => {
-    if (mobile || maximized) return;
-    const nextX = Math.max(8, Math.min(x + info.offset.x, window.innerWidth - width - 8));
-    const nextY = Math.max(8, Math.min(y + info.offset.y, window.innerHeight - height - 54));
-    onMove(nextX, nextY);
+  const clampPosition = (nextX: number, nextY: number) => ({
+    x: Math.max(8, Math.min(nextX, Math.max(8, window.innerWidth - width - 8))),
+    y: Math.max(8, Math.min(nextY, Math.max(8, window.innerHeight - 42 - height - 8)))
+  });
+
+  const handleDragStart = (event: ReactPointerEvent<HTMLElement>) => {
+    onFocus();
+    if (mobile || maximized || event.button !== 0) return;
+
+    event.preventDefault();
+    event.currentTarget.setPointerCapture(event.pointerId);
+    dragState.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      originX: x,
+      originY: y
+    };
+  };
+
+  const handleDragMove = (event: ReactPointerEvent<HTMLElement>) => {
+    const current = dragState.current;
+    if (!current || current.pointerId !== event.pointerId) return;
+
+    const next = clampPosition(
+      current.originX + event.clientX - current.startX,
+      current.originY + event.clientY - current.startY
+    );
+    onMove(next.x, next.y);
+  };
+
+  const handleDragEnd = (event: ReactPointerEvent<HTMLElement>) => {
+    if (dragState.current?.pointerId === event.pointerId) {
+      dragState.current = null;
+    }
   };
 
   return (
     <AnimatePresence>
       {open && !minimized && (
         <motion.section
-          key={title}
+          key={id}
           className={`os-window ${maximized ? 'os-window-maximized' : ''}`}
-          style={{ zIndex, left: maximized ? 6 : x, top: maximized ? 6 : y, width: maximized ? undefined : width, height: maximized ? undefined : height }}
+          style={{
+            zIndex,
+            left: maximized ? 0 : x,
+            top: maximized ? 0 : y,
+            width: maximized ? '100%' : width,
+            height: maximized ? '100%' : height
+          }}
           initial={{ opacity: 0, scale: 0.96, y: 8 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.97, y: 8 }}
           transition={{ duration: 0.14 }}
-          drag={mobile || maximized ? false : true}
-          dragListener={false}
-          dragControls={dragControls}
-          dragMomentum={false}
-          dragElastic={0.05}
-          onDragEnd={handleDragEnd}
           onPointerDown={onFocus}
           role="dialog"
           aria-label={title}
+          aria-modal="false"
         >
           <header
             className="window-titlebar"
-            onPointerDown={(event: ReactPointerEvent<HTMLElement>) => {
-              onFocus();
-              if (!mobile && !maximized) dragControls.start(event);
+            onPointerDown={handleDragStart}
+            onPointerMove={handleDragMove}
+            onPointerUp={handleDragEnd}
+            onPointerCancel={handleDragEnd}
+            onDoubleClick={(event: ReactMouseEvent<HTMLElement>) => {
+              if (event.target instanceof Element && event.target.closest('.window-controls')) return;
+              onMaximize();
             }}
-            onDoubleClick={onMaximize}
           >
             <div className="window-title">
               <XPIcon kind={icon} size={18} />
               <span>{title}</span>
             </div>
-            <div className="window-controls" aria-label="Window controls" onPointerDown={(e: ReactPointerEvent<HTMLDivElement>) => e.stopPropagation()}>
+            <div
+              className="window-controls"
+              aria-label="Window controls"
+              onPointerDown={(event: ReactPointerEvent<HTMLDivElement>) => event.stopPropagation()}
+              onDoubleClick={(event: ReactMouseEvent<HTMLDivElement>) => event.stopPropagation()}
+            >
               <button type="button" className="window-control" aria-label="Minimize" onClick={(e: ReactMouseEvent<HTMLButtonElement>) => { e.stopPropagation(); onMinimize(); }}>_</button>
-              <button type="button" className="window-control" aria-label="Maximize" onClick={(e: ReactMouseEvent<HTMLButtonElement>) => { e.stopPropagation(); onMaximize(); }}>□</button>
+              <button type="button" className="window-control" aria-label={maximized ? 'Restore' : 'Maximize'} onClick={(e: ReactMouseEvent<HTMLButtonElement>) => { e.stopPropagation(); onMaximize(); }}>{maximized ? '❐' : '□'}</button>
               <button type="button" className="window-control window-close" aria-label="Close" onClick={(e: ReactMouseEvent<HTMLButtonElement>) => { e.stopPropagation(); onClose(); }}>×</button>
             </div>
           </header>
           <div className="window-body">{children}</div>
-          <footer className="window-statusbar"><span>CAPIMASO SYSTEM</span><span>READY</span></footer>
+          <footer className="window-statusbar"><span>CAPIMASO SYSTEM</span><span>{maximized ? 'FULL SCREEN' : 'READY'}</span></footer>
         </motion.section>
       )}
     </AnimatePresence>

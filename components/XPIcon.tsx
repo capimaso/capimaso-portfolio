@@ -2,12 +2,13 @@
 
 import { motion } from 'framer-motion';
 
-type IconKind = 'computer' | 'folder' | 'video' | 'user' | 'gear' | 'service' | 'mail' | 'recycle' | 'program' | 'file' | 'play';
+type IconKind = 'computer' | 'folder' | 'video' | 'user' | 'gear' | 'service' | 'mail' | 'recycle' | 'program' | 'file' | 'play' | 'start';
 
 export default function XPIcon({ kind, size = 44 }: { kind: IconKind; size?: number }) {
   const common = { width: size, height: size, viewBox: '0 0 48 48', 'aria-hidden': true };
   const stroke = '#12314d';
   const fill = '#eef7ff';
+  if (kind === 'start') return <svg {...common}><defs><linearGradient id="startBlue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#67c7ff"/><stop offset="1" stopColor="#15659e"/></linearGradient><linearGradient id="startGreen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#8be18c"/><stop offset="1" stopColor="#22824b"/></linearGradient></defs><rect x="5" y="5" width="38" height="38" rx="9" fill="#f7fbff" stroke={stroke} strokeWidth="2"/><path d="M10 10h12v12H10z" fill="url(#startBlue)"/><path d="M26 10h12v12H26z" fill="url(#startGreen)"/><path d="M10 26h12v12H10z" fill="#f0c55d"/><path d="M26 26h12v12H26z" fill="#db7564"/><path d="M24 10v28M10 24h28" stroke="#fff" strokeWidth="1.5" opacity=".9"/></svg>;
   if (kind === 'computer') return <svg {...common}><rect x="5" y="6" width="38" height="27" rx="3" fill={fill} stroke={stroke}/><rect x="9" y="10" width="30" height="18" fill="#69b7e8"/><path d="M19 38h10M15 41h18" stroke={stroke} strokeWidth="3" strokeLinecap="round"/><path d="M14 15h20" stroke="#fff" strokeOpacity=".65"/></svg>;
   if (kind === 'folder') return <svg {...common}><path d="M4 13a4 4 0 0 1 4-4h12l5 5h15a4 4 0 0 1 4 4v17a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V13Z" fill="#f8d96f" stroke={stroke}/><path d="M5 17h38" stroke="#fff4ad" strokeWidth="2"/><path d="M7 22h34" stroke="#c49f32" strokeOpacity=".5"/></svg>;
   if (kind === 'video') return <svg {...common}><rect x="4" y="9" width="40" height="30" rx="4" fill="#eaf4fb" stroke={stroke}/><rect x="8" y="13" width="26" height="22" rx="2" fill="#16344d"/><path d="m22 24-7-5v10l7-5Zm3 0h8" fill="#5bb5e6" stroke="#5bb5e6" strokeWidth="3" strokeLinejoin="round"/></svg>;

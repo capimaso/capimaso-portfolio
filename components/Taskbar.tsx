@@ -21,7 +21,7 @@ export default function Taskbar({
   return (
     <footer className="taskbar" aria-label="System taskbar">
       <button type="button" className={`start-button ${startOpen ? 'pressed' : ''}`} onClick={onStart} aria-expanded={startOpen}>
-        <span className="start-orb">◉</span><span>START</span>
+        <span className="start-orb" aria-hidden="true"><XPIcon kind="start" size={25} /></span><span>START</span>
       </button>
       <div className="taskbar-divider" />
       <div className="taskbar-apps" aria-label="Open applications">

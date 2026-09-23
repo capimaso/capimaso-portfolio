@@ -6,7 +6,8 @@ import XPIcon from './XPIcon';
 import type { Project } from '@/data/projects';
 import { projects } from '@/data/projects';
 import { profile } from '@/data/profile';
-import { services, packages } from '@/data/services';
+import { longFormPricing, services, shortPackages } from '@/data/services';
+import { media } from '@/data/media';
 import { socials } from '@/data/socials';
 import { skills } from '@/data/skills';
 
@@ -46,7 +47,7 @@ export function WelcomeContent({ actions }: { actions: ContentActions }) {
       </div>
       <div className="reel-panel">
         <div className="reel-title"><XPIcon kind="video" size={32} /><div><strong>CAPIMASO_REEL.mp4</strong><span>SHOWREEL / PLACEHOLDER MEDIA</span></div></div>
-        <button type="button" className="xp-button compact" onClick={() => actions.open('player', { ...projects[0], id: 'showreel', filename: 'CAPIMASO_REEL.mp4', title: 'CAPIMASO REEL', category: 'SHOWREEL', description: 'Replace the placeholder with your real showreel.', thumbnail: '/images/project-motion.svg', video: '/videos/CAPIMASO_REEL.mp4' })}>OPEN PLAYER</button>
+        <button type="button" className="xp-button compact" onClick={() => actions.open('player', { ...projects[0], id: 'showreel', filename: 'CAPIMASO_REEL.mp4', title: 'CAPIMASO REEL', category: 'SHOWREEL', description: 'ADD YOUR SHOWREEL DESCRIPTION HERE.', thumbnail: media.showreel.thumbnail, video: media.showreel.video })}>OPEN PLAYER</button>
       </div>
     </div>
   );
@@ -116,8 +117,8 @@ function BeforeAfter() {
   return <section className="before-after">
     <div className="section-caption"><strong>RAW → FINAL</strong><span>INTERACTIVE COMPARISON</span></div>
     <div ref={ref} className="comparison" onPointerMove={(e: ReactPointerEvent<HTMLDivElement>) => e.buttons === 1 && update(e.clientX)} onPointerDown={(e: ReactPointerEvent<HTMLDivElement>) => update(e.clientX)}>
-      <img src="/images/final-placeholder.svg" alt="Final edit placeholder" />
-      <div className="comparison-raw" style={{ width: `${split}%` }}><img src="/images/raw-placeholder.svg" alt="Raw footage placeholder" /></div>
+      <img src={media.beforeAfter.final} alt="Final edit comparison" />
+      <div className="comparison-raw" style={{ width: `${split}%` }}><img src={media.beforeAfter.raw} alt="Raw footage comparison" /></div>
       <div className="comparison-handle" style={{ left: `${split}%` }}><span>↔</span></div>
     </div>
     <div className="comparison-labels"><span>RAW FOOTAGE</span><span>CAPIMASO EDIT</span></div>
@@ -166,9 +167,35 @@ export function SkillsContent() {
 
 export function ServicesContent() {
   return <div className="services-app">
-    <div className="services-hero"><div><p className="eyebrow">CAPIMASO_SERVICES.EXE</p><h2>EDITING SERVICES</h2></div><span className="service-status"><span className="online-dot" /> AVAILABLE</span></div>
+    <div className="services-hero">
+      <div><p className="eyebrow">CAPIMASO_SERVICES.EXE</p><h2>EDITING SERVICES</h2></div>
+      <span className="service-status"><span className="online-dot" /> AVAILABLE</span>
+    </div>
     <div className="services-grid">{services.map((service) => <div className="service-row" key={service.id}><XPIcon kind="service" size={36} /><div><strong>{service.name}</strong><span>{service.description}</span></div><b>{service.price}</b></div>)}</div>
-    <div className="packages"><div className="section-caption"><strong>PACKAGES</strong><span>EDIT IN data/services.ts</span></div><div className="package-grid">{packages.map((item) => <div key={item.name} className="package-card"><strong>{item.name}</strong><span>{item.price}</span><small>{item.quantity === '—' ? 'Flexible quantity' : `${item.quantity} video${item.quantity === '1' ? '' : 's'}`}</small><small>DEADLINE: {item.turnaround}</small><small>REVISIONS: {item.revisions}</small><small>{item.benefits}</small></div>)}</div></div>
+
+    <div className="packages">
+      <div className="section-caption"><strong>SHORT FORM PACKAGES</strong><span>UP TO 60s · EDIT IN data/services.ts</span></div>
+      <div className="package-grid short-packages-grid">
+        {shortPackages.map((item) => <div key={item.name} className="package-card">
+          <strong>{item.name}</strong>
+          <span>{item.price}</span>
+          {item.unitPrice && <small>{item.unitPrice}</small>}
+          <small>{item.benefits}</small>
+          <small>DEADLINE: {item.turnaround}</small>
+          <small>REVISIONS: {item.revisions}</small>
+        </div>)}
+      </div>
+      <p className="pricing-note">Values for short videos up to 60 seconds. Prices may vary for longer videos.</p>
+    </div>
+
+    <div className="long-form-box">
+      <div>
+        <span className="strip-label">LONG FORM</span>
+        <strong>{longFormPricing.startingPrice}</strong>
+        <p>{longFormPricing.note}</p>
+      </div>
+      <span className="custom-quote-tag">CUSTOM QUOTE</span>
+    </div>
   </div>;
 }
 

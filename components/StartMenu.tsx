@@ -19,7 +19,7 @@ export default function StartMenu({ open, onOpen }: { open: boolean; onOpen: (id
   return (
     <div className="start-menu" role="menu">
       <div className="start-menu-head">
-        <div className="start-avatar"><XPIcon kind="program" size={34} /></div>
+        <div className="start-avatar"><XPIcon kind="start" size={36} /></div>
         <div><strong>CAPIMASO</strong><span>VIDEO EDITOR</span></div>
       </div>
       <div className="start-body">
