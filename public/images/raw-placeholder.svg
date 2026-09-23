@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 405">
+  <rect width="720" height="405" fill="#30353a"/>
+  <g opacity=".25" stroke="#fff" stroke-width="2"><path d="M0 0L720 405M720 0L0 405"/></g>
+  <text x="50%" y="48%" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="28" font-weight="700">RAW FOOTAGE</text>
+  <text x="50%" y="58%" text-anchor="middle" fill="#b8c2cc" font-family="monospace" font-size="15">REPLACE /public/videos/raw.mp4</text>
+</svg>

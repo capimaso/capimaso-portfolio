@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#4b3424"/><stop offset="1" stop-color="#e69f57"/></linearGradient></defs>
+  <rect width="640" height="360" fill="url(#g)"/>
+  <rect x="30" y="30" width="580" height="300" rx="10" fill="#09131f" opacity=".72" stroke="#f0efda" stroke-opacity=".55"/>
+  <circle cx="130" cy="180" r="72" fill="#f0efda" opacity=".15"/>
+  <path d="M105 203l28-36 24 27 31-47 72 86" fill="none" stroke="#f0efda" stroke-width="8" opacity=".9"/>
+  <rect x="320" y="118" width="235" height="15" rx="7" fill="#f0efda" opacity=".88"/>
+  <rect x="320" y="151" width="180" height="11" rx="5" fill="#f0efda" opacity=".5"/>
+  <rect x="320" y="176" width="210" height="11" rx="5" fill="#f0efda" opacity=".35"/>
+  <text x="320" y="250" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#f0efda">MOTION GRAPHICS</text>
+  <text x="320" y="281" font-family="monospace" font-size="14" fill="#fff" opacity=".68">LOCAL PLACEHOLDER</text>
+</svg>

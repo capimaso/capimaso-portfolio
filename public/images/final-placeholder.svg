@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 405">
+  <rect width="720" height="405" fill="#0f3e67"/>
+  <circle cx="190" cy="185" r="96" fill="#8ed7ff" opacity=".2"/>
+  <circle cx="535" cy="120" r="140" fill="#7bd1b4" opacity=".13"/>
+  <text x="50%" y="48%" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="28" font-weight="700">CAPIMASO EDIT</text>
+  <text x="50%" y="58%" text-anchor="middle" fill="#cdeaff" font-family="monospace" font-size="15">REPLACE /public/videos/final.mp4</text>
+</svg>
