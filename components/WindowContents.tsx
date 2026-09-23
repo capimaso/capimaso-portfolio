@@ -38,18 +38,46 @@ export function WelcomeContent({ actions }: { actions: ContentActions }) {
         <p className="tagline">{profile.tagline}</p>
         <p className="welcome-copy">A portfolio presented like an old computer: open the programs, browse the files, find the work.</p>
         <div className="xp-button-row">
-          <button type="button" className="xp-button primary" onClick={() => actions.open('work')}><span>▶</span> VIEW MY WORK</button>
-          <button type="button" className="xp-button" onClick={() => actions.open('contact')}><span>✉</span> CONTACT ME</button>
+          <button
+            type="button"
+            className="xp-button primary"
+            onClick={() => actions.open('work')}
+          >
+            <span>▶</span> VIEW MY WORK
+          </button>
+        
+          <button
+            type="button"
+            className="xp-button reel-button"
+            onClick={() =>
+              actions.open('player', {
+                ...projects[0],
+                id: 'showreel',
+                filename: 'CAPIMASO_REEL.mp4',
+                title: 'CAPIMASO REEL',
+                category: 'SHOWREEL',
+                description: 'ADD YOUR SHOWREEL DESCRIPTION HERE.',
+                thumbnail: media.showreel.thumbnail,
+                video: media.showreel.video
+              })
+            }
+          >
+            <span>▶</span> WATCH MY REEL
+          </button>
+        
+          <button
+            type="button"
+            className="xp-button"
+            onClick={() => actions.open('contact')}
+          >
+            <span>✉</span> CONTACT ME
+          </button>
         </div>
       </div>
       <div className="welcome-strip">
         <div><span className="strip-label">STATUS</span><strong><span className="online-dot" /> {profile.status}</strong></div>
         <div><span className="strip-label">SYSTEM</span><strong>CAPIMASO / 200X</strong></div>
         <div><span className="strip-label">MEDIA</span><strong>VIDEO / DIGITAL</strong></div>
-      </div>
-      <div className="reel-panel">
-        <div className="reel-title"><XPIcon kind="video" size={32} /><div><strong>CAPIMASO_REEL.mp4</strong><span>SHOWREEL / PLACEHOLDER MEDIA</span></div></div>
-        <button type="button" className="xp-button compact" onClick={() => actions.open('player', { ...projects[0], id: 'showreel', filename: 'CAPIMASO_REEL.mp4', title: 'CAPIMASO REEL', category: 'SHOWREEL', description: 'ADD YOUR SHOWREEL DESCRIPTION HERE.', thumbnail: media.showreel.thumbnail, video: media.showreel.video })}>OPEN PLAYER</button>
       </div>
     </div>
   );
