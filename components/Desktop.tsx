@@ -176,7 +176,7 @@ export default function Desktop() {
     <div className="crt-overlay" aria-hidden="true" />
 
     {booting && <div className="boot-screen">
-      <div className="boot-logo"><div className="boot-mark">CM</div><strong>CAPIMASO SYSTEM</strong><span>VIDEO EDITOR WORKSTATION</span></div>
+      <div className="boot-logo"><div className="boot-mark"><img src="/images/profile.jpg" alt="CAPIMASO" /></div><strong>CAPIMASO SYSTEM</strong><span>VIDEO EDITOR WORKSTATION</span></div>
       <div className="boot-terminal"><p>BIOS OK</p><p>MEMORY CHECK OK</p><p>MEDIA SUBSYSTEM READY</p><p>LOADING PORTFOLIO...</p></div>
       <div className="boot-progress"><div style={{ width: `${bootProgress}%` }} /></div>
       <div className="boot-bottom"><span>BUILD 200X</span><button type="button" onClick={() => setBooting(false)}>SKIP ›</button><span>{bootProgress}%</span></div>
