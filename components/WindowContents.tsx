@@ -161,7 +161,6 @@ export function SkillsContent() {
     <div className="properties-tabs"><span className="active">GENERAL</span><span>DETAILS</span><span>TOOLS</span></div>
     <div className="system-summary"><XPIcon kind="computer" size={62} /><div><strong>CAPIMASO SYSTEM</strong><span>VIDEO EDITING WORKSTATION</span><small>Tools currently listed in the portfolio.</small></div></div>
     <div className="skills-list">{skills.map((skill) => <div key={skill.name} className="skill-row"><XPIcon kind="program" size={34} /><div className="skill-main"><strong>{skill.name}</strong><span>{skill.category} · {skill.description}</span></div><span className="skill-specialty">{skill.specialty}</span></div>)}</div>
-    <div className="properties-note">No percentage ratings are used. Edit <code>data/skills.ts</code> to add or change tools.</div>
   </div>;
 }
 
@@ -174,7 +173,7 @@ export function ServicesContent() {
     <div className="services-grid">{services.map((service) => <div className="service-row" key={service.id}><XPIcon kind="service" size={36} /><div><strong>{service.name}</strong><span>{service.description}</span></div><b>{service.price}</b></div>)}</div>
 
     <div className="packages">
-      <div className="section-caption"><strong>SHORT FORM PACKAGES</strong><span>UP TO 60s · EDIT IN data/services.ts</span></div>
+      <div className="section-caption"><strong>SHORT FORM PACKAGES</strong><span>UP TO 60s</span></div>
       <div className="package-grid short-packages-grid">
         {shortPackages.map((item) => <div key={item.name} className="package-card">
           <strong>{item.name}</strong>
@@ -212,7 +211,6 @@ export function ContactContent({ actions }: { actions: ContentActions }) {
     <div className="outlook-brand"><div className="mail-logo"><XPIcon kind="mail" size={42} /></div><div><strong>OUTLOOK EXPRESS</strong><span>CAPIMASO MAILBOX</span></div></div>
     <div className="outlook-banner"><span>LET'S WORK TOGETHER</span><small>For projects, availability and editing requests.</small></div>
     <div className="contact-list">{socials.map((social) => <div className="contact-row" key={social.id}><div className="contact-label"><XPIcon kind="mail" size={26} /><strong>{social.name}</strong></div><code>{social.value}</code><div className="contact-actions"><button type="button" className="xp-button compact" onClick={() => openSocial(social.href, social.value)}>OPEN</button>{social.copyable && <button type="button" className="xp-button compact" onClick={() => copy(social.value)}>COPY</button>}</div></div>)}</div>
-    <div className="contact-note">Contacts are placeholders until you edit <code>data/socials.ts</code>.</div>
   </div>;
 }
 
