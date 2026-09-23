@@ -132,7 +132,7 @@ export function WorkContent({ actions }: { actions: ContentActions }) {
     <Toolbar items={['File', 'Edit', 'View', 'Sort', 'Window']} />
     <div className="browser-head"><div><p className="eyebrow">C:\CAPIMASO\WORK\</p><h2>MY WORK</h2></div><span className="object-count">{projects.length} MEDIA FILES</span></div>
     <div className="projects-grid">{projects.map((project) => <ProjectCard key={project.id} project={project} onOpen={(item) => actions.open('player', item)} />)}</div>
-    <BeforeAfter />
+    
   </div>;
 }
 
