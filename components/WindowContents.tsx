@@ -184,10 +184,13 @@ export function PlayerContent({ project, actions }: { project: Project; actions:
   return <div className="player-window">
     <div className="player-header"><div className="player-file"><XPIcon kind="video" size={24} /><div><strong>{project.filename}</strong><span>{project.category} / {project.title}</span></div></div><span className="player-format">MP4</span></div>
     <div className="video-stage">
-      <video controls preload="metadata" poster={project.thumbnail} src={project.video} className="native-video">
-        Your browser does not support the video element.
-      </video>
-      <div className="video-fallback"><img src={project.thumbnail} alt="" /><div><strong>LOCAL MEDIA SLOT</strong><span>Replace {project.video} with your real video.</span></div></div>
+      <iframe
+        src={getYouTubeEmbedUrl(project.video)}
+        title={project.title}
+        className="youtube-player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      />
     </div>
     <div className="player-info"><div><span>DESCRIPTION</span><p>{project.description}</p></div><div><span>SOFTWARE</span><p>{project.software.join(' / ')}</p></div></div>
     <div className="player-footer"><span>▶ PLAYBACK READY</span><button type="button" className="xp-button compact" onClick={() => actions.notify('Project opened successfully.')}>FILE → READY</button></div>
