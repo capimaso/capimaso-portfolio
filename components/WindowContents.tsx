@@ -26,7 +26,9 @@ export function WelcomeContent({ actions }: { actions: ContentActions }) {
       <div className="welcome-topline"><span className="system-led" /> SYSTEM ONLINE <span className="topline-rule" /> CAPIMASO.EXE</div>
       <div className="welcome-main">
         <div className="brand-lockup">
-          <div className="brand-mark"><span>CM</span></div>
+          <div className="brand-mark">
+            <img src="/images/profile.jpg" alt="CAPIMASO" />
+          </div>
           <div>
             <p className="eyebrow">PERSONAL VIDEO WORKSTATION</p>
             <h1>{profile.brand}</h1>
