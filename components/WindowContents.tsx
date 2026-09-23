@@ -16,6 +16,22 @@ export type ContentActions = {
   notify: (message: string) => void;
 };
 
+function getYouTubeEmbedUrl(url: string) {
+  const parsed = new URL(url);
+
+  if (parsed.hostname === 'youtu.be') {
+    return `https://www.youtube-nocookie.com/embed/${parsed.pathname.slice(1)}`;
+  }
+
+  const videoId = parsed.searchParams.get('v');
+
+  if (videoId) {
+    return `https://www.youtube-nocookie.com/embed/${videoId}`;
+  }
+
+  return url;
+}
+
 function Toolbar({ items }: { items: string[] }) {
   return <div className="classic-toolbar">{items.map((item) => <button key={item} type="button">{item}</button>)}</div>;
 }
