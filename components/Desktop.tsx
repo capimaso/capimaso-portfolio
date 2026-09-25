@@ -1,27 +1,16 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { ComponentProps, MouseEvent, MouseEvent as ReactMouseEvent } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type ComponentProps, type MouseEvent, type MouseEvent as ReactMouseEvent } from 'react';
 import type { Project } from '@/data/projects';
 import type { WindowId, WindowState } from '@/lib/types';
+import { media } from '@/data/media';
 import Window from './Window';
 import Taskbar from './Taskbar';
 import StartMenu from './StartMenu';
 import Notifications, { type Notice } from './Notifications';
 import XPIcon from './XPIcon';
-import {
-  AboutContent,
-  ComputerContent,
-  ContactContent,
-  type ContentActions,
-  PlayerContent,
-  PropertiesContent,
-  RecycleContent,
-  ServicesContent,
-  SkillsContent,
-  WelcomeContent,
-  WorkContent
-} from './WindowContents';
+import { useLanguage } from '@/lib/i18n';
+import { AboutContent, ComputerContent, ContactContent, type ContentActions, PlayerContent, PropertiesContent, RecycleContent, ServicesContent, SkillsContent, WelcomeContent, WorkContent } from './WindowContents';
 
 const desktopIcons: Array<{ id: WindowId | 'portfolio'; label: string; icon: ComponentProps<typeof XPIcon>['kind']; title: string }> = [
   { id: 'computer', label: 'My Computer', icon: 'computer', title: 'My Computer' },
@@ -48,28 +37,23 @@ const initialWindows: WindowState[] = [
 ];
 
 export default function Desktop() {
+  const { t } = useLanguage();
   const [booting, setBooting] = useState(true);
   const [bootProgress, setBootProgress] = useState(0);
   const [startOpen, setStartOpen] = useState(false);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null);
   const [mobile, setMobile] = useState(false);
-  const [clock, setClock] = useState(new Date());
   const noticeSeed = useRef(0);
   const [notices, setNotices] = useState<Notice[]>([]);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [windows, setWindows] = useState<WindowState[]>(initialWindows);
 
   useEffect(() => {
-    const media = window.matchMedia('(max-width: 780px)');
-    const set = () => setMobile(media.matches);
+    const mediaQuery = window.matchMedia('(max-width: 780px)');
+    const set = () => setMobile(mediaQuery.matches);
     set();
-    media.addEventListener?.('change', set);
-    return () => media.removeEventListener?.('change', set);
-  }, []);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => setClock(new Date()), 1000);
-    return () => window.clearInterval(interval);
+    mediaQuery.addEventListener?.('change', set);
+    return () => mediaQuery.removeEventListener?.('change', set);
   }, []);
 
   useEffect(() => {
@@ -89,10 +73,8 @@ export default function Desktop() {
   const notify = useCallback((message: string) => {
     const id = ++noticeSeed.current;
     setNotices((items) => [...items.slice(-3), { id, message }]);
-    window.setTimeout(() => {
-      setNotices((items) => items.filter((item) => item.id !== id));
-    }, 3300);
-  }, [noticeSeed]);
+    window.setTimeout(() => setNotices((items) => items.filter((item) => item.id !== id)), 3300);
+  }, []);
 
   const bringToFront = useCallback((id: WindowId) => {
     setWindows((items) => {
@@ -113,33 +95,19 @@ export default function Desktop() {
       welcome: 'CAPIMASO.EXE opened.', computer: 'My Computer opened.', work: 'My Work opened.', about: 'ABOUT_ME.txt opened.',
       skills: 'System Properties opened.', services: 'CAPIMASO services loaded.', contact: 'Outlook Express opened.', recycle: 'Recycle Bin opened.', properties: 'Properties opened.', player: 'Project opened.'
     };
-    notify(labels[id]);
-  }, [mobile, notify]);
+    notify(t(labels[id]));
+  }, [mobile, notify, t]);
 
-  const closeWindow = useCallback((id: WindowId) => {
-    setWindows((items) => items.map((item) => item.id === id ? { ...item, open: false, minimized: false } : item));
-  }, []);
-
-  const minimizeWindow = useCallback((id: WindowId) => {
-    setWindows((items) => items.map((item) => item.id === id ? { ...item, minimized: true } : item));
-  }, []);
-
+  const closeWindow = useCallback((id: WindowId) => setWindows((items) => items.map((item) => item.id === id ? { ...item, open: false, minimized: false } : item)), []);
+  const minimizeWindow = useCallback((id: WindowId) => setWindows((items) => items.map((item) => item.id === id ? { ...item, minimized: true } : item)), []);
   const maximizeWindow = useCallback((id: WindowId) => {
     setWindows((items) => items.map((item) => item.id === id ? { ...item, maximized: !item.maximized } : item));
     bringToFront(id);
   }, [bringToFront]);
-
-  const moveWindow = useCallback((id: WindowId, x: number, y: number) => {
-    setWindows((items) => items.map((item) => item.id === id ? { ...item, x, y } : item));
-  }, []);
-
+  const moveWindow = useCallback((id: WindowId, x: number, y: number) => setWindows((items) => items.map((item) => item.id === id ? { ...item, x, y } : item)), []);
   const taskClick = (id: WindowId) => {
     const item = windows.find((windowItem) => windowItem.id === id);
     if (!item) return;
-    if (item.minimized) {
-      bringToFront(id);
-      return;
-    }
     bringToFront(id);
   };
 
@@ -148,12 +116,7 @@ export default function Desktop() {
     setStartOpen(false);
     setContextMenu({ x: Math.min(event.clientX, window.innerWidth - 190), y: Math.min(event.clientY, window.innerHeight - 190) });
   };
-
-  const refresh = () => {
-    setContextMenu(null);
-    window.location.reload();
-  };
-
+  const refresh = () => { setContextMenu(null); window.location.reload(); };
   const actions: ContentActions = useMemo(() => ({ open: openWindow, notify }), [openWindow, notify]);
 
   const contentFor = (id: WindowId) => {
@@ -167,68 +130,37 @@ export default function Desktop() {
       case 'contact': return <ContactContent actions={actions} />;
       case 'recycle': return <RecycleContent />;
       case 'properties': return <PropertiesContent />;
-      case 'player': return <PlayerContent project={selectedProject ?? { id: 'showreel', filename: 'CAPIMASO_REEL.mp4', title: 'CAPIMASO REEL', category: 'SHOWREEL', description: 'Replace the placeholder with your real showreel.', software: ['Your software here'], thumbnail: '/images/project-motion.svg', video: '/videos/CAPIMASO_REEL.mp4' }} actions={actions} />;
+      case 'player': return <PlayerContent project={selectedProject ?? { id: 'showreel', filename: 'CAPIMASO_REEL', title: 'CAPIMASO REEL', category: 'SHOWREEL', description: 'Replace the placeholder with your real showreel.', software: ['Your software here'], thumbnail: media.showreel.thumbnail, video: media.showreel.video, format: 'long' }} actions={actions} />;
     }
   };
 
   return <main className="desktop-shell" onContextMenu={contextOpen} onClick={() => { if (contextMenu) setContextMenu(null); }}>
     <div className="wallpaper" aria-hidden="true" />
     <div className="crt-overlay" aria-hidden="true" />
-
     {booting && <div className="boot-screen">
-      <div className="boot-logo"><div className="boot-mark"><img src="/images/profile.jpg" alt="CAPIMASO" /></div><strong>CAPIMASO SYSTEM</strong><span>VIDEO EDITOR WORKSTATION</span></div>
-      <div className="boot-terminal"><p>BIOS OK</p><p>MEMORY CHECK OK</p><p>MEDIA SUBSYSTEM READY</p><p>LOADING PORTFOLIO...</p></div>
+      <div className="boot-logo"><div className="boot-mark"><img src="/images/profile.jpg" alt="CAPIMASO" /></div><strong>CAPIMASO SYSTEM</strong><span>{t('VIDEO EDITOR WORKSTATION')}</span></div>
+      <div className="boot-terminal"><p>{t('BIOS OK')}</p><p>{t('MEMORY CHECK OK')}</p><p>{t('MEDIA SUBSYSTEM READY')}</p><p>{t('LOADING PORTFOLIO...')}</p></div>
       <div className="boot-progress"><div style={{ width: `${bootProgress}%` }} /></div>
-      <div className="boot-bottom"><span>BUILD 200X</span><button type="button" onClick={() => setBooting(false)}>SKIP ›</button><span>{bootProgress}%</span></div>
+      <div className="boot-bottom"><span>{t('BUILD 200X')}</span><button type="button" onClick={() => setBooting(false)}>{t('SKIP ›')}</button><span>{bootProgress}%</span></div>
     </div>}
-
     <section className="desktop-area" aria-label="CAPIMASO desktop">
       <div className="desktop-icons" role="navigation" aria-label="Desktop shortcuts">
-        {desktopIcons.map((item, index) => <button
-          type="button"
-          key={item.id}
-          className="desktop-icon"
-          style={{ animationDelay: `${index * 35}ms` }}
-          onClick={() => item.id === 'portfolio' ? openWindow('welcome') : openWindow(item.id)}
-          onDoubleClick={() => notify(`${item.title} activated.`)}
-        >
+        {desktopIcons.map((item, index) => <button type="button" key={item.id} className="desktop-icon" style={{ animationDelay: `${index * 35}ms` }} onClick={() => item.id === 'portfolio' ? openWindow('welcome') : openWindow(item.id)} onDoubleClick={() => notify(t(`${item.title} activated.`))}>
           <span className="desktop-icon-image"><XPIcon kind={item.icon} size={46} /></span>
-          <span>{item.label}</span>
+          <span>{t(item.label)}</span>
         </button>)}
       </div>
-
-      {windows.map((item) => <Window
-        key={item.id}
-        id={item.id}
-        title={item.title}
-        icon={item.icon}
-        open={item.open}
-        minimized={item.minimized}
-        maximized={item.maximized}
-        x={item.x}
-        y={item.y}
-        width={item.width}
-        height={item.height}
-        zIndex={item.zIndex}
-        mobile={mobile}
-        onClose={() => closeWindow(item.id)}
-        onMinimize={() => minimizeWindow(item.id)}
-        onMaximize={() => maximizeWindow(item.id)}
-        onFocus={() => bringToFront(item.id)}
-        onMove={(x, y) => moveWindow(item.id, x, y)}
-      >{contentFor(item.id)}</Window>)}
+      {windows.map((item) => <Window key={item.id} id={item.id} title={item.title} icon={item.icon} open={item.open} minimized={item.minimized} maximized={item.maximized} x={item.x} y={item.y} width={item.width} height={item.height} zIndex={item.zIndex} mobile={mobile} onClose={() => closeWindow(item.id)} onMinimize={() => minimizeWindow(item.id)} onMaximize={() => maximizeWindow(item.id)} onFocus={() => bringToFront(item.id)} onMove={(x, y) => moveWindow(item.id, x, y)}>{contentFor(item.id)}</Window>)}
     </section>
-
     <StartMenu open={startOpen} onOpen={openWindow} />
     {contextMenu && <div className="context-menu" style={{ left: contextMenu.x, top: contextMenu.y }} onClick={(e: ReactMouseEvent<HTMLDivElement>) => e.stopPropagation()} role="menu">
-      <button type="button" role="menuitem" onClick={() => openWindow('welcome')}>View</button>
-      <button type="button" role="menuitem" onClick={() => notify('Icons sorted by name.')}>Sort Icons</button>
-      <button type="button" role="menuitem" onClick={refresh}>Refresh</button>
+      <button type="button" role="menuitem" onClick={() => openWindow('welcome')}>{t('View')}</button>
+      <button type="button" role="menuitem" onClick={() => notify(t('Icons sorted by name.'))}>{t('Sort Icons')}</button>
+      <button type="button" role="menuitem" onClick={refresh}>{t('Refresh')}</button>
       <div className="context-separator" />
-      <button type="button" role="menuitem" onClick={() => notify('New file creation is intentionally disabled in the portfolio shell.')}>New</button>
-      <button type="button" role="menuitem" onClick={() => openWindow('properties')}>Properties</button>
+      <button type="button" role="menuitem" onClick={() => notify(t('New file creation is intentionally disabled in the portfolio shell.'))}>{t('New')}</button>
+      <button type="button" role="menuitem" onClick={() => openWindow('properties')}>{t('Properties')}</button>
     </div>}
-
     <Taskbar windows={windows} startOpen={startOpen} onStart={() => setStartOpen((value) => !value)} onTaskClick={taskClick} />
     <Notifications notices={notices} />
   </main>;

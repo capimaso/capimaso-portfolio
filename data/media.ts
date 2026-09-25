@@ -1,12 +1,8 @@
 // 🔧 ALL OTHER MEDIA SLOTS LIVE HERE.
-// Replace these local paths with your real files when needed.
+// The showreel is now loaded from YouTube instead of a local MP4.
 export const media = {
   showreel: {
-    video: '/videos/CAPIMASO_REEL.mp4',
+    video: 'https://www.youtube.com/watch?v=Mj67WzDsaP4&t=1s',
     thumbnail: '/images/project-motion.svg'
-  },
-  beforeAfter: {
-    raw: '/images/raw-placeholder.svg',
-    final: '/images/final-placeholder.svg'
   }
 };

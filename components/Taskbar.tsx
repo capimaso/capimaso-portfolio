@@ -2,6 +2,7 @@
 
 import XPIcon from './XPIcon';
 import type { WindowState } from '@/lib/types';
+import { useLanguage } from '@/lib/i18n';
 
 export default function Taskbar({
   windows,
@@ -14,10 +15,10 @@ export default function Taskbar({
   onStart: () => void;
   onTaskClick: (id: WindowState['id']) => void;
 }) {
+  const { language, setLanguage, t } = useLanguage();
   const now = new Date();
   const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const openWindows = windows.filter((item) => item.open);
-
   return (
     <footer className="taskbar" aria-label="System taskbar">
       <button type="button" className={`start-button ${startOpen ? 'pressed' : ''}`} onClick={onStart} aria-expanded={startOpen}>
@@ -27,11 +28,22 @@ export default function Taskbar({
       <div className="taskbar-apps" aria-label="Open applications">
         {openWindows.map((item) => (
           <button key={item.id} type="button" className={`task-button ${item.minimized ? 'minimized' : ''}`} onClick={() => onTaskClick(item.id)}>
-            <XPIcon kind="program" size={19} /><span>{item.title}</span>
+            <XPIcon kind="program" size={19} /><span>{t(item.title)}</span>
           </button>
         ))}
       </div>
       <div className="system-tray">
+        <button
+          type="button"
+          className="language-button"
+          onClick={() => setLanguage(language === 'pt-BR' ? 'en' : 'pt-BR')}
+          title={t('Change language')}
+          aria-label={t('Change language')}
+        >
+          <span className={language === 'pt-BR' ? 'active' : ''}>PT-BR</span>
+          <span>/</span>
+          <span className={language === 'en' ? 'active' : ''}>EN</span>
+        </button>
         <span className="online-dot" title="System online" />
         <span className="tray-symbol">◆</span>
         <span className="tray-symbol">◈</span>
