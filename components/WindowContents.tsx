@@ -10,7 +10,6 @@ import { media } from '@/data/media';
 import { socials } from '@/data/socials';
 import { skills } from '@/data/skills';
 import { useLanguage } from '@/lib/i18n';
-
 export type ContentActions = {
   open: (id: 'welcome' | 'computer' | 'work' | 'about' | 'skills' | 'services' | 'contact' | 'recycle' | 'properties' | 'player', payload?: Project) => void;
   notify: (message: string) => void;
@@ -20,7 +19,6 @@ function Toolbar({ items }: { items: string[] }) {
   const { t } = useLanguage();
   return <div className="classic-toolbar">{items.map((item) => <button key={item} type="button">{t(item)}</button>)}</div>;
 }
-
 function getYouTubeVideoId(url: string) {
   if (!url) return null;
   try {
@@ -37,7 +35,6 @@ function getYouTubeVideoId(url: string) {
   }
   return null;
 }
-
 function getYouTubeStartSeconds(url: string) {
   try {
     const value = new URL(url).searchParams.get('t');
@@ -50,7 +47,6 @@ function getYouTubeStartSeconds(url: string) {
     return 0;
   }
 }
-
 function getYouTubeEmbedUrl(url: string) {
   const id = getYouTubeVideoId(url);
   if (!id) return null;
@@ -64,7 +60,6 @@ function getYouTubeThumbnail(url: string) {
   const id = getYouTubeVideoId(url);
   return id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : undefined;
 }
-
 function getInstagramEmbedUrl(url: string) {
   if (!url) return null;
   try {
@@ -74,7 +69,6 @@ function getInstagramEmbedUrl(url: string) {
 
     const match = parsed.pathname.match(/\/(?:[^/]+\/)?(reel|p|tv)\/([^/?#]+)\/?$/i);
     if (!match) return null;
-
     const kind = match[1].toLowerCase();
     const id = match[2];
     return `https://www.instagram.com/${kind}/${id}/embed/`;
@@ -82,7 +76,6 @@ function getInstagramEmbedUrl(url: string) {
     return null;
   }
 }
-
 export function WelcomeContent({ actions }: { actions: ContentActions }) {
   const { t } = useLanguage();
   return (
@@ -134,7 +127,6 @@ export function WelcomeContent({ actions }: { actions: ContentActions }) {
     </div>
   );
 }
-
 export function ComputerContent({ actions }: { actions: ContentActions }) {
   const { t } = useLanguage();
   const folders = [
@@ -169,7 +161,6 @@ export function ComputerContent({ actions }: { actions: ContentActions }) {
     <div className="explorer-status">6 {t('objects')} &nbsp;|&nbsp; C:\CAPIMASO\</div>
   </div>;
 }
-
 function ProjectCard({ project, onOpen }: { project: Project; onOpen: (project: Project) => void }) {
   const { t } = useLanguage();
   const thumbnail = project.thumbnail ?? (project.platform === 'youtube' ? getYouTubeThumbnail(project.video) : undefined);
@@ -178,7 +169,6 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: (project: 
     : project.format === 'short'
       ? t('YouTube Short')
       : t('YouTube Video');
-
   return <article className={`project-card ${project.format === 'short' ? 'short-card' : 'long-card'} ${project.platform === 'instagram' ? 'instagram-card' : 'youtube-card'}`}>
     <button type="button" className="project-thumb" onClick={() => onOpen(project)} aria-label={`${t('OPEN')} ${t(project.title)}`}>
       {thumbnail ? <img src={thumbnail} alt="" loading="lazy" /> : <div className="project-no-thumb"><XPIcon kind="video" size={42} /><span>{t(project.platform === 'instagram' ? 'ADD AN INSTAGRAM THUMBNAIL' : 'ADD A YOUTUBE VIDEO')}</span></div>}
@@ -195,7 +185,6 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: (project: 
     </div>
   </article>;
 }
-
 export function WorkContent({ actions }: { actions: ContentActions }) {
   const { t } = useLanguage();
   const [tab, setTab] = useState<'short' | 'long'>('short');
@@ -223,7 +212,6 @@ export function WorkContent({ actions }: { actions: ContentActions }) {
     )}
   </div>;
 }
-
 export function PlayerContent({ project, actions }: { project: Project; actions: ContentActions }) {
   const { t } = useLanguage();
   const youtubeEmbedUrl = project.platform === 'youtube' ? getYouTubeEmbedUrl(project.video) : null;
@@ -236,7 +224,6 @@ export function PlayerContent({ project, actions }: { project: Project; actions:
   const setupMessage = isInstagram
     ? 'Add a public Instagram Reel URL in data/projects.ts.'
     : 'Add a YouTube URL in data/projects.ts.';
-
   return <div className="player-window">
     <div className="player-header"><div className="player-file"><XPIcon kind="video" size={24} /><div><strong>{project.filename}</strong><span>{t(project.category)} / {t(project.title)}</span></div></div><span className="player-format">{platformLabel}</span></div>
     <div className={`video-stage ${isInstagram ? 'instagram-stage' : 'youtube-stage'} ${isShort ? 'vertical-stage' : ''}`}>
@@ -247,7 +234,6 @@ export function PlayerContent({ project, actions }: { project: Project; actions:
           className={`${isInstagram ? 'instagram-player' : 'youtube-player'} ${isShort ? 'vertical-player' : ''}`}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="origin"
-          scrolling="no"
           allowFullScreen
         />
       ) : (
@@ -258,7 +244,6 @@ export function PlayerContent({ project, actions }: { project: Project; actions:
     <div className="player-footer"><span>▶ {t('PLAYBACK READY')}</span><button type="button" className="xp-button compact" onClick={() => actions.notify(t('Project opened successfully.'))}>{t('READY')}</button></div>
   </div>;
 }
-
 export function AboutContent() {
   const { t } = useLanguage();
   return <div className="notepad">
@@ -267,7 +252,6 @@ export function AboutContent() {
     <textarea aria-label={t('About Me')} defaultValue={`CAPIMASO\n${t(profile.role)}\n\n${t(profile.bio)}`} />
   </div>;
 }
-
 export function SkillsContent() {
   const { t } = useLanguage();
   return <div className="system-properties">
@@ -276,7 +260,6 @@ export function SkillsContent() {
     <div className="skills-list">{skills.map((skill) => <div key={skill.name} className="skill-row"><XPIcon kind="program" size={34} /><div className="skill-main"><strong>{skill.name}</strong><span>{t(skill.category)} · {t(skill.description)}</span></div><span className="skill-specialty">{t(skill.specialty)}</span></div>)}</div>
   </div>;
 }
-
 export function ServicesContent() {
   const { t } = useLanguage();
   return <div className="services-app">
@@ -290,7 +273,6 @@ export function ServicesContent() {
     <div className="long-form-box"><div><span className="strip-label">{t('LONG FORM')}</span><strong>{longFormPricing.startingPrice}</strong><p>{t(longFormPricing.note)}</p></div><span className="custom-quote-tag">{t('CUSTOM QUOTE')}</span></div>
   </div>;
 }
-
 export function ContactContent({ actions }: { actions: ContentActions }) {
   const { t } = useLanguage();
   const copy = async (value: string) => {
@@ -304,15 +286,13 @@ export function ContactContent({ actions }: { actions: ContentActions }) {
   return <div className="outlook">
     <div className="outlook-brand"><div className="mail-logo"><XPIcon kind="mail" size={42} /></div><div><strong>OUTLOOK EXPRESS</strong><span>CAPIMASO MAILBOX</span></div></div>
     <div className="outlook-banner"><span>{t('LET\'S WORK TOGETHER')}</span><small>{t('For projects, availability and editing requests.')}</small></div>
-    <div className="contact-list">{socials.map((social) => <div className="contact-row" key={social.id}><div className="contact-label"><XPIcon kind="mail" size={26} /><strong>{t(social.name)}</strong></div><code>{social.value}</code><div className="contact-actions"><button type="button" className="xp-button compact" onClick={() => openSocial(social.href, social.value)}>{t('OPEN')}</button>{social.copyable && <button type="button" className="xp-button compact" onClick={() => copy(social.value)}>{t('COPY')}</button>}</div></div>)}</div>
+    <div className="contact-list">{socials.map((social) => <div className="contact-row" key={social.id}><div className="contact-label"><XPIcon kind="mail" size={26} /><strong>{t(social.name)}</strong></div><code>{social.value}</code><div className="contact-actions">{social.href && <button type="button" className="xp-button compact" onClick={() => openSocial(social.href!, social.value)}>{t('OPEN')}</button>}<button type="button" className="xp-button compact" onClick={() => copy(social.value)}>{t('COPY')}</button></div></div>)}</div>
   </div>;
 }
-
 export function RecycleContent() {
   const { t } = useLanguage();
   return <div className="recycle-content"><XPIcon kind="recycle" size={70} /><div><h2>{t('RECYCLE BIN')}</h2><p>{t('Nothing interesting here.')}</p><span>{t('0 objects')}</span></div><div className="recycle-joke">{t('Maybe later.')}</div></div>;
 }
-
 export function PropertiesContent() {
   const { t } = useLanguage();
   return <div className="properties-dialog"><XPIcon kind="computer" size={70} /><div><h2>{t('CAPIMASO SYSTEM')}</h2><p>{t('Personal video editing portfolio running locally in your browser.')}</p><div className="property-line"><span>{t('System')}</span><strong>CAPIMASO.EXE</strong></div><div className="property-line"><span>{t('Mode')}</span><strong>{t('PORTFOLIO')}</strong></div><div className="property-line"><span>{t('Media')}</span><strong>{t('LOCAL ASSETS')}</strong></div></div></div>;
