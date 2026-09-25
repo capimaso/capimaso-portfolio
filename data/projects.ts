@@ -36,7 +36,6 @@ export const projects: Project[] = [
     category: 'GAMING',
     description: 'Editei esse vídeo de graça como portfólio para uma amiga de longa data que faz live-streams.',
     software: ['Adobe Premiere Pro'],
-    thumbnail: '',
     video: 'https://www.youtube.com/watch?v=en9sRuniY1U&t=2s',
     format: 'long',
     platform: 'youtube'
@@ -48,7 +47,6 @@ export const projects: Project[] = [
     category: 'GAMING',
     description: 'Esse foi meu primeiro vídeo produzido, não sabia nem mudar a taxa de quadros e nem como exportar em alta qualidade, sempre que vejo ele, lembro o quanto aprendi desde então.',
     software: ['Adobe Premiere Pro'],
-    thumbnail: '',
     video: 'https://youtu.be/Mj67WzDsaP4',
     format: 'long',
     platform: 'youtube'
