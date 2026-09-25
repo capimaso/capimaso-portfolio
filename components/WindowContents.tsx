@@ -247,6 +247,7 @@ export function PlayerContent({ project, actions }: { project: Project; actions:
           className={`${isInstagram ? 'instagram-player' : 'youtube-player'} ${isShort ? 'vertical-player' : ''}`}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="origin"
+          scrolling="no"
           allowFullScreen
         />
       ) : (

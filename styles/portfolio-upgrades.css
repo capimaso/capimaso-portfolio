@@ -92,12 +92,14 @@
   background: linear-gradient(#fff, #eef4f7 48%, #dce5ea);
 }
 
-.youtube-stage {
+.youtube-stage,
+.instagram-stage {
   display: grid;
-  place-items: stretch;
+  place-items: center;
 }
 
-.youtube-player {
+.youtube-player,
+.instagram-player {
   width: 100%;
   height: 100%;
   display: block;
@@ -105,35 +107,44 @@
   background: #000;
 }
 
+/* Keep Shorts/Reels inside the same 16:9 player area instead of letting the
+   external embed decide its own huge dimensions. The vertical iframe is
+   centered and constrained by the stage height. */
 .vertical-stage {
-  min-height: 430px;
+  min-height: 0;
   display: grid;
   place-items: center;
   background: #0b1822;
+  overflow: hidden;
 }
 
 .vertical-player {
-  width: min(360px, 72%);
-  height: min(560px, 100%);
+  width: auto;
+  height: 100%;
+  max-width: 100%;
   aspect-ratio: 9 / 16;
+  flex: 0 0 auto;
 }
 
+/* Instagram's iframe has its own responsive document and can otherwise
+   overflow the portfolio window. Keep it within the stage and give it a
+   stable portrait viewport that works for public Reels. */
 .instagram-stage {
-  min-height: 430px;
-  display: grid;
-  place-items: center;
-  padding: 14px;
+  min-height: 0;
+  padding: 0;
   background: #0b1822;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .instagram-player {
-  width: min(540px, 100%);
-  height: min(720px, 100%);
-  min-height: 520px;
-  display: block;
-  border: 0;
-  background: #fff;
+  min-height: 0;
+}
+
+.instagram-stage.vertical-stage .instagram-player {
+  width: min(340px, 100%);
+  height: 100%;
+  max-width: 100%;
+  aspect-ratio: auto;
 }
 
 .thumb-platform {
@@ -217,11 +228,12 @@
   }
 
   .vertical-player {
-    width: min(300px, 80%);
+    width: auto;
+    height: 100%;
   }
 
-  .instagram-player {
-    width: min(540px, 100%);
-    min-height: 480px;
+  .instagram-stage.vertical-stage .instagram-player {
+    width: min(340px, 100%);
+    min-height: 0;
   }
 }
