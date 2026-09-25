@@ -281,7 +281,7 @@ export function ContactContent({ actions }: { actions: ContentActions }) {
   };
   const openSocial = (href: string, value: string) => {
     if (value.includes('YOUR_')) { actions.notify(t('Replace this placeholder in data/socials.ts first.')); return; }
-    if (href.startsWith('mailto:')) window.location.href = href; else window.open(href, '_blank', 'noopener,noreferrer');
+    window.location.href = href;
   };
   return <div className="outlook">
     <div className="outlook-brand"><div className="mail-logo"><XPIcon kind="mail" size={42} /></div><div><strong>OUTLOOK EXPRESS</strong><span>CAPIMASO MAILBOX</span></div></div>
