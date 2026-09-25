@@ -65,6 +65,24 @@ function getYouTubeThumbnail(url: string) {
   return id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : undefined;
 }
 
+function getInstagramEmbedUrl(url: string) {
+  if (!url) return null;
+  try {
+    const parsed = new URL(url);
+    const hostname = parsed.hostname.toLowerCase().replace(/^www\./, '');
+    if (hostname !== 'instagram.com') return null;
+
+    const match = parsed.pathname.match(/\/(?:[^/]+\/)?(reel|p|tv)\/([^/?#]+)\/?$/i);
+    if (!match) return null;
+
+    const kind = match[1].toLowerCase();
+    const id = match[2];
+    return `https://www.instagram.com/${kind}/${id}/embed/`;
+  } catch {
+    return null;
+  }
+}
+
 export function WelcomeContent({ actions }: { actions: ContentActions }) {
   const { t } = useLanguage();
   return (
@@ -97,7 +115,8 @@ export function WelcomeContent({ actions }: { actions: ContentActions }) {
               description: 'Replace the placeholder with your real showreel.',
               thumbnail: media.showreel.thumbnail,
               video: media.showreel.video,
-              format: 'long'
+              format: 'long',
+              platform: 'youtube'
             })}
           >
             <span>▶</span> {t('WATCH MY REEL')}
@@ -153,14 +172,21 @@ export function ComputerContent({ actions }: { actions: ContentActions }) {
 
 function ProjectCard({ project, onOpen }: { project: Project; onOpen: (project: Project) => void }) {
   const { t } = useLanguage();
-  const thumbnail = project.thumbnail ?? getYouTubeThumbnail(project.video);
-  return <article className={`project-card ${project.format === 'short' ? 'short-card' : 'long-card'}`}>
+  const thumbnail = project.thumbnail ?? (project.platform === 'youtube' ? getYouTubeThumbnail(project.video) : undefined);
+  const platformLabel = project.platform === 'instagram'
+    ? t('Instagram Reel')
+    : project.format === 'short'
+      ? t('YouTube Short')
+      : t('YouTube Video');
+
+  return <article className={`project-card ${project.format === 'short' ? 'short-card' : 'long-card'} ${project.platform === 'instagram' ? 'instagram-card' : 'youtube-card'}`}>
     <button type="button" className="project-thumb" onClick={() => onOpen(project)} aria-label={`${t('OPEN')} ${t(project.title)}`}>
-      {thumbnail ? <img src={thumbnail} alt="" loading="lazy" /> : <div className="project-no-thumb"><XPIcon kind="video" size={42} /><span>{t('ADD A YOUTUBE VIDEO')}</span></div>}
+      {thumbnail ? <img src={thumbnail} alt="" loading="lazy" /> : <div className="project-no-thumb"><XPIcon kind="video" size={42} /><span>{t(project.platform === 'instagram' ? 'ADD AN INSTAGRAM THUMBNAIL' : 'ADD A YOUTUBE VIDEO')}</span></div>}
+      <span className="thumb-platform">{project.platform === 'instagram' ? 'IG' : 'YT'}</span>
       <span className="thumb-play">▶</span>
     </button>
     <div className="project-meta">
-      <div className="project-file"><XPIcon kind="video" size={22} /><span>{project.format === 'short' ? t('YouTube Short') : t('YouTube Video')}</span></div>
+      <div className="project-file"><XPIcon kind="video" size={22} /><span>{platformLabel}</span></div>
       <span className="project-category">{t(project.category)}</span>
       <h3>{t(project.title)}</h3>
       <p>{t(project.description)}</p>
@@ -193,22 +219,38 @@ export function WorkContent({ actions }: { actions: ContentActions }) {
         {visibleProjects.map((project) => <ProjectCard key={project.id} project={project} onOpen={(item) => actions.open('player', item)} />)}
       </div>
     ) : (
-      <div className="work-empty"><XPIcon kind="folder" size={48} /><strong>{t(tab === 'short' ? 'NO SHORT VIDEOS YET' : 'NO LONG VIDEOS YET')}</strong><span>{t('Add entries in data/projects.ts and paste your YouTube link in the video field.')}</span></div>
+      <div className="work-empty"><XPIcon kind="folder" size={48} /><strong>{t(tab === 'short' ? 'NO SHORT VIDEOS YET' : 'NO LONG VIDEOS YET')}</strong><span>{t('Add entries in data/projects.ts and paste a YouTube or Instagram link in the video field.')}</span></div>
     )}
   </div>;
 }
 
 export function PlayerContent({ project, actions }: { project: Project; actions: ContentActions }) {
   const { t } = useLanguage();
-  const embedUrl = getYouTubeEmbedUrl(project.video);
+  const youtubeEmbedUrl = project.platform === 'youtube' ? getYouTubeEmbedUrl(project.video) : null;
+  const instagramEmbedUrl = project.platform === 'instagram' ? getInstagramEmbedUrl(project.video) : null;
   const isShort = project.format === 'short';
+  const isInstagram = project.platform === 'instagram';
+  const embedUrl = isInstagram ? instagramEmbedUrl : youtubeEmbedUrl;
+  const platformLabel = isInstagram ? 'INSTAGRAM' : 'YOUTUBE';
+  const missingMessage = isInstagram ? 'INSTAGRAM LINK NOT CONFIGURED' : 'YOUTUBE LINK NOT CONFIGURED';
+  const setupMessage = isInstagram
+    ? 'Add a public Instagram Reel URL in data/projects.ts.'
+    : 'Add a YouTube URL in data/projects.ts.';
+
   return <div className="player-window">
-    <div className="player-header"><div className="player-file"><XPIcon kind="video" size={24} /><div><strong>{project.filename}</strong><span>{t(project.category)} / {t(project.title)}</span></div></div><span className="player-format">YOUTUBE</span></div>
-    <div className={`video-stage youtube-stage ${isShort ? 'youtube-stage-short' : ''}`}>
+    <div className="player-header"><div className="player-file"><XPIcon kind="video" size={24} /><div><strong>{project.filename}</strong><span>{t(project.category)} / {t(project.title)}</span></div></div><span className="player-format">{platformLabel}</span></div>
+    <div className={`video-stage ${isInstagram ? 'instagram-stage' : 'youtube-stage'} ${isShort ? 'vertical-stage' : ''}`}>
       {embedUrl ? (
-        <iframe src={embedUrl} title={project.title} className={`youtube-player ${isShort ? 'youtube-player-short' : ''}`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
+        <iframe
+          src={embedUrl}
+          title={project.title}
+          className={`${isInstagram ? 'instagram-player' : 'youtube-player'} ${isShort ? 'vertical-player' : ''}`}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="origin"
+          allowFullScreen
+        />
       ) : (
-        <div className="youtube-unconfigured"><XPIcon kind="video" size={52} /><strong>{t('YOUTUBE LINK NOT CONFIGURED')}</strong><span>{t('Add a YouTube URL in data/projects.ts.')}</span></div>
+        <div className="youtube-unconfigured"><XPIcon kind="video" size={52} /><strong>{t(missingMessage)}</strong><span>{t(setupMessage)}</span></div>
       )}
     </div>
     <div className="player-info"><div><span>{t('DESCRIPTION')}</span><p>{t(project.description)}</p></div><div><span>{t('SOFTWARE')}</span><p>{project.software.join(' / ')}</p></div></div>

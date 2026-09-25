@@ -130,7 +130,7 @@ export default function Desktop() {
       case 'contact': return <ContactContent actions={actions} />;
       case 'recycle': return <RecycleContent />;
       case 'properties': return <PropertiesContent />;
-      case 'player': return <PlayerContent project={selectedProject ?? { id: 'showreel', filename: 'CAPIMASO_REEL', title: 'CAPIMASO REEL', category: 'SHOWREEL', description: 'Replace the placeholder with your real showreel.', software: ['Your software here'], thumbnail: media.showreel.thumbnail, video: media.showreel.video, format: 'long' }} actions={actions} />;
+      case 'player': return <PlayerContent project={selectedProject ?? { id: 'showreel', filename: 'CAPIMASO_REEL', title: 'CAPIMASO REEL', category: 'SHOWREEL', description: 'Replace the placeholder with your real showreel.', software: ['Your software here'], thumbnail: media.showreel.thumbnail, video: media.showreel.video, format: 'long', platform: 'youtube' }} actions={actions} />;
     }
   };
 

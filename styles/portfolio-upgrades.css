@@ -1,4 +1,4 @@
-/* YouTube project browser + language switcher upgrades. */
+/* YouTube + Instagram project browser + language switcher upgrades. */
 
 .work-tabs {
   display: flex;
@@ -105,18 +105,59 @@
   background: #000;
 }
 
-.youtube-stage-short {
-  aspect-ratio: auto;
+.vertical-stage {
   min-height: 430px;
   display: grid;
   place-items: center;
   background: #0b1822;
 }
 
-.youtube-player-short {
+.vertical-player {
   width: min(360px, 72%);
   height: min(560px, 100%);
   aspect-ratio: 9 / 16;
+}
+
+.instagram-stage {
+  min-height: 430px;
+  display: grid;
+  place-items: center;
+  padding: 14px;
+  background: #0b1822;
+  overflow: auto;
+}
+
+.instagram-player {
+  width: min(540px, 100%);
+  height: min(720px, 100%);
+  min-height: 520px;
+  display: block;
+  border: 0;
+  background: #fff;
+}
+
+.thumb-platform {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  z-index: 2;
+  min-width: 25px;
+  padding: 3px 5px;
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 3px;
+  background: rgba(0,0,0,.68);
+  color: #fff;
+  font: 800 9px Tahoma, sans-serif;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,.35);
+}
+
+.instagram-card .project-thumb img,
+.youtube-card .project-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .youtube-unconfigured {
@@ -175,7 +216,12 @@
     padding: 8px;
   }
 
-  .youtube-player-short {
+  .vertical-player {
     width: min(300px, 80%);
+  }
+
+  .instagram-player {
+    width: min(540px, 100%);
+    min-height: 480px;
   }
 }
