@@ -24,7 +24,7 @@ export const projects: Project[] = [
     category: 'GAMING',
     description: 'Minha primeira edição em vídeos curtos, foram 2 dias para pensar na parte criativa e editar.',
     software: ['Adobe Premiere Pro'],
-    thumbnail: '/images/scarfaceThumb.svg',
+    thumbnail: '/images/scarfaceThumb.png',
     video: 'https://www.instagram.com/reel/Ddo2T6JTP51/?stkn=MzRlODBiNWFlZA==',
     format: 'short',
     platform: 'instagram'
