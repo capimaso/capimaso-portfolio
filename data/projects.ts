@@ -32,7 +32,7 @@ export const projects: Project[] = [
   {
     id: 'megluh-video',
     filename: 'MEGLUUH',
-    title: 'Creator Content',
+    title: 'A tríade do caos: Huntress, Nurse e Billy - Dead by Daylight',
     category: 'GAMING',
     description: 'Editei esse vídeo de graça como portfólio para uma amiga de longa data que faz live-streams.',
     software: ['Adobe Premiere Pro'],
