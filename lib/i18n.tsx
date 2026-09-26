@@ -206,7 +206,7 @@ const LanguageContext = createContext<{
 } | null>(null);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('pt-BR');
+  const [language, setLanguageState] = useState<Language>('en');
 
   useEffect(() => {
     const saved = window.localStorage.getItem('capimaso-language');
