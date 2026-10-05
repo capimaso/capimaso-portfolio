@@ -67,6 +67,9 @@ The visual language mixes **Windows-era UI ideas, Y2K computing, early internet 
 | 🖥️ Interactive Desktop | Desktop-based portfolio navigation |
 | 🪟 Window Manager | Open, close, minimize, maximize, focus and drag windows |
 | ▶️ Video Player | Local video playback with project metadata |
+| 🖼️ Thumbnails Tab | `My Work` has a THUMBNAILS tab that shows every image in `public/images/thumbs/` automatically |
+| 🔍 Image Viewer | Click a thumbnail to open it larger in its own window, with just the image |
+| 📝 Guestbook | Orkut-style comments with photo, name and a clickable profile link, below `My Portfolio` |
 | 📁 File Explorer | Portfolio sections presented as folders/files |
 | 🟦 Start Menu | Central navigation inspired by classic desktop systems |
 | 🔌 Boot Sequence | Short startup animation with skip control |
@@ -88,7 +91,8 @@ C:\CAPIMASO\
 │   ├── 02_SHORT_FORM.mp4
 │   ├── 03_LONG_FORM.mp4
 │   ├── 04_MOTION_GRAPHICS.mp4
-│   └── 05_CREATOR_CONTENT.mp4
+│   ├── 05_CREATOR_CONTENT.mp4
+│   └── THUMBNAILS (every image in public/images/thumbs/)
 │
 ├── ABOUT
 ├── SKILLS
@@ -139,19 +143,25 @@ capimaso-portfolio/
 │   ├── services.ts
 │   ├── skills.ts
 │   ├── socials.ts
-│   └── media.ts
+│   ├── media.ts
+│   └── comments.ts
 │
 ├── lib/
-│   └── types.ts
+│   ├── types.ts
+│   ├── i18n.tsx
+│   └── thumbnails.ts
 │
 ├── public/
 │   ├── images/
+│   │   ├── thumbs/      ← drop thumbnails here
+│   │   └── avatars/     ← drop comment photos here
 │   ├── videos/
 │   ├── icons/
 │   └── sounds/
 │
 ├── styles/
-│   └── globals.css
+│   ├── globals.css
+│   └── portfolio-upgrades.css
 │
 ├── package.json
 ├── next.config.ts
@@ -206,6 +216,7 @@ The most important content files are all inside `data/`.
 | `data/skills.ts` | Editing software and specialties |
 | `data/socials.ts` | Email, Instagram, Discord, YouTube and other contact links |
 | `data/media.ts` | Showreel and RAW → FINAL media slots |
+| `data/comments.ts` | Guestbook comments: name, photo, comment text and profile link |
 
 ### 🎬 Project videos + thumbnails
 
@@ -234,6 +245,57 @@ project-creator.svg → Creator Content thumbnail
 ```
 
 You can either replace those files while keeping their names or change the path in `data/projects.ts`.
+
+### 🖼️ Thumbnails tab
+
+`My Work` has a third tab, **THUMBNAILS**. It lists **every image** found in:
+
+```text
+public/images/thumbs/
+```
+
+No code changes needed: put an image in that folder and it shows up.
+
+- Supported formats: `.png`, `.jpg`, `.jpeg`, `.webp`, `.gif`, `.avif`, `.svg`, `.bmp`.
+- Clicking a thumbnail opens it in a separate **Image Viewer** window (draggable, minimizable, maximizable) that shows only the image.
+- Order is alphabetical by file name (numbers are sorted naturally). To control the order, prefix the names: `01-first.png`, `02-second.png`, `10-tenth.png`.
+- The folder is read when the site is built / when the dev server renders the page. In `npm run dev` just refresh the page; in production, push the new images to GitHub and Vercel redeploys.
+- The file name is shown under each thumbnail, so name the files the way you want them to appear.
+
+### 📝 Comments / Guestbook (My Portfolio)
+
+The window opened by **My Portfolio** has an Orkut-style guestbook at the bottom (scroll down inside the window). All comments live in a single easy file:
+
+```text
+data/comments.ts
+```
+
+Each comment looks like this:
+
+```ts
+{
+  id: 'ana',                                  // any unique text
+  name: 'Ana Souza',                          // name shown on the comment
+  avatar: 'ana.jpg',                          // file in public/images/avatars/
+  comment: 'Great editor, delivered before the deadline!',
+  link: 'https://youtube.com/@ana',           // where the name goes when clicked
+  date: '05/10/2026'                          // optional
+}
+```
+
+Steps to add a person:
+
+1. Upload their photo to `public/images/avatars/` (for example `ana.jpg`).
+2. Add a new block to the `comments` list in `data/comments.ts` (newest first = top of the list).
+3. Set `link` to their real profile (YouTube, Instagram, X, TikTok, etc.). Clicking the name opens it in a new tab.
+
+Details:
+
+- `avatar` can also be a full URL (`https://...`) or a path starting with `/`. If it is empty or the file is missing, the default silhouette icon is shown.
+- If `link` is empty the name is just plain text. Only `http://` and `https://` links are accepted.
+- A small badge (YouTube, Instagram, X / Twitter, TikTok, Twitch, Discord) is added automatically based on the link.
+- Comment text is shown exactly as you write it. Line breaks (`\n`) are kept.
+- Use comments from real people who agreed to be shown, with their own name, photo and link.
 
 ### 📼 Showreel
 
@@ -356,6 +418,9 @@ MAXIMIZE / RESTORE  OK
 TASKBAR ........... OK
 START MENU ........ OK
 VIDEO PLAYER ...... OK
+THUMBNAILS ........ OK
+IMAGE VIEWER ...... OK
+GUESTBOOK ......... OK
 RESPONSIVE ........ OK
 SEO ............... OK
 

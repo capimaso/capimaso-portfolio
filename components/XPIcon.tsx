@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 
-type IconKind = 'computer' | 'folder' | 'video' | 'user' | 'gear' | 'service' | 'mail' | 'recycle' | 'program' | 'file' | 'play' | 'start';
+type IconKind = 'computer' | 'folder' | 'video' | 'user' | 'gear' | 'service' | 'mail' | 'recycle' | 'program' | 'file' | 'play' | 'start' | 'image';
 
 export default function XPIcon({ kind, size = 44 }: { kind: IconKind; size?: number }) {
   const common = { width: size, height: size, viewBox: '0 0 48 48', 'aria-hidden': true };
@@ -18,6 +18,7 @@ export default function XPIcon({ kind, size = 44 }: { kind: IconKind; size?: num
   if (kind === 'mail') return <svg {...common}><rect x="5" y="9" width="38" height="30" rx="4" fill="#edf5fb" stroke={stroke}/><path d="m7 13 17 14 17-14" fill="none" stroke="#4c7b9e" strokeWidth="2"/><path d="m7 35 13-11M41 35 28 24" fill="none" stroke="#4c7b9e"/></svg>;
   if (kind === 'recycle') return <svg {...common}><path d="m17 10 5-5 4 5M19 10h14" fill="none" stroke="#1f516e" strokeWidth="2"/><path d="M13 14h22l-2 27H15l-2-27Z" fill="#c8d5dc" stroke={stroke}/><path d="M19 19v16M24 19v16M29 19v16" stroke="#8096a6" strokeWidth="3"/></svg>;
   if (kind === 'program') return <svg {...common}><rect x="6" y="8" width="36" height="31" rx="4" fill="#f3f5f7" stroke={stroke}/><rect x="6" y="8" width="36" height="7" rx="4" fill="#2b78af"/><circle cx="11" cy="11.5" r="1.5" fill="#fff"/><circle cx="16" cy="11.5" r="1.5" fill="#fff"/><rect x="12" y="21" width="24" height="3" rx="1.5" fill="#b7c4ce"/><rect x="12" y="27" width="18" height="3" rx="1.5" fill="#d0d8de"/></svg>;
+  if (kind === 'image') return <svg {...common}><rect x="4" y="8" width="40" height="32" rx="3" fill="#f4f9fd" stroke={stroke}/><rect x="8" y="12" width="32" height="24" fill="#8fd0f5"/><circle cx="31" cy="19" r="4" fill="#ffe27a" stroke="#c49f32" strokeWidth=".8"/><path d="m8 36 11-13 8 9 5-5 8 9Z" fill="#3f9a56" stroke={stroke} strokeLinejoin="round"/></svg>;
   if (kind === 'file') return <svg {...common}><path d="M10 4h18l10 10v30H10z" fill="#f0f2f3" stroke={stroke}/><path d="M28 4v11h10" fill="#d4dce2" stroke={stroke}/><path d="M15 25h18M15 31h15M15 37h10" stroke="#5d7181" strokeWidth="2"/></svg>;
   return <motion.svg {...common} whileHover={{ scale: 1.06 }}><rect x="5" y="8" width="38" height="32" rx="4" fill="#101f2c" stroke="#8ed4ff"/><path d="m20 16 14 8-14 8z" fill="#8ed4ff"/></motion.svg>;
 }

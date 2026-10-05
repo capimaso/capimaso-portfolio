@@ -8,12 +8,13 @@ export type WindowId =
   | 'contact'
   | 'recycle'
   | 'properties'
-  | 'player';
+  | 'player'
+  | 'viewer';
 
 export type WindowState = {
   id: WindowId;
   title: string;
-  icon: 'computer' | 'folder' | 'video' | 'user' | 'gear' | 'service' | 'mail' | 'recycle' | 'program' | 'file' | 'play';
+  icon: 'computer' | 'folder' | 'video' | 'user' | 'gear' | 'service' | 'mail' | 'recycle' | 'program' | 'file' | 'play' | 'image';
   open: boolean;
   minimized: boolean;
   maximized: boolean;

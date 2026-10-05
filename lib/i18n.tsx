@@ -196,7 +196,19 @@ const ptBR: TranslationTable = {
   'VIDEOS': 'VÍDEOS',
   "Hi, my name is Tiago, but online I’m better known as capimaso. I’m a video editor who has been editing for a short time and I’m always eager to learn new things and improve with every project.\n\nI’m especially looking to work with people in gaming and creator content, creating dynamic videos while continuing to develop my skills. I mainly edit with Adobe Premiere Pro, and also use After Effects and Photoshop when needed.\n\nIf you need me, just reach out.": "Oi, meu nome é Tiago, mas online sou mais conhecido como capimaso. Sou editor de vídeo e venho editando há pouco tempo, sempre buscando aprender coisas novas e melhorar a cada projeto.\n\nQuero trabalhar principalmente com pessoas de gaming e conteúdo para criadores, produzindo vídeos dinâmicos enquanto continuo desenvolvendo minhas habilidades. Trabalho principalmente com Adobe Premiere Pro e também uso After Effects e Photoshop quando necessário.\n\nSe precisar de mim, é só chamar.",
   'Português': 'Português',
-  'English': 'English'
+  'English': 'English',
+  'THUMBNAILS': 'THUMBNAILS',
+  'IMAGE FILE': 'ARQUIVO DE IMAGEM',
+  'IMAGE FILES': 'ARQUIVOS DE IMAGEM',
+  'NO THUMBNAILS YET': 'NENHUMA THUMBNAIL AINDA',
+  'Drop images into public/images/thumbs/ and they will appear here automatically.': 'Coloque imagens em public/images/thumbs/ e elas aparecem aqui automaticamente.',
+  'Image Viewer': 'Visualizador de Imagens',
+  'Image opened.': 'Imagem aberta.',
+  'GUESTBOOK': 'LIVRO DE RECADOS',
+  'comment': 'recado',
+  'comments': 'recados',
+  'NO COMMENTS YET': 'NENHUM RECADO AINDA',
+  'Add comments in data/comments.ts.': 'Adicione recados em data/comments.ts.'
 };
 
 const LanguageContext = createContext<{

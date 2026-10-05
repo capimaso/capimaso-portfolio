@@ -28,7 +28,7 @@ export default function Taskbar({
       <div className="taskbar-apps" aria-label="Open applications">
         {openWindows.map((item) => (
           <button key={item.id} type="button" className={`task-button ${item.minimized ? 'minimized' : ''}`} onClick={() => onTaskClick(item.id)}>
-            <XPIcon kind="program" size={19} /><span>{t(item.title)}</span>
+            <XPIcon kind={item.icon} size={19} /><span>{t(item.title)}</span>
           </button>
         ))}
       </div>

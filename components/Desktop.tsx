@@ -4,13 +4,14 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ComponentProps,
 import type { Project } from '@/data/projects';
 import type { WindowId, WindowState } from '@/lib/types';
 import { media } from '@/data/media';
+import type { ThumbnailImage } from '@/lib/thumbnails';
 import Window from './Window';
 import Taskbar from './Taskbar';
 import StartMenu from './StartMenu';
 import Notifications, { type Notice } from './Notifications';
 import XPIcon from './XPIcon';
 import { useLanguage } from '@/lib/i18n';
-import { AboutContent, ComputerContent, ContactContent, type ContentActions, PlayerContent, PropertiesContent, RecycleContent, ServicesContent, SkillsContent, WelcomeContent, WorkContent } from './WindowContents';
+import { AboutContent, ComputerContent, ContactContent, type ContentActions, ImageViewerContent, PlayerContent, PropertiesContent, RecycleContent, ServicesContent, SkillsContent, WelcomeContent, WorkContent } from './WindowContents';
 
 const desktopIcons: Array<{ id: WindowId | 'portfolio'; label: string; icon: ComponentProps<typeof XPIcon>['kind']; title: string }> = [
   { id: 'computer', label: 'My Computer', icon: 'computer', title: 'My Computer' },
@@ -33,10 +34,11 @@ const initialWindows: WindowState[] = [
   { id: 'contact', title: 'OUTLOOK EXPRESS', icon: 'mail', open: false, minimized: false, maximized: false, zIndex: 10, x: 310, y: 120, width: 720, height: 510 },
   { id: 'recycle', title: 'Recycle Bin', icon: 'recycle', open: false, minimized: false, maximized: false, zIndex: 10, x: 430, y: 175, width: 500, height: 340 },
   { id: 'properties', title: 'Properties', icon: 'computer', open: false, minimized: false, maximized: false, zIndex: 10, x: 470, y: 190, width: 480, height: 340 },
-  { id: 'player', title: 'Media Player', icon: 'video', open: false, minimized: false, maximized: false, zIndex: 10, x: 190, y: 100, width: 820, height: 560 }
+  { id: 'player', title: 'Media Player', icon: 'video', open: false, minimized: false, maximized: false, zIndex: 10, x: 190, y: 100, width: 820, height: 560 },
+  { id: 'viewer', title: 'Image Viewer', icon: 'image', open: false, minimized: false, maximized: false, zIndex: 10, x: 150, y: 60, width: 900, height: 620 }
 ];
 
-export default function Desktop() {
+export default function Desktop({ thumbnails = [] }: { thumbnails?: ThumbnailImage[] }) {
   const { t } = useLanguage();
   const [booting, setBooting] = useState(true);
   const [bootProgress, setBootProgress] = useState(0);
@@ -46,6 +48,7 @@ export default function Desktop() {
   const noticeSeed = useRef(0);
   const [notices, setNotices] = useState<Notice[]>([]);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedImage, setSelectedImage] = useState<ThumbnailImage | null>(null);
   const [windows, setWindows] = useState<WindowState[]>(initialWindows);
 
   useEffect(() => {
@@ -93,10 +96,16 @@ export default function Desktop() {
     });
     const labels: Record<WindowId, string> = {
       welcome: 'CAPIMASO.EXE opened.', computer: 'My Computer opened.', work: 'My Work opened.', about: 'ABOUT_ME.txt opened.',
-      skills: 'System Properties opened.', services: 'CAPIMASO services loaded.', contact: 'Outlook Express opened.', recycle: 'Recycle Bin opened.', properties: 'Properties opened.', player: 'Project opened.'
+      skills: 'System Properties opened.', services: 'CAPIMASO services loaded.', contact: 'Outlook Express opened.', recycle: 'Recycle Bin opened.', properties: 'Properties opened.', player: 'Project opened.', viewer: 'Image opened.'
     };
     notify(t(labels[id]));
   }, [mobile, notify, t]);
+
+  const viewImage = useCallback((image: ThumbnailImage) => {
+    setSelectedImage(image);
+    setWindows((items) => items.map((item) => item.id === 'viewer' ? { ...item, title: image.name } : item));
+    openWindow('viewer');
+  }, [openWindow]);
 
   const closeWindow = useCallback((id: WindowId) => setWindows((items) => items.map((item) => item.id === id ? { ...item, open: false, minimized: false } : item)), []);
   const minimizeWindow = useCallback((id: WindowId) => setWindows((items) => items.map((item) => item.id === id ? { ...item, minimized: true } : item)), []);
@@ -117,19 +126,20 @@ export default function Desktop() {
     setContextMenu({ x: Math.min(event.clientX, window.innerWidth - 190), y: Math.min(event.clientY, window.innerHeight - 190) });
   };
   const refresh = () => { setContextMenu(null); window.location.reload(); };
-  const actions: ContentActions = useMemo(() => ({ open: openWindow, notify }), [openWindow, notify]);
+  const actions: ContentActions = useMemo(() => ({ open: openWindow, notify, viewImage }), [openWindow, notify, viewImage]);
 
   const contentFor = (id: WindowId) => {
     switch (id) {
       case 'welcome': return <WelcomeContent actions={actions} />;
       case 'computer': return <ComputerContent actions={actions} />;
-      case 'work': return <WorkContent actions={actions} />;
+      case 'work': return <WorkContent actions={actions} thumbnails={thumbnails} />;
       case 'about': return <AboutContent />;
       case 'skills': return <SkillsContent />;
       case 'services': return <ServicesContent />;
       case 'contact': return <ContactContent actions={actions} />;
       case 'recycle': return <RecycleContent />;
       case 'properties': return <PropertiesContent />;
+      case 'viewer': return <ImageViewerContent image={selectedImage} />;
       case 'player': return <PlayerContent project={selectedProject ?? { id: 'showreel', filename: 'CAPIMASO_REEL', title: 'CAPIMASO REEL', category: 'SHOWREEL', description: 'Replace the placeholder with your real showreel.', software: ['Your software here'], thumbnail: media.showreel.thumbnail, video: media.showreel.video, format: 'long', platform: 'youtube' }} actions={actions} />;
     }
   };

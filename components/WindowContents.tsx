@@ -9,10 +9,14 @@ import { longFormPricing, services, shortPackages } from '@/data/services';
 import { media } from '@/data/media';
 import { socials } from '@/data/socials';
 import { skills } from '@/data/skills';
+import { comments, type Comment } from '@/data/comments';
+import type { ThumbnailImage } from '@/lib/thumbnails';
+import type { WindowId } from '@/lib/types';
 import { useLanguage } from '@/lib/i18n';
 export type ContentActions = {
-  open: (id: 'welcome' | 'computer' | 'work' | 'about' | 'skills' | 'services' | 'contact' | 'recycle' | 'properties' | 'player', payload?: Project) => void;
+  open: (id: WindowId, payload?: Project) => void;
   notify: (message: string) => void;
+  viewImage: (image: ThumbnailImage) => void;
 };
 
 function Toolbar({ items }: { items: string[] }) {
@@ -76,6 +80,68 @@ function getInstagramEmbedUrl(url: string) {
     return null;
   }
 }
+const SAFE_URL = /^https?:\/\//i;
+const PLATFORM_BY_HOST: Array<[RegExp, string]> = [
+  [/(^|\.)youtube\.com$|(^|\.)youtu\.be$/, 'YouTube'],
+  [/(^|\.)instagram\.com$/, 'Instagram'],
+  [/(^|\.)(twitter|x)\.com$/, 'X / Twitter'],
+  [/(^|\.)tiktok\.com$/, 'TikTok'],
+  [/(^|\.)twitch\.tv$/, 'Twitch'],
+  [/(^|\.)discord\.(gg|com)$/, 'Discord'],
+  [/(^|\.)orkut\.com$/, 'Orkut']
+];
+function getPlatformLabel(link?: string) {
+  if (!link || !SAFE_URL.test(link)) return null;
+  try {
+    const host = new URL(link).hostname.toLowerCase();
+    return PLATFORM_BY_HOST.find(([pattern]) => pattern.test(host))?.[1] ?? null;
+  } catch {
+    return null;
+  }
+}
+function resolveAvatar(avatar?: string) {
+  if (!avatar) return null;
+  if (avatar.startsWith('/') || /^https?:\/\//i.test(avatar)) return avatar;
+  return `/images/avatars/${encodeURIComponent(avatar)}`;
+}
+function Avatar({ name, avatar }: { name: string; avatar?: string }) {
+  const [failed, setFailed] = useState(false);
+  const src = resolveAvatar(avatar);
+  return <div className="guest-avatar">
+    {src && !failed ? <img src={src} alt={name} loading="lazy" onError={() => setFailed(true)} /> : <XPIcon kind="user" size={40} />}
+  </div>;
+}
+function GuestbookEntry({ entry }: { entry: Comment }) {
+  const hasLink = Boolean(entry.link && SAFE_URL.test(entry.link));
+  const platform = getPlatformLabel(entry.link);
+  return <li className="guest-entry">
+    <Avatar name={entry.name} avatar={entry.avatar} />
+    <div className="guest-body">
+      <div className="guest-head">
+        {hasLink
+          ? <a className="guest-name" href={entry.link} target="_blank" rel="noopener noreferrer nofollow">{entry.name}</a>
+          : <strong className="guest-name">{entry.name}</strong>}
+        {platform && <span className="guest-platform">{platform}</span>}
+        {entry.date && <span className="guest-date">{entry.date}</span>}
+      </div>
+      <p className="guest-text">{entry.comment}</p>
+    </div>
+  </li>;
+}
+function Guestbook() {
+  const { t } = useLanguage();
+  return <section className="guestbook" aria-label={t('GUESTBOOK')}>
+    <div className="guestbook-head">
+      <span className="guestbook-title"><XPIcon kind="mail" size={20} /> {t('GUESTBOOK')}</span>
+      <span className="guestbook-count">{comments.length} {comments.length === 1 ? t('comment') : t('comments')}</span>
+    </div>
+    {comments.length > 0 ? (
+      <ul className="guest-list">{comments.map((entry) => <GuestbookEntry key={entry.id} entry={entry} />)}</ul>
+    ) : (
+      <div className="guest-empty"><XPIcon kind="user" size={36} /><strong>{t('NO COMMENTS YET')}</strong><span>{t('Add comments in data/comments.ts.')}</span></div>
+    )}
+  </section>;
+}
 export function WelcomeContent({ actions }: { actions: ContentActions }) {
   const { t } = useLanguage();
   return (
@@ -124,6 +190,7 @@ export function WelcomeContent({ actions }: { actions: ContentActions }) {
         <div><span className="strip-label">{t('SYSTEM')}</span><strong>CAPIMASO / 200X</strong></div>
         <div><span className="strip-label">{t('MEDIA')}</span><strong>{t('VIDEO / DIGITAL')}</strong></div>
       </div>
+      <Guestbook />
     </div>
   );
 }
@@ -185,15 +252,36 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: (project: 
     </div>
   </article>;
 }
-export function WorkContent({ actions }: { actions: ContentActions }) {
+function ThumbnailsGrid({ thumbnails, onOpen }: { thumbnails: ThumbnailImage[]; onOpen: (image: ThumbnailImage) => void }) {
   const { t } = useLanguage();
-  const [tab, setTab] = useState<'short' | 'long'>('short');
+  if (thumbnails.length === 0) {
+    return <div className="work-empty"><XPIcon kind="image" size={48} /><strong>{t('NO THUMBNAILS YET')}</strong><span>{t('Drop images into public/images/thumbs/ and they will appear here automatically.')}</span></div>;
+  }
+  return <div className="thumbs-grid">
+    {thumbnails.map((image) => (
+      <button key={image.src} type="button" className="thumb-item" onClick={() => onOpen(image)} title={image.name} aria-label={`${t('OPEN')} ${image.name}`}>
+        <span className="thumb-frame"><img src={image.src} alt="" loading="lazy" /></span>
+        <span className="thumb-name">{image.name}</span>
+      </button>
+    ))}
+  </div>;
+}
+export function ImageViewerContent({ image }: { image: ThumbnailImage | null }) {
+  const { t } = useLanguage();
+  if (!image) return <div className="image-viewer image-viewer-empty">{t('NO THUMBNAILS YET')}</div>;
+  return <div className="image-viewer"><img key={image.src} src={image.src} alt={image.name} /></div>;
+}
+export function WorkContent({ actions, thumbnails = [] }: { actions: ContentActions; thumbnails?: ThumbnailImage[] }) {
+  const { t } = useLanguage();
+  const [tab, setTab] = useState<'short' | 'long' | 'thumbs'>('short');
+  const showingThumbs = tab === 'thumbs';
   const visibleProjects = projects.filter((project) => project.format === tab);
+  const itemCount = showingThumbs ? thumbnails.length : visibleProjects.length;
   return <div className="work-browser">
     <Toolbar items={['File', 'Edit', 'View', 'Sort', 'Window']} />
     <div className="browser-head">
       <div><p className="eyebrow">C:\CAPIMASO\WORK\</p><h2>{t('MY WORK')}</h2></div>
-      <span className="object-count">{visibleProjects.length} {visibleProjects.length === 1 ? t('MEDIA FILE') : t('MEDIA FILES')}</span>
+      <span className="object-count">{itemCount} {showingThumbs ? (itemCount === 1 ? t('IMAGE FILE') : t('IMAGE FILES')) : (itemCount === 1 ? t('MEDIA FILE') : t('MEDIA FILES'))}</span>
     </div>
     <div className="work-tabs" role="tablist" aria-label={t('Work folders')}>
       <button type="button" className={`work-tab ${tab === 'short' ? 'active' : ''}`} onClick={() => setTab('short')} role="tab" aria-selected={tab === 'short'}>
@@ -202,8 +290,13 @@ export function WorkContent({ actions }: { actions: ContentActions }) {
       <button type="button" className={`work-tab ${tab === 'long' ? 'active' : ''}`} onClick={() => setTab('long')} role="tab" aria-selected={tab === 'long'}>
         <XPIcon kind="folder" size={19} /> {t('LONG FORM')}
       </button>
+      <button type="button" className={`work-tab ${tab === 'thumbs' ? 'active' : ''}`} onClick={() => setTab('thumbs')} role="tab" aria-selected={tab === 'thumbs'}>
+        <XPIcon kind="image" size={19} /> {t('THUMBNAILS')}
+      </button>
     </div>
-    {visibleProjects.length > 0 ? (
+    {showingThumbs ? (
+      <ThumbnailsGrid thumbnails={thumbnails} onOpen={actions.viewImage} />
+    ) : visibleProjects.length > 0 ? (
       <div className={`projects-grid ${tab === 'short' ? 'short-projects-grid' : 'long-projects-grid'}`}>
         {visibleProjects.map((project) => <ProjectCard key={project.id} project={project} onOpen={(item) => actions.open('player', item)} />)}
       </div>
