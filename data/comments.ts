@@ -27,4 +27,12 @@ export const comments: Comment[] = [
   //   link: 'https://youtube.com/@their-channel',
   //   date: '05/10/2026'
   // },
+  {
+    id: 'Megluuh',
+    name: 'MegLuuh',
+    avatar: 'megluuh.jpg',     
+    comment: 'Adorei o estilo dele, me ajudou muitooo! <3',
+    link: 'https://www.youtube.com/@megluuh',
+    date: '01/09/2026'
+  },
 ];
