@@ -31,7 +31,7 @@ export const comments: Comment[] = [
     id: 'Megluuh',
     name: 'MegLuuh',
     avatar: 'megluuh.jpg',     
-    comment: 'Adorei o estilo dele, me ajudou muitooo! <3',
+    comment: 'Adorei, ficou bem dinâmico, manteve o ritmo da live',
     link: 'https://www.youtube.com/@megluuh',
     date: '01/09/2026'
   },
