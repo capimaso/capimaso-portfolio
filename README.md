@@ -1,444 +1,251 @@
 <div align="center">
 
-<img src="public/images/og.svg" width="760" alt="CAPIMASO — Video Editor Portfolio">
+<img src="public/images/og.svg" alt="Janela do portfólio CAPIMASO no estilo Windows XP" width="740" />
 
-# 🖥️ CAPIMASO
+# 🖥️ CAPIMASO.exe
 
-### VIDEO EDITOR PORTFOLIO
+**Portfólio de editor de vídeo · Windows XP Edition**
 
-<code>CAPIMASO.EXE</code> · <code>SYSTEM ONLINE</code> · <code>READY</code>
+`[ Meu computador ]` · `[ Meus trabalhos ]` · `[ Windows Media Player ]` · `[ Outlook Express ]`
 
-<br><br>
-
-<a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js" alt="Next.js"></a>
-<a href="https://react.dev/"><img src="https://img.shields.io/badge/React-19-20232A?style=flat-square&logo=react" alt="React"></a>
-<a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript"></a>
-<a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Tailwind-4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS"></a>
-<a href="https://motion.dev/"><img src="https://img.shields.io/badge/Framer_Motion-12-black?style=flat-square&logo=framer" alt="Framer Motion"></a>
-
-<br><br>
-
-> **The computer isn't just the interface. It is the portfolio.**
+**Uma área de trabalho para explorar. Não uma landing page fingindo ser um sistema operacional.**
 
 </div>
 
 ---
 
-<table>
-<tr>
-<td width="55%">
+## 🟦 Bem-vindo ao Windows XP do CAPIMASO
 
-## 💾 ABOUT
+A identidade foi reconstruída tendo o **Windows XP com tema Luna** como referência: barra azul, botão Iniciar verde, janelas com controles clássicos, Explorador de Arquivos, menu de duas colunas e programas familiares. O conteúdo do CAPIMASO continua sendo a parte mais importante: vídeos, thumbnails, habilidades, valores, comentários e contato.
 
-An interactive video editor portfolio disguised as a nostalgic 2000s computer.
+Acesse o portfólio pela área de trabalho, pelo menu **iniciar** ou pelos botões da janela principal.
 
-Boot the system, explore the desktop, open programs, browse files, watch projects and find the contact area — all inside one interface.
+> **Projeto Next.js + React + TypeScript.** Sem serviço de banco de dados para o portfólio e sem API key obrigatória.
 
-The visual language mixes **Windows-era UI ideas, Y2K computing, early internet culture, gaming and video editing** while keeping the implementation modern underneath.
+## ▶ Instalar e rodar
 
-</td>
-<td width="45%" align="center">
-
-### SYSTEM STATUS
-
-```text
-╔══════════════════════╗
-║   CAPIMASO SYSTEM    ║
-╠══════════════════════╣
-║ STATUS   : ONLINE    ║
-║ MODE     : PORTFOLIO ║
-║ USER     : VISITOR   ║
-║ ACCESS   : GRANTED   ║
-╚══════════════════════╝
-```
-
-🟢 **AVAILABLE FOR WORK**
-
-</td>
-</tr>
-</table>
-
----
-
-## 🗂️ FEATURES
-
-| Feature | What it does |
-|:--|:--|
-| 🖥️ Interactive Desktop | Desktop-based portfolio navigation |
-| 🪟 Window Manager | Open, close, minimize, maximize, focus and drag windows |
-| ▶️ Video Player | Local video playback with project metadata |
-| 🖼️ Thumbnails Tab | `My Work` has a THUMBNAILS tab that shows every image in `public/images/thumbs/` automatically |
-| 🔍 Image Viewer | Click a thumbnail to open it larger in its own window, with just the image |
-| 📝 Guestbook | Orkut-style comments with photo, name and a clickable profile link, below `My Portfolio` |
-| 📁 File Explorer | Portfolio sections presented as folders/files |
-| 🟦 Start Menu | Central navigation inspired by classic desktop systems |
-| 🔌 Boot Sequence | Short startup animation with skip control |
-| 📋 Context Menu | Right-click actions such as View, Refresh and Properties |
-| 🔔 Notifications | Small system-style feedback messages |
-| 📱 Responsive | Adapted layout for phones and touch devices |
-| ♿ Accessibility | Semantic controls, keyboard focus and reduced-motion support |
-
----
-
-## 🎬 PORTFOLIO STRUCTURE
-
-```text
-C:\CAPIMASO\
-│
-├── PORTFOLIO
-├── WORK
-│   ├── 01_GAMING_EDIT.mp4
-│   ├── 02_SHORT_FORM.mp4
-│   ├── 03_LONG_FORM.mp4
-│   ├── 04_MOTION_GRAPHICS.mp4
-│   ├── 05_CREATOR_CONTENT.mp4
-│   └── THUMBNAILS (every image in public/images/thumbs/)
-│
-├── ABOUT
-├── SKILLS
-├── SERVICES
-└── CONTACT
-```
-
-The computer metaphor is the navigation. The actual portfolio data stays separate from the visual components.
-
----
-
-## ⚙️ TECH STACK
-
-- **Next.js 16** — application framework
-- **React 19** — UI
-- **TypeScript** — type safety
-- **Tailwind CSS 4** — styling foundation
-- **Framer Motion** — transitions and microinteractions
-- **SVG / CSS** — local interface assets
-- **Vercel** — deployment
-
----
-
-<details>
-<summary>📂 Project Structure</summary>
-
-<br>
-
-```text
-capimaso-portfolio/
-│
-├── app/
-│   ├── layout.tsx
-│   └── page.tsx
-│
-├── components/
-│   ├── Desktop.tsx
-│   ├── Window.tsx
-│   ├── WindowContents.tsx
-│   ├── Taskbar.tsx
-│   ├── StartMenu.tsx
-│   ├── Notifications.tsx
-│   └── XPIcon.tsx
-│
-├── data/
-│   ├── profile.ts
-│   ├── projects.ts
-│   ├── services.ts
-│   ├── skills.ts
-│   ├── socials.ts
-│   ├── media.ts
-│   └── comments.ts
-│
-├── lib/
-│   ├── types.ts
-│   ├── i18n.tsx
-│   └── thumbnails.ts
-│
-├── public/
-│   ├── images/
-│   │   ├── thumbs/      ← drop thumbnails here
-│   │   └── avatars/     ← drop comment photos here
-│   ├── videos/
-│   ├── icons/
-│   └── sounds/
-│
-├── styles/
-│   ├── globals.css
-│   └── portfolio-upgrades.css
-│
-├── package.json
-├── next.config.ts
-├── postcss.config.mjs
-├── tsconfig.json
-└── README.md
-```
-
-</details>
-
----
-
-## 🚀 RUN LOCALLY
-
-### Requirements
-
-- Node.js 20.9+
-- npm
-
-### Installation
+Requisitos: **Node.js 20.9+**, npm e conexão com a internet na primeira instalação para dependências e recuperação de imagens originais.
 
 ```bash
 npm install
-```
-
-### Development
-
-```bash
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Abra `http://localhost:3000`.
 
-### Production
+- Portfólio público: `http://localhost:3000`
+- Estúdio de upload: **`http://localhost:3000/studio`**
+
+`npm run dev` tenta recuperar automaticamente os arquivos da pasta `public` do repositório original **somente se não estiverem presentes**. Se quiser repetir manualmente:
 
 ```bash
-npm run build
-npm start
+npm run assets:sync
 ```
+
+### 🚀 Publicar usando seu GitHub atual
+
+1. Descompacte o ZIP.
+2. **Copie o conteúdo da pasta descompactada para a raiz do repositório `capimaso-portfolio`**, substituindo os arquivos de mesmo nome. Não apague manualmente `public/images`, `public/videos` ou pastas antigas: seus arquivos continuam válidos.
+3. Rode `npm install` e `npm run dev` para conferir.
+4. Execute `npm run build`. Depois publique os arquivos via commit/push ou upload pelo GitHub; a Vercel poderá fazer o deploy.
+5. Na Vercel, o framework é Next.js e o build padrão é `npm run build`.
+
+**Nota sobre o pacote:** este ZIP contém todo o código novo, suas configurações, o fundo XP inspirado, os dados do portfólio, a documentação e os scripts de recuperação. **Fotos, thumbnails e MP4 binários já existentes não foram baixados diretamente neste ambiente.** O script `scripts/sync-original-assets.mjs` os recupera do seu repositório público na primeira execução, sem sobrescrever arquivos existentes. Ao aplicar sobre o repositório atual, eles já estarão presentes. Isso exige que a branch `main` original continue disponível durante a migração ou que você mantenha a pasta `public` existente. O script recupera arquivos de um **commit original fixado** (não depende do conteúdo da `main` após a atualização). Nenhuma foto original foi substituída por uma foto inventada.
+
+## ✨ Atualização 2.1 — idioma, wallpaper, player, cursores e menu Iniciar
+
+Todos os recursos novos funcionam **em cima da edição XP**, sem trocar de framework nem perder o conteúdo anterior.
+
+### 🌐 Inglês e português
+
+- **EN** e **PT** aparecem sempre na barra de tarefas, ao lado do relógio. O site **abre em inglês na primeira visita**.
+- Ao trocar, são traduzidos área de trabalho, menu Iniciar, programas, textos principais, projetos originais, contato e Estúdio. A escolha é preservada no navegador.
+- As traduções moram em `lib/locale-dictionary.ts`. Para adicionar conteúdo novo traduzido, use `t('Texto em português')` com o hook `useT` nos componentes React, e inclua a frase no dicionário.
+- Conteúdo que você adicionar futuramente (novos títulos, comentários, serviços) não será traduzido automaticamente: adicione suas traduções manualmente ao dicionário para evitar alterar nomes próprios.
+
+### 🏞️ Papéis de parede: Bliss padrão + duas alternativas
+
+Coloque a sua cópia da fotografia **Bliss do Windows XP** em `public/images/xp-bliss.jpg`. Essa imagem **não está no ZIP** por questões de direitos autorais. O site já abre por padrão com `/images/xp-bliss.jpg` para visitantes novos, desde que o arquivo esteja presente.
+
+Clique com o botão direito na área de trabalho e abra **Display Properties / Propriedades de exibição**. Você verá quatro opções:
+
+1. **Windows XP Bliss (default)** — seu `public/images/xp-bliss.jpg`, já selecionado por padrão.
+2. **XP Hills (illustration)** — o fundo ilustrado que eu criei (`public/images/xp-hills.svg`).
+3. **Original Repo Wallpaper** — o wallpaper do repositório anterior (`public/images/wallpaper.svg`), recuperado pelo script de sincronização de assets.
+4. **Uploaded Image** — uma imagem selecionada por **Browse image…**, guardada localmente no navegador.
+
+A opção "Site Image File" e seu campo de caminho foram retirados. **Restore Default** agora volta ao Bliss. Se o navegador já salvou uma preferência antiga, clique em Restore Default uma vez; visitantes novos usam Bliss automaticamente. Para publicação, inclua sua imagem Bliss no GitHub junto com o código.
+
+### ▶ Windows Media Player
+
+- Vídeos longos do YouTube são encaixados no espaço disponível em **16:9**; curtos locais ficam em **9:16**. Os iframes não ultrapassam os limites da janela.
+- Ao abrir um vídeo incorporado do YouTube ou um MP4/WebM local, o site tenta iniciá-lo automaticamente **sem som**, como exigem as políticas de autoplay dos navegadores. Use o player para ligar o áudio. A reprodução pode depender de permissões e restrições do próprio YouTube.
+- Reels antigos que **ainda são somente links do Instagram** continuam abrindo externamente; para autoplay dentro do player, é necessário adicioná-los como MP4 pelo Estúdio.
+
+### 🖱️ Cursores e ícones do menu
+
+- Usamos os quatro cursores da pasta `public/icons`: `cursor.svg`, `cursor-pointer.svg`, `cursor-text.svg` e `cursor-drag.svg`. Eles foram criados no seu projeto original e **não são substituídos** por este ZIP. Caso estejam faltando, rode `npm run assets:sync` com acesso à internet. O navegador tem cursores padrão como fallback.
+- Os botões inferiores do menu Iniciar agora usam **ícones SVG desenhados na interface**, em vez de emoji ou glifo dependente da fonte do sistema.
+
+### 📦 Instalar a atualização por cima da anterior
+
+1. **Faça commit ou backup** do portfólio que já está funcionando.
+2. Extraia o ZIP e copie **os arquivos que estão dentro dele** para a raiz de `capimaso-portfolio`, confirmando substituir arquivos com o mesmo nome.
+3. **Não apague** pastas antigas de `public/images`, `public/videos` e nem o seu `data/showcase.json` se já adicionou vídeos pelo Estúdio. Nesse caso **mantenha seu `data/showcase.json` mais recente**, pois o ZIP contém apenas a lista original de exemplo.
+4. Com o Node.js e as dependências instaladas, rode `npm run check`, `npm run dev` e `npm run build` para verificar a atualização. Não é preciso apagar `node_modules` se a sua instalação já funciona.
+
+> Observação: o ZIP traz os dados do showcase anterior porque é um projeto completo; se você já editou esses dados, preserve suas mudanças ao copiar.
 
 ---
 
-## ✏️ WHERE TO EDIT YOUR INFORMATION
+## 🎬 Como enviar Reels e Shorts SEM LINK
 
-The most important content files are all inside `data/`.
+<details open>
+<summary><strong>Opção 1 — Upload visual no Estúdio (recomendado)</strong></summary>
 
-| File | Change here |
-|:--|:--|
-| `data/profile.ts` | Name, role, tagline, bio and SEO text |
-| `data/projects.ts` | Project title, category, description, software, thumbnail and video |
-| `data/services.ts` | Services, short-video prices and package values |
-| `data/skills.ts` | Editing software and specialties |
-| `data/socials.ts` | Email, Instagram, Discord, YouTube and other contact links |
-| `data/media.ts` | Showreel and RAW → FINAL media slots |
-| `data/comments.ts` | Guestbook comments: name, photo, comment text and profile link |
+1. No seu computador, abra o projeto no VS Code, execute `npm run dev` e acesse **`http://localhost:3000/studio`**.
+2. Preencha o título, a descrição e a categoria.
+3. Selecione o MP4 ou WebM exportado (até **100 MB**).
+4. Clique em **Gerar capa a partir do vídeo** ou escolha uma JPG/PNG/WebP. Confira o enquadramento vertical da capa.
+5. Clique em **Adicionar ao showcase**.
+6. O projeto salvará vídeo + thumbnail e atualizará `data/showcase.json`. Verifique em **Meus trabalhos → Reels e Shorts**.
+7. Para disponibilizar o vídeo publicamente, inclua no commit os novos arquivos em `public/videos/shorts/`, `public/images/thumbs/` e `data/showcase.json`.
 
-### 🎬 Project videos + thumbnails
+> O Estúdio é **somente local** (`npm run dev`), intencionalmente **bloqueado na versão publicada**. Um upload feito direto na Vercel não persistiria em seu GitHub. Esse limite evita prometer uma funcionalidade de publicação que não funcionaria após um redeploy. Para uploads administrativos diretamente em produção seria necessário conectar um serviço de armazenamento/autenticação.
 
-For every project, edit **`data/projects.ts`**:
+</details>
 
-```ts
-thumbnail: '/images/your-thumbnail.jpg',
-video: '/videos/your-video.mp4'
-```
+<details>
+<summary><strong>Opção 2 — Adicionar manualmente (ótimo para Codex)</strong></summary>
 
-Put the files themselves in:
+Salve:
 
 ```text
-public/images/
-public/videos/
+public/videos/shorts/meu-short.mp4
+public/images/thumbs/meu-short.jpg
 ```
 
-Current project mapping:
+Depois adicione ao **INÍCIO** do array `data/showcase.json`:
 
-```text
-project-gaming.svg  → Gaming Edit thumbnail
-project-short.svg   → Short Form thumbnail
-project-long.svg    → Long Form thumbnail
-project-motion.svg  → Motion Graphics thumbnail
-project-creator.svg → Creator Content thumbnail
-```
-
-You can either replace those files while keeping their names or change the path in `data/projects.ts`.
-
-### 🖼️ Thumbnails tab
-
-`My Work` has a third tab, **THUMBNAILS**. It lists **every image** found in:
-
-```text
-public/images/thumbs/
-```
-
-No code changes needed: put an image in that folder and it shows up.
-
-- Supported formats: `.png`, `.jpg`, `.jpeg`, `.webp`, `.gif`, `.avif`, `.svg`, `.bmp`.
-- Clicking a thumbnail opens it in a separate **Image Viewer** window (draggable, minimizable, maximizable) that shows only the image.
-- Order is alphabetical by file name (numbers are sorted naturally). To control the order, prefix the names: `01-first.png`, `02-second.png`, `10-tenth.png`.
-- The folder is read when the site is built / when the dev server renders the page. In `npm run dev` just refresh the page; in production, push the new images to GitHub and Vercel redeploys.
-- The file name is shown under each thumbnail, so name the files the way you want them to appear.
-
-### 📝 Comments / Guestbook (My Portfolio)
-
-The window opened by **My Portfolio** has an Orkut-style guestbook at the bottom (scroll down inside the window). All comments live in a single easy file:
-
-```text
-data/comments.ts
-```
-
-Each comment looks like this:
-
-```ts
+```json
 {
-  id: 'ana',                                  // any unique text
-  name: 'Ana Souza',                          // name shown on the comment
-  avatar: 'ana.jpg',                          // file in public/images/avatars/
-  comment: 'Great editor, delivered before the deadline!',
-  link: 'https://youtube.com/@ana',           // where the name goes when clicked
-  date: '05/10/2026'                          // optional
+  "id": "meu-short",
+  "title": "Meu novo Short",
+  "description": "O que editei e para quem",
+  "category": "Gaming • Short form",
+  "format": "short",
+  "video": "/videos/shorts/meu-short.mp4",
+  "thumbnail": "/images/thumbs/meu-short.jpg",
+  "software": "Premiere Pro"
 }
 ```
 
-Steps to add a person:
+`format: "short"` = **player HTML5 local** para MP4/WebM. A capa usa proporção vertical com `object-fit: cover`.
 
-1. Upload their photo to `public/images/avatars/` (for example `ana.jpg`).
-2. Add a new block to the `comments` list in `data/comments.ts` (newest first = top of the list).
-3. Set `link` to their real profile (YouTube, Instagram, X, TikTok, etc.). Clicking the name opens it in a new tab.
+</details>
 
-Details:
+### 📼 E os vídeos longos?
 
-- `avatar` can also be a full URL (`https://...`) or a path starting with `/`. If it is empty or the file is missing, the default silhouette icon is shown.
-- If `link` is empty the name is just plain text. Only `http://` and `https://` links are accepted.
-- A small badge (YouTube, Instagram, X / Twitter, TikTok, Twitch, Discord) is added automatically based on the link.
-- Comment text is shown exactly as you write it. Line breaks (`\n`) are kept.
-- Use comments from real people who agreed to be shown, with their own name, photo and link.
+Use **somente links do YouTube**, como solicitado. O player aceita `youtube.com/watch?v=...` e `youtu.be/...`:
 
-### 📼 Showreel
-
-Edit `data/media.ts`:
-
-```ts
-showreel: {
-  video: '/videos/CAPIMASO_REEL.mp4',
-  thumbnail: '/images/project-motion.svg'
+```json
+{
+  "id": "meu-video-longo",
+  "title": "Vídeo para YouTube",
+  "description": "Um trabalho de edição horizontal",
+  "category": "Gaming • Vídeo longo",
+  "format": "long",
+  "video": "https://www.youtube.com/watch?v=SEU_ID",
+  "thumbnail": "",
+  "software": "Premiere Pro"
 }
 ```
 
-So your showreel files are:
+A thumbnail é extraída do YouTube quando `thumbnail` está vazia. Links antigos de Instagram continuam registrados, mas dependem de acesso externo: **para assistir diretamente no site é necessário enviar o arquivo MP4 original do Reel ao Estúdio.** O site não baixa vídeos do Instagram.
+
+## 📁 Onde editar cada coisa
+
+| Quero mudar... | Arquivo correto |
+| --- | --- |
+| Nome, bio, profissão, frase principal e SEO | [`data/profile.ts`](data/profile.ts) |
+| Trabalhos, vídeos e thumbnails | [`data/showcase.json`](data/showcase.json) |
+| Redes e email | [`data/socials.ts`](data/socials.ts) |
+| Softwares que utilizo | [`data/skills.ts`](data/skills.ts) |
+| Serviços e valores | [`data/services.ts`](data/services.ts) |
+| Recados reais de clientes | [`data/comments.ts`](data/comments.ts) |
+| Vídeo do botão azul “Vídeo de apresentação” | [`data/media.ts`](data/media.ts) |
+| Cores, formas, responsividade e XP Luna | [`app/xp.css`](app/xp.css) |
+| Ícones e interação das janelas/menu | [`components/XpDesktop.tsx`](components/XpDesktop.tsx) |
+| Conteúdo interno de cada programa | [`components/XPApps.tsx`](components/XPApps.tsx) |
+| Ícones vetoriais locais | [`components/XPIcon.tsx`](components/XPIcon.tsx) |
+| Upload local e validações de arquivo | [`app/api/studio/upload/route.ts`](app/api/studio/upload/route.ts) |
+| Sincronizar mídias originais | [`scripts/sync-original-assets.mjs`](scripts/sync-original-assets.mjs) |
+
+## 🖼️ Acervo preservado
+
+A sincronização mantém os caminhos originais de `profile.jpg`, `scarfaceThumb.png`, `thumbs/ThumbBizu.png`, `avatars/megluuh.jpg`, SVGs de projetos, cursor e vídeos antigos. A galeria **Thumbnails** lista automaticamente todas as imagens de `public/images/thumbs/` — inclusive as enviadas pelo Estúdio.
+
+### Papel de parede XP
+
+O fundo padrão `public/images/xp-hills.svg` é **uma arte original inspirada no clássico Bliss**. O botão direito no desktop permite alternar para `public/images/wallpaper.svg` do repositório anterior. O retrato fotográfico original do Windows XP **não é redistribuído** por razões de direitos de uso. Se você possuir um arquivo autorizado, pode substituir `xp-hills.svg` e ajustar o CSS para `.jpg` ou `.webp`.
+
+## 🗂️ Estrutura
 
 ```text
-public/videos/CAPIMASO_REEL.mp4
-public/images/<your-showreel-thumbnail>
+capimaso-portfolio/
+├── app/
+│   ├── page.tsx                 Área de trabalho
+│   ├── layout.tsx               SEO e estilos
+│   ├── xp.css                   Tema Luna, layout responsivo
+│   ├── studio/page.tsx          Estúdio privado local
+│   └── api/studio/upload/route.ts
+├── components/
+│   ├── XpDesktop.tsx            Menu Iniciar, janelas, taskbar
+│   ├── XPApps.tsx               Explorador, Player, serviços etc.
+│   ├── XPIcon.tsx               Ícones do sistema
+│   └── XPImage.tsx              Assets locais + fallback dos originais
+├── data/                        Informações editáveis
+├── lib/                         Leitura de mídia / helpers
+├── public/
+│   ├── images/                  Wallpapers, capas, avatar, thumbs/
+│   ├── icons/
+│   └── videos/shorts/           Seus MP4/WebM publicados
+├── scripts/sync-original-assets.mjs
+├── docs/CODEX-GUIDE.md
+├── MUDANCAS.md
+├── docs/ANALISE-DO-ORIGINAL.md
+├── AGENTS.md                    Instruções autônomas para Codex
+└── package.json
 ```
 
-### 🔀 RAW → FINAL
+## 🎨 Diretrizes visuais
 
-Edit `data/media.ts`:
+- **Windows XP Luna Blue**, Tahoma 11–12 px, fundos creme `#ECE9D8`, sombras discretas; sem glassmorphism, blur exagerado ou card de SaaS.
+- Barra de tarefas azul, botão Iniciar verde, cantos arredondados **somente no topo da janela**; menu Iniciar em duas colunas, Explorador com painel de tarefas à esquerda.
+- Respeitar a distinção de formatos: **9:16 para vídeos curtos** e **16:9 para vídeos longos**.
+- Priorizar legibilidade, navegação por teclado, botões reais e comportamento consistente em telas pequenas.
 
-```ts
-beforeAfter: {
-  raw: '/images/raw-placeholder.svg',
-  final: '/images/final-placeholder.svg'
-}
-```
+## ✅ Checklist de publicação
 
-Replace those two files or change their paths.
-
-### 🌄 Wallpaper
-
-The desktop wallpaper is:
-
-```text
-public/images/wallpaper.svg
-```
-
-Replace that file with your own image, preferably keeping the same path so no code changes are necessary.
-
-### 🖱️ Cursor
-
-The custom cursor assets live in:
-
-```text
-public/icons/cursor.svg
-public/icons/cursor-pointer.svg
-public/icons/cursor-drag.svg
-public/icons/cursor-text.svg
-```
-
----
-
-## 💰 CURRENT PRICING
-
-Short-form prices are configured in `data/services.ts` and are for videos up to 60 seconds.
-
-The current package values are based on CAPIMASO's supplied pricing:
-
-```text
-01  R$ 40
-02  R$ 75
-03  R$ 105
-04  R$ 130
-05  R$ 160
-06  R$ 185
-07  R$ 210
-08  R$ 235
-09  R$ 265
-10  R$ 290
-```
-
-The current suggested starting point for long-form is **FROM R$ 90**, with the final quote adjusted to duration, raw footage, complexity and revisions.
-
----
-
-## ☁️ DEPLOY ON VERCEL
-
-```text
-LOCAL PROJECT
-      │
-      ▼
-    GITHUB
-      │
-      ▼
-    VERCEL
-      │
-      ▼
-  CAPIMASO ONLINE
-```
-
-1. Push the project to GitHub.
-2. Open Vercel and import the GitHub repository.
-3. Keep the standard Next.js build settings.
-4. Deploy.
-
-No custom server or special Vercel configuration is required.
-
----
-
-## 🧠 DESIGN PHILOSOPHY
-
-This project intentionally avoids the usual portfolio formula.
-
-Instead of presenting a traditional hero section followed by cards and a contact block, the **desktop itself is the portfolio**.
-
-The visual layer carries the personality while the underlying application stays componentized and data-driven.
-
----
-
-## 📼 SYSTEM CHECK
-
-```text
-DESKTOP ........... OK
-WINDOW MANAGER .... OK
-WINDOW DRAG ....... OK
-MAXIMIZE / RESTORE  OK
-TASKBAR ........... OK
-START MENU ........ OK
-VIDEO PLAYER ...... OK
-THUMBNAILS ........ OK
-IMAGE VIEWER ...... OK
-GUESTBOOK ......... OK
-RESPONSIVE ........ OK
-SEO ............... OK
-
-SYSTEM STATUS: ONLINE
-```
+- [ ] Rodei `npm install` e `npm run dev`.
+- [ ] As imagens antigas aparecem (ou executei `npm run assets:sync`).
+- [ ] Abri trabalhos, recados, serviços e contatos.
+- [ ] Testei um MP4 curto **local** no Windows Media Player.
+- [ ] Verifiquei a capa do Short em formato vertical.
+- [ ] Conferi as URLs de YouTube dos vídeos longos.
+- [ ] Rodei `npm run build`.
+- [ ] Dei commit e push nas mídias + `data/showcase.json`.
 
 ---
 
 <div align="center">
 
-### 🖥️ CAPIMASO.EXE
+**CAPIMASO • Meu computador, meus cortes, meu jeito.**
 
-**Video Editor Portfolio**
-
-<sub>Built with code, video editing and an unreasonable amount of nostalgia.</sub>
-
-<br><br>
-
-`© CAPIMASO`
+`[ iniciar ]` `📁` `🎞️` `💾` — Interface inspirada no Windows XP, não afiliada à Microsoft.
 
 </div>
+
+### Atualizações sobre projetos existentes
+
+Na versão 2.1.1 o arquivo de traduções é `lib/locale-dictionary.ts`. Se você havia copiado versões anteriores por cima, pode ter sobrado `lib/i18n.tsx` antigo; esse arquivo não é mais usado pelo desktop atual. Após copiar os arquivos novos, execute `npm run check` e `npm run build`.

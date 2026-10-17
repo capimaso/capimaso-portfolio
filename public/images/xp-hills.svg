@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+<defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#2365ba"/><stop offset=".27" stop-color="#4da5e4"/><stop offset=".65" stop-color="#75c8f1"/><stop offset="1" stop-color="#c1edf6"/></linearGradient><linearGradient id="hill" x2="0" y2="1"><stop stop-color="#9ac431"/><stop offset=".35" stop-color="#65a51b"/><stop offset="1" stop-color="#245d04"/></linearGradient><linearGradient id="near" x2="0" y2="1"><stop stop-color="#7bba19"/><stop offset="1" stop-color="#417e0a"/></linearGradient><filter id="blur"><feGaussianBlur stdDeviation="24"/></filter><filter id="grain"><feTurbulence baseFrequency=".36" numOctaves="3" seed="5" type="fractalNoise"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".045"/></feComponentTransfer></filter></defs>
+<path fill="url(#sky)" d="M0 0h1920v1080H0z"/>
+<g fill="#fff" opacity=".82" filter="url(#blur)"><ellipse cx="470" cy="200" rx="290" ry="44"/><ellipse cx="650" cy="177" rx="200" ry="45"/><ellipse cx="1320" cy="265" rx="270" ry="40"/><ellipse cx="1540" cy="239" rx="240" ry="37"/><ellipse cx="1030" cy="395" rx="175" ry="23"/></g>
+<path d="M0 720C240 575 415 505 653 544c297 49 492 211 1267-121v657H0Z" fill="url(#hill)"/>
+<path d="M0 850c307-215 530-249 830-183 410 91 659 66 1090-51v464H0Z" fill="url(#near)" opacity=".93"/>
+<path d="M0 916c233-123 521-163 788-100 365 87 686 127 1132-42v306H0Z" fill="#448c0a" opacity=".58"/>
+<path d="M0 1020c630-227 1147-17 1920-100" fill="none" stroke="#b4ca39" stroke-width="90" opacity=".15"/>
+<path fill="#fff" filter="url(#grain)" d="M0 0h1920v1080H0z"/>
+</svg>

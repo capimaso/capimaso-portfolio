@@ -1,12 +1,5 @@
-export type Skill = {
-  name: string;
-  category: string;
-  description: string;
-  specialty: string;
-};
-
-export const skills: Skill[] = [
-  { name: 'Adobe Premiere Pro', category: 'EDITING', description: 'Primary editing workflow.', specialty: 'TIMELINE / CUTS / PACING' },
-  { name: 'Adobe After Effects', category: 'MOTION', description: 'Motion and compositing workflow.', specialty: 'MOTION / COMPOSITING' },
-  { name: 'Adobe Photoshop', category: 'IMAGE', description: 'Image and visual asset work.', specialty: 'THUMBNAILS / ASSETS' }
+export const skills = [
+  { name:'Adobe Premiere Pro', category:'Edição', detail:'Montagem, cortes, ritmo e áudio' },
+  { name:'Adobe After Effects', category:'Motion', detail:'Movimento, animação e composição' },
+  { name:'Adobe Photoshop', category:'Imagem', detail:'Thumbnails e materiais gráficos' }
 ];

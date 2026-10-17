@@ -1,9 +1,8 @@
-// 🔧 ALL OTHER MEDIA SLOTS LIVE HERE.
-// The showreel is now loaded from YouTube instead of a local MP4.
+/** Vídeo de introdução (mantido do projeto original). Pode trocar por /videos/introducao.mp4. */
 export const media = {
-  showreel: {
+  introduction: {
+    title: 'Vídeo de apresentação',
     video: 'https://www.youtube.com/watch?v=A1XsNJy-utU',
-    thumbnail: '/images/project-motion.svg',
-    platform: 'youtube'
+    thumbnail: '/images/project-motion.svg'
   }
 };

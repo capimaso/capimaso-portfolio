@@ -1,0 +1,42 @@
+[
+  {
+    "id": "scarface",
+    "title": "3 programas que todo PC Gamer deveria ter",
+    "description": "Meu primeiro trabalho em formato curto.",
+    "category": "Gaming • Short form",
+    "format": "short",
+    "video": "/videos/shorts/Scarface.mp4",
+    "thumbnail": "/images/scarfaceThumb.png",
+    "software": "Premiere Pro"
+  },
+  {
+    "id": "stefany",
+    "title": "Ela não espera o sonho acontecer. Ela vive.",
+    "description": "Video teste feito para @realrafasilva.",
+    "category": "OQSQC • Short form",
+    "format": "short",
+    "video": "/videos/shorts/Stefany.mp4",
+    "thumbnail": "/images/stefanyThumb.png",
+    "software": "Premiere Pro"
+  },
+  {
+    "id": "megluuh",
+    "title": "A tríade do caos: Huntress, Nurse e Billy — Dead by Daylight",
+    "description": "Edição de gameplay para uma amiga que faz lives.",
+    "category": "Gaming • Vídeo longo",
+    "format": "long",
+    "video": "https://www.youtube.com/watch?v=en9sRuniY1U&t=3s",
+    "thumbnail": "",
+    "software": "Premiere Pro"
+  },
+  {
+    "id": "tranzit",
+    "title": "Tentamos fazer o Easter Egg do TRANZIT",
+    "description": "Meu primeiro vídeo editado — um bom registro do começo dessa jornada.",
+    "category": "Gaming • Vídeo longo",
+    "format": "long",
+    "video": "https://www.youtube.com/watch?v=Mj67WzDsaP4&t=1s",
+    "thumbnail": "",
+    "software": "Premiere Pro"
+  }
+]
