@@ -1,6 +1,7 @@
 /** Offline sanity checks for contributors and Codex. No npm dependencies required. */
 import { readFile, access } from 'node:fs/promises';
 import { join } from 'node:path';
+import { googleDriveEmbed } from '../lib/google-drive.mjs';
 const root=process.cwd();let errors=0;
 function assert(value,message){if(!value){console.error(`✖ ${message}`);errors++}else console.log(`✓ ${message}`)}
 const work=JSON.parse(await readFile(join(root,'data/showcase.json'),'utf8'));
@@ -8,8 +9,25 @@ assert(Array.isArray(work)&&work.length>0,'Manifesto de projetos não vazio');
 assert(new Set(work.map(x=>x.id)).size===work.length,'IDs de vídeos únicos');
 assert(work.every(x=>x.id&&x.title&&['short','long'].includes(x.format)),'Projetos com informações obrigatórias');
 assert(work.filter(x=>x.format==='long').every(x=>/^https:\/\/(www\.)?(youtube\.com|youtu\.be)\//.test(x.video)),'Vídeos longos usam YouTube');
-assert(work.filter(x=>x.format==='short').every(x=>x.video.startsWith('/videos/')||/^https:\/\/www\.instagram\.com\/reel\//.test(x.video)), 'Reels locais ou link Instagram legado explicitamente preservado');
+assert(work.filter(x=>x.format==='short').every(x=>x.video===''||googleDriveEmbed(x.video)||/^https:\/\/www\.instagram\.com\/reel\//.test(x.video)), 'Curtos usam Google Drive, estão pendentes ou preservam Instagram legado');
+const drivePreview='https://drive.google.com/file/d/test_ID-123/preview';
+for(const link of [
+ 'https://drive.google.com/file/d/test_ID-123/view?usp=sharing',
+ drivePreview,
+ 'https://drive.google.com/file/d/test_ID-123',
+ 'https://drive.google.com/open?id=test_ID-123',
+ 'https://drive.google.com/uc?export=download&id=test_ID-123'
+]) assert(googleDriveEmbed(link)===drivePreview,`Link Drive aceito: ${link}`);
+assert(googleDriveEmbed('https://drive.google.com/file/d/test_ID-123/view?resourcekey=key-123&usp=sharing')===`${drivePreview}?resourcekey=key-123`,'Drive preserva resourcekey');
+assert(['','not a url','/videos/shorts/video.mp4','http://drive.google.com/file/d/test/view',
+ 'https://drive.google.com.evil.test/file/d/test/view','https://drive.google.com@evil.test/file/d/test/view',
+ 'https://drive.google.com/drive/folders/test','https://drive.google.com/open?id=test%2Fother',
+ 'https://drive.google.com/file/d/test/view/extra','https://youtube.com/watch?v=test'
+].every(link=>googleDriveEmbed(link)===null),'Drive rejeita arquivos locais, hosts falsos, pastas e links inválidos');
 assert(work.every(x=>!x.thumbnail||x.thumbnail.startsWith('/images/')),'Capas usam caminhos locais');
+for(const item of work.filter(x=>x.thumbnail)){
+ try{await access(join(root,'public',item.thumbnail));console.log(`✓ Capa preservada: ${item.id}`)}catch{assert(false,`Capa ausente: ${item.id}`)}
+}
 for(const p of ['app/xp.css','app/page.tsx','app/studio/page.tsx','components/XpDesktop.tsx','components/XPApps.tsx','public/images/xp-hills.svg','AGENTS.md','README.md','MUDANCAS.md','postcss.config.mjs','lib/locale-dictionary.ts','lib/wallpaper.ts','components/LanguageContext.tsx','components/WallpaperSettings.tsx']){
  try{await access(join(root,p));console.log(`✓ ${p}`)}catch{console.error(`✖ faltando ${p}`);errors++}
 }

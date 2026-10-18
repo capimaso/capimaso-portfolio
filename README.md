@@ -50,7 +50,7 @@ npm run assets:sync
 4. Execute `npm run build`. Depois publique os arquivos via commit/push ou upload pelo GitHub; a Vercel poderá fazer o deploy.
 5. Na Vercel, o framework é Next.js e o build padrão é `npm run build`.
 
-**Nota sobre o pacote:** este ZIP contém todo o código novo, suas configurações, o fundo XP inspirado, os dados do portfólio, a documentação e os scripts de recuperação. **Fotos, thumbnails e MP4 binários já existentes não foram baixados diretamente neste ambiente.** O script `scripts/sync-original-assets.mjs` os recupera do seu repositório público na primeira execução, sem sobrescrever arquivos existentes. Ao aplicar sobre o repositório atual, eles já estarão presentes. Isso exige que a branch `main` original continue disponível durante a migração ou que você mantenha a pasta `public` existente. O script recupera arquivos de um **commit original fixado** (não depende do conteúdo da `main` após a atualização). Nenhuma foto original foi substituída por uma foto inventada.
+**Nota sobre o pacote:** este ZIP contém todo o código novo, suas configurações, o fundo XP inspirado, os dados do portfólio, a documentação e os scripts de recuperação. **Fotos e thumbnails binários já existentes não foram baixados diretamente neste ambiente.** O script `scripts/sync-original-assets.mjs` os recupera do seu repositório público na primeira execução, sem sobrescrever arquivos existentes. Ao aplicar sobre o repositório atual, eles já estarão presentes. Isso exige que a branch `main` original continue disponível durante a migração ou que você mantenha a pasta `public` existente. O script recupera arquivos de um **commit original fixado** (não depende do conteúdo da `main` após a atualização). Nenhuma foto original foi substituída por uma foto inventada.
 
 ## ✨ Atualização 2.1 — idioma, wallpaper, player, cursores e menu Iniciar
 
@@ -78,9 +78,9 @@ A opção "Site Image File" e seu campo de caminho foram retirados. **Restore De
 
 ### ▶ Windows Media Player
 
-- Vídeos longos do YouTube são encaixados no espaço disponível em **16:9**; curtos locais ficam em **9:16**. Os iframes não ultrapassam os limites da janela.
+- Vídeos longos do YouTube são encaixados no espaço disponível em **16:9**; curtos do Google Drive ficam em **9:16**. Os iframes não ultrapassam os limites da janela.
 - Ao abrir um vídeo incorporado do YouTube ou um MP4/WebM local, o site tenta iniciá-lo automaticamente **sem som**, como exigem as políticas de autoplay dos navegadores. Use o player para ligar o áudio. A reprodução pode depender de permissões e restrições do próprio YouTube.
-- Reels antigos que **ainda são somente links do Instagram** continuam abrindo externamente; para autoplay dentro do player, é necessário adicioná-los como MP4 pelo Estúdio.
+- Reels antigos que **ainda são somente links do Instagram** continuam abrindo externamente; para assistir dentro do player, adicione o link do arquivo no Google Drive.
 
 ### 🖱️ Cursores e ícones do menu
 
@@ -98,34 +98,23 @@ A opção "Site Image File" e seu campo de caminho foram retirados. **Restore De
 
 ---
 
-## 🎬 Como enviar Reels e Shorts SEM LINK
+## 🎬 Reels e Shorts com Google Drive
 
-<details open>
-<summary><strong>Opção 1 — Upload visual no Estúdio (recomendado)</strong></summary>
+Os vídeos curtos usam o player incorporado do Google Drive em **9:16**. Os arquivos de vídeo ficam no Drive; apenas as capas continuam no repositório. O player inicia pelo botão de reprodução, sem autoplay forçado.
 
-1. No seu computador, abra o projeto no VS Code, execute `npm run dev` e acesse **`http://localhost:3000/studio`**.
-2. Preencha o título, a descrição e a categoria.
-3. Selecione o MP4 ou WebM exportado (até **100 MB**).
-4. Clique em **Gerar capa a partir do vídeo** ou escolha uma JPG/PNG/WebP. Confira o enquadramento vertical da capa.
-5. Clique em **Adicionar ao showcase**.
-6. O projeto salvará vídeo + thumbnail e atualizará `data/showcase.json`. Verifique em **Meus trabalhos → Reels e Shorts**.
-7. Para disponibilizar o vídeo publicamente, inclua no commit os novos arquivos em `public/videos/shorts/`, `public/images/thumbs/` e `data/showcase.json`.
+### Adicionar pelo Estúdio
 
-> O Estúdio é **somente local** (`npm run dev`), intencionalmente **bloqueado na versão publicada**. Um upload feito direto na Vercel não persistiria em seu GitHub. Esse limite evita prometer uma funcionalidade de publicação que não funcionaria após um redeploy. Para uploads administrativos diretamente em produção seria necessário conectar um serviço de armazenamento/autenticação.
+1. Envie o vídeo ao Google Drive e compartilhe como **Qualquer pessoa com o link → Leitor**.
+2. Rode `npm run dev` e abra **http://localhost:3000/studio**.
+3. Preencha título, descrição e categoria; cole o link do Drive e escolha a capa JPG/PNG/WebP.
+4. Confira a prévia e clique em **Adicionar ao showcase**.
+5. Faça commit/push de `data/showcase.json` e da nova imagem em `public/images/thumbs/`.
 
-</details>
+O Estúdio continua disponível apenas em desenvolvimento. Ele salva **o link e a capa**, sem baixar ou gravar o vídeo. A capa deve ser escolhida manualmente; o player do Drive não permite capturar frames diretamente pelo site.
 
-<details>
-<summary><strong>Opção 2 — Adicionar manualmente (ótimo para Codex)</strong></summary>
+### Configurar os vídeos existentes ou adicionar manualmente
 
-Salve:
-
-```text
-public/videos/shorts/meu-short.mp4
-public/images/thumbs/meu-short.jpg
-```
-
-Depois adicione ao **INÍCIO** do array `data/showcase.json`:
+Em **`data/showcase.json`**, preencha o campo `video` de cada curto com seu link real:
 
 ```json
 {
@@ -134,15 +123,15 @@ Depois adicione ao **INÍCIO** do array `data/showcase.json`:
   "description": "O que editei e para quem",
   "category": "Gaming • Short form",
   "format": "short",
-  "video": "/videos/shorts/meu-short.mp4",
+  "video": "https://drive.google.com/file/d/SEU_ID_REAL/view?usp=sharing",
   "thumbnail": "/images/thumbs/meu-short.jpg",
   "software": "Premiere Pro"
 }
 ```
 
-`format: "short"` = **player HTML5 local** para MP4/WebM. A capa usa proporção vertical com `object-fit: cover`.
+Links `/file/d/ID/view`, `/file/d/ID/preview`, `/open?id=ID` e `/uc?id=ID` são aceitos. Links com `resourcekey` preservam essa chave. Use o link de **um arquivo**, não de uma pasta. O botão **Abrir no Google Drive** permite abrir o vídeo fora do player.
 
-</details>
+Scarface e Stefany já usam os links reais fornecidos pelo proprietário, mantendo seus dados e capas. Os MP4 locais foram removidos; `public/videos/` está no `.gitignore` e a sincronização não baixa mais vídeos.
 
 ### 📼 E os vídeos longos?
 
@@ -161,7 +150,7 @@ Use **somente links do YouTube**, como solicitado. O player aceita `youtube.com/
 }
 ```
 
-A thumbnail é extraída do YouTube quando `thumbnail` está vazia. Links antigos de Instagram continuam registrados, mas dependem de acesso externo: **para assistir diretamente no site é necessário enviar o arquivo MP4 original do Reel ao Estúdio.** O site não baixa vídeos do Instagram.
+A thumbnail é extraída do YouTube quando `thumbnail` está vazia. Links antigos de Instagram continuam registrados, mas dependem de acesso externo: **para assistir diretamente no site, configure o link do arquivo no Google Drive.** O site não baixa vídeos do Instagram.
 
 ## 📁 Onde editar cada coisa
 
@@ -178,12 +167,12 @@ A thumbnail é extraída do YouTube quando `thumbnail` está vazia. Links antigo
 | Ícones e interação das janelas/menu | [`components/XpDesktop.tsx`](components/XpDesktop.tsx) |
 | Conteúdo interno de cada programa | [`components/XPApps.tsx`](components/XPApps.tsx) |
 | Ícones vetoriais locais | [`components/XPIcon.tsx`](components/XPIcon.tsx) |
-| Upload local e validações de arquivo | [`app/api/studio/upload/route.ts`](app/api/studio/upload/route.ts) |
+| Cadastro local de link Drive e capa | [`app/api/studio/upload/route.ts`](app/api/studio/upload/route.ts) |
 | Sincronizar mídias originais | [`scripts/sync-original-assets.mjs`](scripts/sync-original-assets.mjs) |
 
 ## 🖼️ Acervo preservado
 
-A sincronização mantém os caminhos originais de `profile.jpg`, `scarfaceThumb.png`, `thumbs/ThumbBizu.png`, `avatars/megluuh.jpg`, SVGs de projetos, cursor e vídeos antigos. A galeria **Thumbnails** lista automaticamente todas as imagens de `public/images/thumbs/` — inclusive as enviadas pelo Estúdio.
+A sincronização mantém os caminhos originais de `profile.jpg`, `scarfaceThumb.png`, `thumbs/ThumbBizu.png`, `avatars/megluuh.jpg`, SVGs de projetos e cursores. Vídeos não são mais sincronizados. A galeria **Thumbnails** lista automaticamente todas as imagens de `public/images/thumbs/` — inclusive as enviadas pelo Estúdio.
 
 ### Papel de parede XP
 
@@ -208,8 +197,7 @@ capimaso-portfolio/
 ├── lib/                         Leitura de mídia / helpers
 ├── public/
 │   ├── images/                  Wallpapers, capas, avatar, thumbs/
-│   ├── icons/
-│   └── videos/shorts/           Seus MP4/WebM publicados
+│   └── icons/                   Cursores originais
 ├── scripts/sync-original-assets.mjs
 ├── docs/CODEX-GUIDE.md
 ├── MUDANCAS.md
@@ -230,7 +218,7 @@ capimaso-portfolio/
 - [ ] Rodei `npm install` e `npm run dev`.
 - [ ] As imagens antigas aparecem (ou executei `npm run assets:sync`).
 - [ ] Abri trabalhos, recados, serviços e contatos.
-- [ ] Testei um MP4 curto **local** no Windows Media Player.
+- [ ] Testei um curto do **Google Drive** no Windows Media Player.
 - [ ] Verifiquei a capa do Short em formato vertical.
 - [ ] Conferi as URLs de YouTube dos vídeos longos.
 - [ ] Rodei `npm run build`.

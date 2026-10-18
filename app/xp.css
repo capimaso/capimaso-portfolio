@@ -1791,10 +1791,12 @@ p {
   justify-content:center;
   background:#0f1722
 }
-.studio-preview video {
+.studio-preview iframe {
   height:275px;
+  width:auto;
+  aspect-ratio:9/16;
   max-width:100%;
-  object-fit:contain
+  border:0
 }
 .studio-preview-cover {
   width:165px;

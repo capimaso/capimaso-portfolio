@@ -1,3 +1,13 @@
+# Google Drive nos vídeos curtos — 18/10/2026
+
+- Reels/Shorts usam o player incorporado do Google Drive em 9:16, preservando o tema XP e todas as thumbnails. Vídeos longos e apresentação continuam no YouTube.
+- Scarface e Stefany configurados em `data/showcase.json` com os links reais fornecidos pelo proprietário. Títulos, descrições, capas e demais projetos preservados.
+- Estúdio local recebe link do Drive e upload da capa; grava apenas imagem e manifesto. Removidos upload de vídeo e captura de frame local. A API continua bloqueada em produção.
+- Drive usa reprodução pelo controle do player, sem forçar autoplay com áudio. Fullscreen e link para abrir no Drive disponíveis. EN/PT preservados.
+- Removidos, a pedido do proprietário, os 10 arquivos MP4 de `public/videos/` (719.908.459 bytes, cerca de 687 MiB). Nenhuma imagem removida. A sincronização não restaura vídeos; o Git ignora novos binários nessa pasta.
+- A exclusão dos arquivos não remove blobs de commits antigos. Nenhum histórico Git foi reescrito.
+- Validação: `npm run check` passou; navegador conferido em 360, 768 e 1440 px, com os dois iframes Drive em 9:16, YouTube preservado e Estúdio EN/PT. API testada com link/capa reais, rejeição de links inválidos e bloqueio em produção; dados temporários de teste removidos. `npm run build` compilou, mas build/typecheck seguem bloqueados pelos mesmos 51 erros TypeScript da versão anterior (componentes legados e chaves repetidas nos dicionários), sem erros novos.
+
 # ✅ Atualização 2.1 — correções solicitadas (17/10/2026)
 
 Esta é uma atualização **incremental** da edição Windows XP Luna.

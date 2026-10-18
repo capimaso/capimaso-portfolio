@@ -5,3 +5,6 @@ out/
 .DS_Store
 .env*
 !.env.example
+
+# Reels/Shorts are hosted on Google Drive; keep video binaries out of commits.
+public/videos/**

@@ -15,10 +15,7 @@ const files=[
  'images/avatars/megluuh.jpg','images/final-placeholder.svg','images/profile.jpg',
  'images/project-creator.svg','images/project-gaming.svg','images/project-long.svg',
  'images/project-motion.svg','images/project-short.svg','images/raw-placeholder.svg',
- 'images/scarfaceThumb.png','images/thumbs/ThumbBizu.png','images/wallpaper.svg',
- 'videos/01_GAMING_EDIT.mp4','videos/02_SHORT_FORM.mp4','videos/03_LONG_FORM.mp4',
- 'videos/04_MOTION_GRAPHICS.mp4','videos/05_CREATOR_CONTENT.mp4',
- 'videos/CAPIMASO_REEL.mp4','videos/final.mp4','videos/raw.mp4'
+ 'images/scarfaceThumb.png','images/thumbs/ThumbBizu.png','images/wallpaper.svg'
 
 ];
 // Keep originals of the old site metadata graphics alongside the new branding.

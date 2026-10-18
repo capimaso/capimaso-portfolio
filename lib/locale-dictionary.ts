@@ -1,6 +1,17 @@
 /** Single source of truth for interface translations; English is the initial language. */
 export type Language = 'en' | 'pt';
 export const translations: Record<string,string> = {
+ 'Cole o link do Google Drive e escolha a capa que aparecerá no portfólio.':'Paste the Google Drive link and choose a cover for your portfolio.',
+ 'no seu computador. Apenas a capa e o link são salvos no projeto; o vídeo fica no Google Drive.':'on your computer. Only the cover and link are saved in the project; the video stays on Google Drive.',
+ 'Link do Google Drive':'Google Drive link',
+ 'Compartilhe como “Qualquer pessoa com o link” (Leitor).':'Share as “Anyone with the link” (Viewer).',
+ 'Informe um link válido do Google Drive e selecione uma capa.':'Enter a valid Google Drive link and select a cover.',
+ 'Prévia do vídeo no Google Drive':'Google Drive video preview',
+ 'Prévia da capa escolhida':'Selected cover preview',
+ 'Para tocar direto aqui, adicione o link do Google Drive.':'To play it here, add the Google Drive link.',
+ 'Google Drive · vídeo incorporado':'Google Drive · embedded video',
+ 'Clique em reproduzir no player do Google Drive.':'Click play in the Google Drive player.',
+ 'Abrir no Google Drive':'Open in Google Drive',
  'CAPIMASO':'CAPIMASO','Outlook Express':'Outlook Express','Fechar':'Close',
  'Estúdio CAPIMASO — importar mídia':'CAPIMASO Studio — Import Media',
  'CAPIMASO / GERENCIADOR LOCAL':'CAPIMASO / LOCAL MEDIA MANAGER',
@@ -21,7 +32,7 @@ export const translations: Record<string,string> = {
  'Aqui você pode abrir minhas pastas, assistir às edições e conhecer meu trabalho sem sair do desktop.':'Explore my folders, watch my edits and get to know my work without leaving the desktop.',
  'Disponível para projetos':'Available for projects',
  'Oi, meu nome é Tiago, mas pela internet sou o capimaso. Estou construindo minha trajetória na edição de vídeo, aprendendo a cada projeto. Gosto especialmente de gaming e conteúdo para criadores: ritmo, cortes que fazem sentido e histórias que prendem atenção. Trabalho principalmente com Adobe Premiere Pro e, quando o projeto pede, After Effects e Photoshop. Se tem uma ideia, pode me chamar.':"Hi! My name is Tiago, but online I'm known as capimaso. I'm building my journey in video editing, learning from every project. I especially enjoy gaming and creator content: good pacing, purposeful cuts, and stories worth watching. I mainly work with Adobe Premiere Pro and, when a project calls for it, After Effects and Photoshop. Got an idea? Let's talk.",
- 'Reels e Shorts':'Reels & Shorts','Vídeos longos':'Long Videos','Thumbnails':'Thumbnails','Reproduzir':'Play','Nenhum vídeo nesta pasta. Envie um MP4 em':'No videos in this folder. Upload an MP4 at','Esta pasta está vazia. Coloque imagens em':'This folder is empty. Add images to','objeto(s)':'item(s)','objetos':'items',
+ 'Reels e Shorts':'Reels & Shorts','Vídeos longos':'Long Videos','Thumbnails':'Thumbnails','Reproduzir':'Play','Nenhum vídeo nesta pasta. Adicione um link do Google Drive em':'No videos in this folder. Add a Google Drive link at','Esta pasta está vazia. Coloque imagens em':'This folder is empty. Add images to','objeto(s)':'item(s)','objetos':'items',
  'Programas':'Programs','Disponibilidade':'Availability','Linha 1, coluna 1 · UTF-8':'Line 1, column 1 · UTF-8','Geral':'General','Hardware':'Hardware','Avançado':'Advanced','Estação de trabalho para edição de vídeo':'Video editing workstation','Programas instalados':'Installed Software',
  'Serviços de edição':'Editing Services','Escolha um formato. Para um orçamento, fale comigo.':'Choose a format. Contact me for a quote.','Pacotes de vídeos curtos':'Short-form video packages','até 60 segundos cada':'up to 60 seconds each','vídeo':'video','vídeos':'videos','Prazos, revisões e necessidades específicas: a combinar. Preços do portfólio original.':'Deadlines, revisions and special requests: by arrangement. Prices carried over from the original portfolio.',
  'Edição':'Editing','Imagem':'Image','Montagem, cortes, ritmo e áudio':'Assembly, cuts, pacing and audio','Movimento, animação e composição':'Motion, animation and compositing','Thumbnails e materiais gráficos':'Thumbnails and graphics','Vídeos verticais de até 60 segundos':'Vertical videos up to 60 seconds','Preço conforme duração e complexidade':'Price depends on duration and complexity','Destaques, compilações e conteúdo para jogos':'Highlights, compilations and gaming content','Edição para canais, streamers e redes sociais':'Editing for channels, streamers and social platforms','Propostas personalizadas':'Custom projects','Sob orçamento':'Request a quote','A partir de R$ 40':'Starting at R$ 40','A partir de R$ 90':'Starting at R$ 90','Conteúdo para criadores':'Creator Content','Projeto especial':'Special Project',
