@@ -1,3 +1,10 @@
+# Correção do build na Vercel — 18/10/2026
+
+- Logs do deployment `dpl_6ud6GjyMJU4BUNestoJNtLYR4Kws` confirmaram falha na checagem TypeScript: componentes do desktop antigo, não importados pela aplicação XP atual, e duas traduções duplicadas.
+- `tsconfig.json` passa a usar as rotas de `app/`, a configuração Next e os tipos gerados como entradas. Todos os componentes, helpers e dados importados continuam sendo verificados com `strict: true`. Arquivos legados preservados; nenhuma dependência de animação adicionada.
+- Removidas somente as cópias idênticas de `Meus trabalhos` e `Ferramentas` em `lib/locale-dictionary.ts`, mantendo os mesmos textos EN/PT.
+- `npm run check`, `npm run typecheck` e `npm run build` concluídos com sucesso. Conteúdo, imagens, thumbnails, projetos e links do Drive preservados.
+
 # Google Drive nos vídeos curtos — 18/10/2026
 
 - Reels/Shorts usam o player incorporado do Google Drive em 9:16, preservando o tema XP e todas as thumbnails. Vídeos longos e apresentação continuam no YouTube.

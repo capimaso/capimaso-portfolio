@@ -21,6 +21,8 @@ Exemplo: "Leia AGENTS.md. Preciso de uma nova aba no Meu computador. Faça mudan
 
 ## Cuidados de implantação
 
+O `tsconfig.json` verifica as entradas em `app/`, `next.config.ts`, os tipos gerados pelo Next e todos os módulos importados por essas entradas, inclusive componentes e dados fora de `app/`. A checagem estrita permanece ativa. Os componentes antigos (`Desktop.tsx`, `WindowContents.tsx` e auxiliares) e `lib/i18n.ts` estão preservados, mas não fazem parte da aplicação atual. Não voltar a incluir indiscriminadamente todos os arquivos legados no build. O dicionário atual é `lib/locale-dictionary.ts`; cada chave deve aparecer uma única vez.
+
 O `npm run dev`/`npm run build` executa a sincronização de imagens originais quando faltam. Vídeos não são recuperados para evitar reintroduzir binários removidos. O ZIP novo **não contém** os binários recuperáveis do GitHub original; não apagar a pasta `public` ao atualizar o repositório existente. Se GitHub não responder, pode-se reexecutar `npm run assets:sync`. Uma cópia limpa depende do repo original permanecer público enquanto não tiver sido sincronizado.
 
 ## Checklist de regressão
