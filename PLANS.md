@@ -1,11 +1,10 @@
 # CAPIMASO Dual Boot — plano aprovado
 
-## Progresso — shell Windows 7
+## Progresso — fotografias Windows 7
 
-Etapas 1–4 concluídas. Nesta rodada, a etapa 5 entrega desktop e shell Aero,
-taskbar, menu com busca e gerenciador de janelas. Por delimitação do pedido,
-a integração Drive fica pendente, assim como os jogos da etapa 6. Fotografias
-e Games abrem avisos de preparação; Sobre e Contato usam dados reais.
+Etapas 1–5 concluídas: boot, XP preservado, shell Aero, Drive público, Explorer
+e Photo Viewer com navegação, zoom e download. A rodada atual cobre fotografias;
+os jogos da etapa 6 continuam pendentes. Sobre e Contato usam dados reais.
 Assets recebidos: Harmony, Orb de três estados e cursores em `cursor/`.
 
 ## Objetivo e decisões
@@ -66,7 +65,7 @@ ao boot; não simula um desktop pronto.
 ### Google Drive
 
 Usar API v3 com fetch no servidor; não instalar better-gdrive nesta abordagem.
-Variáveis: DRIVE_FOLDER_ID, GOOGLE_DRIVE_API_KEY e DRIVE_FOLDER_RESOURCE_KEY
+Variáveis: DRIVE_FOLDER_ID (ID ou link de pasta), GOOGLE_DRIVE_API_KEY e DRIVE_FOLDER_RESOURCE_KEY
 opcional. Sem NEXT_PUBLIC, login ou OAuth para o acervo público.
 
 Listar filhos por parents e trashed=false, sob demanda e com nextPageToken.
@@ -77,10 +76,17 @@ data/photos.json como fonte do acervo. Build e XP não dependem da configuraçã
 
 GET /api/photos lista a raiz; folderId e pageToken permitem subpastas/páginas.
 Retornar pasta atual, itens com id/name/kind/mimeType/dimensões opcionais e
-nextPageToken. GET /api/photos/[id]/image?variant=thumbnail|original entrega
+nextPageToken, além dos breadcrumbs. `path` contém IDs ancestrais para chamadas
+sem cache/afinidade de servidor; cada vínculo é verificado em listagem do Drive,
+pois files.get pode omitir parents de arquivos públicos.
+GET /api/photos/[id]/image?variant=thumbnail|original entrega
 imagens sem expor a chave. Validar pertencimento de cada pasta/arquivo à árvore
 configurada; rejeitar IDs externos e URLs arbitrárias. Não persistir links
 temporários de miniaturas como URLs permanentes.
+
+`download=1` entrega attachment com os bytes e nome original. Cache de provas
+de pertencimento dura no máximo 60s, assim como o de listagem; não é um catálogo
+permanente. Nenhuma mídia é persistida no repositório.
 
 Explorer tem breadcrumbs, voltar/avançar, subpastas e carregamento progressivo.
 Visualizador tem anterior/próxima na pasta atual, zoom e ajuste sem distorção.

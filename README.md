@@ -49,25 +49,38 @@ duplo clique ou Enter abre. No celular, um toque abre em tela cheia. Arraste a
 barra de título ou redimensione pelas bordas no desktop. Focada a barra de
 título, setas movem a janela e Shift+setas redimensionam.
 
-Sobre e Contato mostram os dados reais. Fotografias e Games exibem avisos de
-preparação; a integração do acervo Drive e os jogos ainda serão implementados.
+Sobre e Contato mostram os dados reais. Fotografias abre o Explorer com o acervo
+público do Drive: breadcrumbs, voltar/avançar, miniaturas e carregamento por
+páginas. Duplo clique/Enter abre uma pasta ou imagem; no mobile, use um toque.
+O Photo Viewer tem fundo escuro, anterior/próximo na mesma pasta, zoom e **Baixar**
+para obter o original. Setas esquerda/direita navegam; +/- ajusta zoom e 0 encaixa
+à janela. Games continua em preparação.
 Reiniciar volta ao boot; o menu também permite abrir o XP. **Mostrar área de
 trabalho** minimiza/restaura as janelas visíveis sem reabrir as já minimizadas.
 EN/PT mantém a preferência compartilhada. `npm run test:win7` verifica as regras
 do gerenciador de janelas sem navegador.
 
-### Configuração futura de fotografias no Google Drive
+### Configuração de fotografias no Google Drive
 
-Copie `.env.example` para `.env.local`. Preencha `DRIVE_FOLDER_ID` com o ID
-da pasta pública e `GOOGLE_DRIVE_API_KEY` com a chave de um projeto Google Cloud
+Copie `.env.example` para `.env.local`. Preencha `DRIVE_FOLDER_ID` com o ID ou link
+completo da pasta pública e `GOOGLE_DRIVE_API_KEY` com a chave de um projeto Google Cloud
 com Drive API v3 habilitada. Compartilhe a pasta e o conteúdo como **Qualquer
 pessoa com o link → Leitor**. Se o link tiver `resourcekey`, copie esse valor
 para `DRIVE_FOLDER_RESOURCE_KEY`. Restrinja a chave à Drive API no Google Cloud.
 
-Essas variáveis serão utilizadas somente no servidor na próxima etapa do
-Windows 7. Não use prefixo `NEXT_PUBLIC_` e não versione `.env.local`.
+Essas variáveis são utilizadas somente no servidor. Não use prefixo `NEXT_PUBLIC_`
+e não versione `.env.local`.
 O boot, o XP e o Estúdio continuam funcionando sem configuração do Drive.
-Não há integração fotográfica ou consulta remota ao Drive nesta entrega.
+A API lista pastas e JPG/PNG/WebP/GIF/AVIF/BMP, sem copiar o acervo para o
+repositório. Listagens e provas de pertencimento têm cache de 60s; Atualizar
+recarrega a pasta. Arquivos novos aparecem sem deploy após a atualização do cache.
+Erros de rede, permissão e quota aparecem dentro da janela com tentar novamente.
+
+Miniaturas, originais e downloads passam pelo proxy local; a chave nunca vai
+para o navegador. O caminho de ancestrais enviado pelo cliente é verificado
+por listagens do Drive, incluindo em instâncias sem cache anterior. O visualizador
+carrega metadados de páginas seguintes quando necessário, sem pré-baixar originais.
+`npm run test:photos` cobre o backend com respostas simuladas e sem credenciais reais.
 
 `npm run dev` tenta recuperar automaticamente os arquivos da pasta `public` do repositório original **somente se não estiverem presentes**. Se quiser repetir manualmente:
 

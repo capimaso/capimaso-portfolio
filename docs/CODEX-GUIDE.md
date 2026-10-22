@@ -10,8 +10,16 @@ O Windows 7 está em `/win7`, implementado em `src/os/win7/` com CSS Modules.
 `WindowChrome.tsx` trata gestos e teclado. `npm run test:win7` verifica as regras.
 O CSS aplica a sprite original do Orb em três posições, sem recortar ou alterar
 o PNG. Cursores usam o caminho singular `public/assets/win7/cursor/`.
-Fotografias/Drive e jogos ainda estão em preparação; não fabricar acervo nem
-apresentar Solitaire ou Purble Place como jogáveis nesta etapa.
+Fotografias usa Explorer/PhotoViewer e `/api/photos`, com dados reais do Drive.
+Jogos ainda estão em preparação; não apresentar Solitaire ou Purble Place como
+jogáveis até essa etapa ser implementada. Não fabricar acervo.
+
+O backend está em `src/server/drive/`, marcado server-only. Credenciais apenas
+em ambiente, nunca no código ou logs. `DRIVE_FOLDER_ID` aceita ID ou link de pasta.
+Client paths são dicas, verificadas por listagens pai/filho; não confie em
+`files.get.parents`, pois pode faltar em arquivos públicos. O proxy permite
+somente imagens raster dentro da raiz e hosts Google para bytes/miniaturas.
+Use `npm run test:photos` para erros, limites de escopo, proxy e paginação.
 
 ## Como pedir mudanças ao Codex
 

@@ -21,8 +21,11 @@ Read this file FIRST when editing this repository, even without prior chat conte
 ## Architecture
 - `/` is BIOS + Boot Manager (`src/boot/`); `/xp` is the existing video desktop.
 - `/win7` is the Aero desktop shell in `src/os/win7/`, isolated with CSS Modules.
-- Photography Drive integration and playable games are still pending. Preserve
-  the preparation notices until those features are implemented.
+- Photography uses `src/server/drive/` and `/api/photos`; Explorer and PhotoViewer
+  live in `src/os/win7/apps/`. Playable games remain pending.
+- Drive credentials are server-only environment variables. Never print or commit
+  `.env.local`. Keep listing/proxy access within the configured public root;
+  client paths are hints and must be verified against Drive folder listings.
 - Win7 original wallpaper/Orb/cursors live in `public/assets/win7/`; cursor
   directory is singular (`cursor/`). Orb is 106x318, three vertical frames.
 - Scope every XP CSS selector to `.xp-shell`; both XP and Studio use that shell.

@@ -1,5 +1,13 @@
 # Windows 7 — Google Drive — 22/10/2026
 
+- Check, typecheck, build, nove testes do backend e sete do gerenciador passaram.
+  Teste real listou pastas, abriu imagens e validou download idêntico por hash.
+  Testes simulados de erro, paginação e mobile passaram também em produção.
+  Google aplicou limite temporário aos originais na reconferência; caso tratado
+  sem contorno. Detalhes e limites em `docs/PHOTOS-VERIFICATION.md`.
+- `.env.local` preservado e não versionado; nenhuma ocorrência da chave real
+  encontrada nos arquivos versionados ou bundles do navegador.
+
 - Limites de quota e bloqueios temporários HTML do Google retornam 429 com
   Retry-After, sem repassar a página do provedor nem tentar contornar o bloqueio.
 

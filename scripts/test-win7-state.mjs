@@ -62,3 +62,16 @@ test('rectangles stay reachable after a workspace shrinks', () => {
   assert.deepEqual(rect, { x: 0, y: 0, width: 768, height: 400 });
   assert.deepEqual(fitBounds({ x: -20, y: -10, width: 1, height: 1 }, area), { x: 0, y: 0, width: 320, height: 200 });
 });
+
+test('opening another photograph updates the existing viewer without losing its geometry', () => {
+  const first = { images: [{ id: 'a' }], index: 0, folder: { id: 'album' }, path: ['root', 'album'] };
+  const second = { ...first, images: [{ id: 'b' }] };
+  let state = reduce(initialWindows, { type: 'open', id: 'photoViewer', area, selection: first });
+  const bounds = state.windows[0].bounds;
+  state = reduce(state, { type: 'minimize', id: 'photoViewer' });
+  state = reduce(state, { type: 'open', id: 'photoViewer', area, selection: second });
+  assert.equal(state.windows.length, 1);
+  assert.equal(state.windows[0].selection, second);
+  assert.equal(state.windows[0].minimized, false);
+  assert.deepEqual(state.windows[0].bounds, bounds);
+});

@@ -43,6 +43,6 @@ do computador do visitante. Nenhum som ou controle do sistema operacional real
 é simulado. As molduras, gradientes e controles geométricos são CSS de interface,
 sem criar imagens para substituir recursos ausentes.
 
-Fotografias serão lidas do Google Drive público, configurado via ambiente;
+Fotografias são lidas do Google Drive público, configurado via ambiente;
 não preencher o acervo com imagens de demonstração. Chave e pasta são configuração,
 não assets gráficos. Fontes usam Tahoma/Segoe UI instaladas, sem redistribuição.
