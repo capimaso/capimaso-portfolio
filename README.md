@@ -49,6 +49,12 @@ duplo clique ou Enter abre. No celular, um toque abre em tela cheia. Arraste a
 barra de título ou redimensione pelas bordas no desktop. Focada a barra de
 título, setas movem a janela e Shift+setas redimensionam.
 
+O visual do Win7 usa `7.css` 0.21.1, na distribuição oficial isolada `.win7`;
+o XP continua com seu tema próprio. A busca do Iniciar encontra aplicativos
+locais (incluindo Calculadora e Bloco de notas) e pastas da raiz pública do Drive,
+com paginação. Resultados de pasta abrem seu endereço no Explorer existente;
+apps locais continuam pesquisáveis quando o Drive está indisponível.
+
 Sobre e Contato mostram os dados reais. Fotografias abre o Explorer com o acervo
 público do Drive: breadcrumbs, voltar/avançar, miniaturas e carregamento por
 páginas. Duplo clique/Enter abre uma pasta ou imagem; no mobile, use um toque.

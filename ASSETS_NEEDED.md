@@ -9,7 +9,7 @@
 - XP Bliss, capas, avatares, thumbnails e cursores: preservar caminhos atuais.
 - `public/assets/win7/wallpapers/harmony.jpg`: wallpaper original recebido e usado.
 - `public/assets/win7/theme/start-orb.png`: sprite 106x318 com três estados;
-  frames nativos 106x106, posições Y 0/-106/-212 em pseudo-elemento reduzido
+  frames nativos 106x106, posições Y 0/-106/-212 em elemento dedicado reduzido
   uniformemente a 50%; sem esticar, recortar ou modificar o arquivo.
 - `public/assets/win7/cursor/`: cursores originais recebidos; usados Normal
   Select, Link Select, Move e os quatro de redimensionamento. Diretório singular.
@@ -26,7 +26,8 @@ substituem wallpaper limpo ou recursos individuais.
 
 | Recurso | Destino previsto | Situação |
 | --- | --- | --- |
-| Recursos de moldura Aero | public/assets/win7/theme/ | Molduras reconstruídas em CSS com base nas capturas; sprites originais não encontrados |
+| Recursos originais de moldura Aero | public/assets/win7/theme/ | Sprites originais ausentes; chrome atual usa os estilos oficiais de 7.css 0.21.1, sem gerar imagens |
+| Recursos de logon (fundo e moldura do avatar) | public/assets/win7/logon/ | Ainda não incorporados; AuthUX é referência para etapa futura |
 | Cursor de seleção de texto | public/assets/win7/cursor/ | Não encontrado; fallback default |
 | Sons XP/Win7 | public/assets/win7/sounds/ e equivalente XP | Não encontrados |
 | Cartas, versos e tabuleiro Solitaire | public/assets/win7/games/solitaire/ | Ícone presente; artes internas ausentes |

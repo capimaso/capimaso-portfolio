@@ -2,6 +2,10 @@
 
 ## 1. Objetivo e estado
 
+Rodada concluída: base scoped 7.css, hook central de janelas, gestos separados
+e busca integrada a apps/pastas implementados. Validação em
+[docs/WIN7-REFACTOR-VERIFICATION.md](docs/WIN7-REFACTOR-VERIFICATION.md).
+
 Preservar Tiago / CAPIMASO, o XP e todo o conteúdo existente. Consolidar o Windows 7
 com 7.css e separação entre estado, gestos, apresentação e aplicativos. Stack:
 Next.js App Router, React e TypeScript. Sem Vue, styled-components, Tailwind ou

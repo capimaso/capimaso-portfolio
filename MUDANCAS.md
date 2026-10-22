@@ -2,6 +2,11 @@
 
 ## Base visual 7.css — refatoração incremental
 
+- Validação final em docs/WIN7-REFACTOR-VERIFICATION.md: 22 testes automatizados,
+  fluxos de navegador em dev/produção, Drive real e hashes do XP preservados.
+  Chave ausente dos bundles e arquivos versionados; sem novas imagens geradas.
+  Comparação visual com capturas locais, Win7 Simu e explorer7 registrada.
+
 - Busca separada em catálogo bilíngue e consulta paginada das pastas reais da
   raiz do Drive. Debounce/cancelamento e cache de 60 s evitam consultas ociosas;
   falha remota não impede Calculadora/Bloco de notas e outros atalhos locais.
