@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type PointerEvent, type KeyboardEvent, type ReactNode } from 'react';
 import { useT } from '@/src/shared/LanguageContext';
-import { applications, type AppWindow, type Bounds, type WorkArea } from './types';
+import { windowApplications as applications, type AppWindow, type Bounds, type WorkArea } from './types';
 import Win7Icon from './Win7Icon';
 import { fitBounds } from './window-state';
 import styles from './win7.module.css';

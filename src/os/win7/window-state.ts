@@ -1,8 +1,9 @@
-import { applications, type AppId, type AppWindow, type Bounds, type WorkArea } from './types';
+import { windowApplications as applications, type AppId, type AppWindow, type Bounds, type WorkArea } from './types';
+import type { PhotoSelection } from '@/src/lib/photos';
 
 export type WindowState = { windows: AppWindow[]; desktopRestore: AppId[] };
 export type WindowAction =
-  | { type: 'open'; id: AppId; area: WorkArea }
+  | { type: 'open'; id: AppId; area: WorkArea; selection?: PhotoSelection }
   | { type: 'focus' | 'close' | 'minimize' | 'maximize' | 'task'; id: AppId }
   | { type: 'bounds'; id: AppId; bounds: Bounds }
   | { type: 'fit'; area: WorkArea }
@@ -26,11 +27,11 @@ export function windowReducer(state: WindowState, action: WindowAction): WindowS
   const windows = state.windows;
   switch (action.type) {
     case 'open': {
-      if (windows.some(win => win.id === action.id)) return { windows: focus(windows, action.id), desktopRestore: [] };
+      if (windows.some(win => win.id === action.id)) return { windows: focus(windows.map(win => win.id === action.id && action.selection ? { ...win, selection: action.selection } : win), action.id), desktopRestore: [] };
       const app = applications.find(app => app.id === action.id)!;
       const offset = (windows.length % 5) * 26;
       const bounds = fitBounds({ x: 120 + offset, y: 55 + offset, width: app.width, height: app.height }, action.area);
-      return { windows: [...windows, { id: action.id, bounds, minimized: false, maximized: false }], desktopRestore: [] };
+      return { windows: [...windows, { id: action.id, bounds, minimized: false, maximized: false, ...(action.selection ? { selection: action.selection } : {}) }], desktopRestore: [] };
     }
     case 'focus': return { ...state, windows: focus(windows, action.id) };
     case 'close': return { windows: windows.filter(win => win.id !== action.id), desktopRestore: state.desktopRestore.filter(id => id !== action.id) };

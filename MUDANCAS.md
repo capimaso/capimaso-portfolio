@@ -1,5 +1,11 @@
 # Windows 7 — Google Drive — 22/10/2026
 
+- Explorer de fotografias conectado à raiz real, com histórico voltar/avançar,
+  breadcrumbs clicáveis, sidebar, miniaturas em molduras, seleção, paginação,
+  skeletons e mensagens de erro EN/PT. Enter/duplo clique abre; mobile usa um toque.
+- Caminhos do cliente são apenas dicas: cada vínculo pai/filho é verificado por
+  listagem do Drive, inclusive quando files.get omite parents no acervo público.
+
 - APIs de listagem paginada e proxy de miniaturas/originais em `/api/photos`.
   Apenas pastas e imagens raster compatíveis; navegação limitada à raiz configurada.
 - Credenciais lidas somente no servidor. `DRIVE_FOLDER_ID` aceita ID ou link de

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useLanguage, useT } from '@/src/shared/LanguageContext';
 import type { Language } from '@/lib/locale-dictionary';
-import { applications, type AppId, type AppWindow } from './types';
+import { windowApplications as applications, type AppId, type AppWindow } from './types';
 import Win7Icon from './Win7Icon';
 import styles from './win7.module.css';
 

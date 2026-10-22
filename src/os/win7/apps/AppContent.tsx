@@ -7,10 +7,15 @@ import { socials } from '@/data/socials';
 import { applications, type AppId } from '../types';
 import Win7Icon from '../Win7Icon';
 import styles from '../win7.module.css';
+import type { PhotoSelection } from '@/src/lib/photos';
+import Explorer from './Explorer';
+import PhotoViewer from './PhotoViewer';
 
-export default function AppContent({ id, onOpen }: { id: AppId; onOpen: (id: AppId) => void }) {
+export default function AppContent({ id, onOpen, onView, selection }: { id: AppId; onOpen: (id: AppId) => void; onView: (selection: PhotoSelection) => void; selection?: PhotoSelection }) {
   const t = useT();
   const [notice, setNotice] = useState('');
+  if (id === 'photos') return <Explorer onOpen={onOpen} onView={onView} />;
+  if (id === 'photoViewer') return selection ? <PhotoViewer selection={selection} /> : null;
   if (id === 'about') return <article className={styles.about}>
     <header><img src="/images/profile.jpg" width={72} height={72} alt={profile.brand} /><div><h1>{profile.name} / {profile.brand}</h1><p>{t(profile.role)}</p></div></header>
     <p>{t(profile.bio)}</p><p>{t(profile.status)}</p>
@@ -29,7 +34,7 @@ export default function AppContent({ id, onOpen }: { id: AppId; onOpen: (id: App
   </section>;
 
   return <div className={styles.explorer}>
-    <div className={styles.addressBar}><Win7Icon name={id} size={16} /><span>{t(id === 'photos' ? 'Bibliotecas' : 'Meu computador')}</span><span aria-hidden="true">›</span><strong>{t(applications.find(app => app.id === id)!.label)}</strong></div>
+    <div className={styles.addressBar}><Win7Icon name={id} size={16} /><span>{t('Meu computador')}</span><span aria-hidden="true">›</span><strong>{t(applications.find(app => app.id === id)!.label)}</strong></div>
     <div className={styles.explorerToolbar}><span>{t('Organizar')}</span><span>{t('Biblioteca de fotografias e pastas pessoais')}</span></div>
     <div className={styles.explorerColumns}>
       <nav className={styles.explorerSidebar} aria-label={t('Outros lugares')}>
@@ -38,7 +43,6 @@ export default function AppContent({ id, onOpen }: { id: AppId; onOpen: (id: App
       </nav>
       <div className={styles.explorerBody}>
         <h1>{t(applications.find(app => app.id === id)!.label)}</h1>
-        {id === 'photos' && <div className={styles.emptyLibrary}><Win7Icon name="photos" size={64} /><p>{t('A biblioteca de fotografias está em preparação.')}</p></div>}
         {id === 'recycle' && <div className={styles.emptyLibrary}><Win7Icon name="recycle" size={64} /><p>{t('Lixeira vazia')}</p></div>}
         {id === 'games' && <><p>{t('Os jogos estarão disponíveis em uma próxima atualização.')}</p><div className={styles.gamesList}>
           {(['solitaire', 'purble'] as const).map(game => <div key={game} className={styles.gameItem}>

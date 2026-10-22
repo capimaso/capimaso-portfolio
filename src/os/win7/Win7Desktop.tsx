@@ -10,6 +10,7 @@ import StartMenu from './StartMenu';
 import WindowManager from './WindowManager';
 import { activeWindow, initialWindows, windowReducer } from './window-state';
 import styles from './win7.module.css';
+import type { PhotoSelection } from '@/src/lib/photos';
 
 export default function Win7Desktop() {
   const [language, setLanguage] = useState<Language>('en');
@@ -73,6 +74,11 @@ function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {
     dispatch({ type: 'open', id, area });
   }, [area]);
 
+  const view = useCallback((selection: PhotoSelection) => {
+    setStartOpen(false);
+    dispatch({ type: 'open', id: 'photoViewer', area, selection });
+  }, [area]);
+
   function close(id: AppId) {
     dispatch({ type: 'close', id });
     requestAnimationFrame(() => root.current?.querySelector<HTMLButtonElement>(`[data-shortcut="${id}"]`)?.focus());
@@ -113,7 +119,7 @@ function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {
     </div>
     <div ref={workspace} className={styles.workspace}>
       <WindowManager windows={state.windows} activeId={activeId} compact={compact} area={area}
-        dispatch={dispatch} onOpen={open} onClose={close} />
+        dispatch={dispatch} onOpen={open} onClose={close} onView={view} />
     </div>
     {startOpen && <StartMenu onOpen={open} />}
     <Taskbar startOpen={startOpen} onStart={() => setStartOpen(value => !value)} windows={state.windows}

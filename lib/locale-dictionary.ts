@@ -1,6 +1,21 @@
 /** Single source of truth for interface translations; English is the initial language. */
 export type Language = 'en' | 'pt';
 export const translations: Record<string,string> = {
+ 'Avançar':'Forward',
+ 'Visualizador de Fotos do Windows':'Windows Photo Viewer',
+ 'Carregando fotografias...':'Loading photographs...',
+ 'Carregando...':'Loading...',
+ 'Carregar mais':'Load more',
+ 'Mais itens disponíveis':'More items available',
+ 'Tentar novamente':'Try again',
+ 'Prévia indisponível':'Preview unavailable',
+ 'Esta pasta está vazia.':'This folder is empty.',
+ 'A galeria ainda não está disponível. Tente novamente mais tarde.':'The gallery is not available yet. Please try again later.',
+ 'Não foi possível abrir este endereço. Volte para Fotografias.':'This address could not be opened. Return to Photographs.',
+ 'Esta pasta ou imagem não está mais disponível.':'This folder or image is no longer available.',
+ 'Não foi possível acessar esta pasta ou imagem.':'This folder or image could not be accessed.',
+ 'A galeria está recebendo muitos acessos. Aguarde um pouco e tente novamente.':'The gallery is busy. Please wait a little and try again.',
+ 'Não foi possível carregar as fotografias. Verifique sua conexão e tente novamente.':'Photographs could not be loaded. Check your connection and try again.',
  'Área de trabalho Windows 7':'Windows 7 desktop',
  'Fotografias':'Photographs',
  'Sobre':'About',

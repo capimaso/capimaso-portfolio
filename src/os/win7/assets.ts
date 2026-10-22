@@ -2,6 +2,8 @@ const icon = (group: string, file: string) => `/assets/win7/icons/${encodeURICom
 
 export const win7Assets = {
   photos: icon('Special Folders', 'imageres_113'),
+  folder: icon('Standard Folders', 'imageres_3'),
+  photoViewer: icon('Libraries', 'imageres_1003'),
   about: icon('Special Folders', 'imageres_123'),
   contact: icon('Shell32.dll', 'imageres_20'),
   games: icon('Special Folders', 'imageres_186'),
