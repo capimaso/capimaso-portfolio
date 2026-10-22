@@ -2,6 +2,13 @@
 
 ## Base visual 7.css — refatoração incremental
 
+- useWindowManager centraliza ações e área útil; useWindowGesture separa captura
+  de ponteiro, atualização por frame e cleanup. Geometria pura cobre oito bordas.
+  Foco repetido é idempotente; frames atrasados não alteram janelas minimizadas
+  ou maximizadas. Fechar não rouba mais foco da próxima janela visível.
+- Testes do gerenciador ampliados e fluxos de navegador verificaram drag/resize,
+  restauração exata, taskbar, mostrar desktop, idiomas e transição XP/Win7.
+
 - Plano reescrito com fontes e código consultados, limites dos projetos e etapas
   futuras de logon/jogos. 7.css 0.21.1 fixado no manifesto e lockfile.
 - Distribuição oficial scoped na camada win7-base: molduras, estados de título,

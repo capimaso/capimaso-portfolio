@@ -1,14 +1,14 @@
 'use client';
 
-import { useEffect, useRef, type PointerEvent, type KeyboardEvent, type ReactNode } from 'react';
+import { useEffect, useRef, type KeyboardEvent, type ReactNode } from 'react';
 import { useT } from '@/src/shared/LanguageContext';
 import { windowApplications as applications, type AppWindow, type Bounds, type WorkArea } from './types';
 import Win7Icon from './Win7Icon';
 import { fitBounds } from './window-state';
 import styles from './win7.module.css';
+import { useWindowGesture } from './useWindowGesture';
+import type { ResizeDirection } from './window-geometry';
 
-type Direction = 'n' | 's' | 'e' | 'w' | 'ne' | 'nw' | 'se' | 'sw';
-type Gesture = { pointerId: number; x: number; y: number; bounds: Bounds; direction?: Direction };
 type Props = {
   window: AppWindow; active: boolean; compact: boolean; area: WorkArea; order: number;
   onFocus: () => void; onClose: () => void; onMinimize: () => void; onMaximize: () => void;
@@ -18,40 +18,13 @@ type Props = {
 export default function WindowChrome({ window: win, active, compact, area, order, onFocus, onClose, onMinimize, onMaximize, onBounds, children }: Props) {
   const t = useT();
   const panel = useRef<HTMLElement>(null);
-  const gesture = useRef<Gesture | null>(null);
+  const gesture = useWindowGesture(win, compact, area, onFocus, onBounds);
   const maximized = compact || win.maximized;
   const title = t(applications.find(app => app.id === win.id)!.label);
 
   useEffect(() => {
     if (active && !win.minimized && !panel.current?.contains(document.activeElement)) panel.current?.focus({ preventScroll: true });
   }, [active, win.minimized]);
-
-  function start(event: PointerEvent<HTMLDivElement>, direction?: Direction) {
-    if (event.button !== 0 || maximized || (event.target as HTMLElement).closest('button')) return;
-    event.preventDefault();
-    event.stopPropagation();
-    onFocus();
-    gesture.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, bounds: win.bounds, direction };
-    event.currentTarget.setPointerCapture(event.pointerId);
-  }
-
-  function move(event: PointerEvent<HTMLDivElement>) {
-    const drag = gesture.current;
-    if (!drag || drag.pointerId !== event.pointerId || maximized) return;
-    const dx = event.clientX - drag.x, dy = event.clientY - drag.y;
-    const b = drag.bounds, direction = drag.direction;
-    if (!direction) {
-      onBounds(fitBounds({ ...b, x: b.x + dx, y: b.y + dy }, area));
-      return;
-    }
-    let left = b.x, top = b.y, right = b.x + b.width, bottom = b.y + b.height;
-    const minWidth = Math.min(320, area.width), minHeight = Math.min(200, area.height);
-    if (direction.includes('w')) left = Math.max(0, Math.min(b.x + dx, right - minWidth));
-    if (direction.includes('e')) right = Math.min(area.width, Math.max(right + dx, left + minWidth));
-    if (direction.includes('n')) top = Math.max(0, Math.min(b.y + dy, bottom - minHeight));
-    if (direction.includes('s')) bottom = Math.min(area.height, Math.max(bottom + dy, top + minHeight));
-    onBounds({ x: left, y: top, width: right - left, height: bottom - top });
-  }
 
   function keyboardMove(event: KeyboardEvent<HTMLDivElement>) {
     if (event.target !== event.currentTarget || maximized || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
@@ -68,9 +41,7 @@ export default function WindowChrome({ window: win, active, compact, area, order
     style={{ left: maximized ? 0 : win.bounds.x, top: maximized ? 0 : win.bounds.y,
       width: maximized ? '100%' : win.bounds.width, height: maximized ? '100%' : win.bounds.height, zIndex: order + 1 }}>
     <div className={`title-bar ${styles.titlebar}`} tabIndex={0} aria-label={t('Setas movem a janela; Shift e setas redimensionam.')}
-      onKeyDown={keyboardMove} onPointerDown={event => start(event)} onPointerMove={move}
-      onPointerUp={() => { gesture.current = null; }} onPointerCancel={() => { gesture.current = null; }}
-      onLostPointerCapture={() => { gesture.current = null; }}
+      onKeyDown={keyboardMove} onPointerDown={event => gesture.start(event)} {...gesture.handlers}
       onDoubleClick={event => { if (!compact && !(event.target as HTMLElement).closest('button')) onMaximize(); }}>
       <span className={`title-bar-text ${styles.windowTitle}`}><Win7Icon name={win.id} size={16} /><span>{title}</span></span>
       <div className={`title-bar-controls ${styles.windowButtons}`}>
@@ -81,10 +52,8 @@ export default function WindowChrome({ window: win, active, compact, area, order
       </div>
     </div>
     <div className={`window-body ${styles.windowContent}`}>{children}</div>
-    {!maximized && (['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'] as Direction[]).map(direction => <div
+    {!maximized && (['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'] as ResizeDirection[]).map(direction => <div
       key={direction} className={`${styles.resizeHandle} ${styles[direction]}`} data-resize={direction} aria-hidden="true"
-      onPointerDown={event => start(event, direction)} onPointerMove={move}
-      onPointerUp={() => { gesture.current = null; }} onPointerCancel={() => { gesture.current = null; }}
-      onLostPointerCapture={() => { gesture.current = null; }} />)}
+      onPointerDown={event => gesture.start(event, direction)} {...gesture.handlers} />)}
   </section>;
 }

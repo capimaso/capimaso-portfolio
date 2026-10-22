@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useReducer, useRef, useState, type KeyboardEvent } from 'react';
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { LanguageProvider, useT } from '@/src/shared/LanguageContext';
 import type { Language } from '@/lib/locale-dictionary';
 import { applications, type AppId } from './types';
@@ -8,7 +8,7 @@ import Win7Icon from './Win7Icon';
 import Taskbar from './Taskbar';
 import StartMenu from './StartMenu';
 import WindowManager from './WindowManager';
-import { activeWindow, initialWindows, windowReducer } from './window-state';
+import { useWindowManager } from './useWindowManager';
 import styles from './win7.module.css';
 import type { PhotoSelection } from '@/src/lib/photos';
 
@@ -35,26 +35,21 @@ function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {
   const shortcuts = useRef<(HTMLButtonElement | null)[]>([]);
   const root = useRef<HTMLElement>(null);
   const workspace = useRef<HTMLDivElement>(null);
-  const [state, dispatch] = useReducer(windowReducer, initialWindows);
-  const [area, setArea] = useState({ width: 1024, height: 728 });
-  const [compact, setCompact] = useState(false);
+  const manager = useWindowManager(workspace);
+  const { state, dispatch, area, compact, activeId } = manager;
   const [startOpen, setStartOpen] = useState(false);
-  const activeId = activeWindow(state.windows);
+  const previousActive = useRef<AppId | undefined>(undefined);
 
   useEffect(() => {
-    const element = workspace.current;
-    if (!element) return;
-    const observer = new ResizeObserver(() => {
-      const next = { width: element.clientWidth, height: element.clientHeight };
-      if (!next.width || !next.height) return;
-      setArea(next);
-      setCompact(next.width < 720);
-      // Mobile uses a fullscreen view; leave desktop bounds intact.
-      if (next.width >= 720) dispatch({ type: 'fit', area: next });
-    });
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
+    if (!activeId && previousActive.current) {
+      const id = previousActive.current;
+      const control = root.current?.querySelector<HTMLButtonElement>(`[data-task="${id}"]`)
+        || root.current?.querySelector<HTMLButtonElement>(`[data-shortcut="${id}"]`)
+        || root.current?.querySelector<HTMLButtonElement>('[data-start-button]');
+      control?.focus({ preventScroll: true });
+    }
+    previousActive.current = activeId;
+  }, [activeId]);
 
   useEffect(() => {
     const keyboard = (event: globalThis.KeyboardEvent) => {
@@ -71,18 +66,13 @@ function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {
 
   const open = useCallback((id: AppId) => {
     setStartOpen(false);
-    dispatch({ type: 'open', id, area });
-  }, [area]);
+    manager.open(id);
+  }, [manager.open]);
 
   const view = useCallback((selection: PhotoSelection) => {
     setStartOpen(false);
-    dispatch({ type: 'open', id: 'photoViewer', area, selection });
-  }, [area]);
-
-  function close(id: AppId) {
-    dispatch({ type: 'close', id });
-    requestAnimationFrame(() => root.current?.querySelector<HTMLButtonElement>(`[data-shortcut="${id}"]`)?.focus());
-  }
+    manager.open('photoViewer', selection);
+  }, [manager.open]);
 
   function navigate(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     if (event.key === 'Enter') { event.preventDefault(); open(applications[index].id); return; }
@@ -119,12 +109,12 @@ function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {
     </div>
     <div ref={workspace} className={styles.workspace}>
       <WindowManager windows={state.windows} activeId={activeId} compact={compact} area={area}
-        dispatch={dispatch} onOpen={open} onClose={close} onView={view} />
+        dispatch={dispatch} onOpen={open} onClose={manager.close} onView={view} />
     </div>
     <StartMenu open={startOpen} onOpen={open} />
     <Taskbar startOpen={startOpen} onStart={() => setStartOpen(value => !value)} windows={state.windows}
-      activeId={activeId} onOpen={open} onTask={id => dispatch({ type: 'task', id })}
-      onShowDesktop={() => dispatch({ type: 'desktop' })} onLanguage={onLanguage} />
+      activeId={activeId} onOpen={open} onTask={manager.task}
+      onShowDesktop={manager.showDesktop} onLanguage={onLanguage} />
     <noscript><p className={styles.noScript}>{t('Ative o JavaScript para usar as janelas.')} <a href="/">{t('Voltar ao Boot Manager')}</a></p></noscript>
   </main>;
 }

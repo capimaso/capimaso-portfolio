@@ -9,8 +9,10 @@ const compile = source => ts.transpileModule(source, {
 }).outputText;
 const moduleURL = source => `data:text/javascript;base64,${Buffer.from(source).toString('base64')}`;
 const typesURL = moduleURL(compile(await readFile(new URL('../src/os/win7/types.ts', import.meta.url), 'utf8')));
+const geometryURL = moduleURL(compile(await readFile(new URL('../src/os/win7/window-geometry.ts', import.meta.url), 'utf8')));
+const { gestureBounds } = await import(geometryURL);
 const reducerSource = compile(await readFile(new URL('../src/os/win7/window-state.ts', import.meta.url), 'utf8'));
-const { windowReducer: reduce, initialWindows, activeWindow, fitBounds } = await import(moduleURL(reducerSource.replace("'./types'", JSON.stringify(typesURL))));
+const { windowReducer: reduce, initialWindows, activeWindow, fitBounds } = await import(moduleURL(reducerSource.replaceAll("'./window-geometry'", JSON.stringify(geometryURL)).replace("'./types'", JSON.stringify(typesURL))));
 const area = { width: 1440, height: 860 };
 const open = (state, id) => reduce(state, { type: 'open', id, area });
 
@@ -74,4 +76,38 @@ test('opening another photograph updates the existing viewer without losing its 
   assert.equal(state.windows[0].selection, second);
   assert.equal(state.windows[0].minimized, false);
   assert.deepEqual(state.windows[0].bounds, bounds);
+});
+
+test('resizing each edge preserves opposite edges and obeys minimum sizes and work area', () => {
+  const bounds = { x: 120, y: 100, width: 640, height: 450 };
+  for (const direction of ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw']) {
+    for (const delta of [-10000, -23, 40, 10000]) {
+      const rect = gestureBounds(bounds, area, delta, delta, direction);
+      assert(rect.x >= 0 && rect.y >= 0 && rect.width >= 320 && rect.height >= 200);
+      assert(rect.x + rect.width <= area.width && rect.y + rect.height <= area.height);
+      if (!direction.includes('w')) assert.equal(rect.x, bounds.x);
+      if (!direction.includes('n')) assert.equal(rect.y, bounds.y);
+      if (!direction.includes('e')) assert.equal(rect.x + rect.width, bounds.x + bounds.width);
+      if (!direction.includes('s')) assert.equal(rect.y + rect.height, bounds.y + bounds.height);
+    }
+  }
+});
+
+test('focus is idempotent; arbitrarily many focus changes keep one entry per window', () => {
+  let state = open(open(initialWindows, 'photos'), 'about');
+  assert.equal(reduce(state, { type: 'focus', id: 'about' }), state);
+  for (let index = 0; index < 2000; index++) state = reduce(state, { type: 'focus', id: index % 2 ? 'photos' : 'about' });
+  assert.equal(state.windows.length, 2);
+  assert.equal(new Set(state.windows.map(win => win.id)).size, 2);
+  assert.equal(activeWindow(state.windows), 'photos');
+});
+
+test('late gesture frames cannot overwrite minimized or maximized restore geometry', () => {
+  const state = open(initialWindows, 'photos');
+  for (const type of ['minimize', 'maximize']) {
+    const changed = reduce(state, { type, id: 'photos' });
+    const late = reduce(changed, { type: 'bounds', id: 'photos', bounds: { x: 0, y: 0, width: 321, height: 201 } });
+    assert.deepEqual(late.windows[0].bounds, state.windows[0].bounds);
+  }
+  assert.equal(reduce(state, { type: 'bounds', id: 'photos', bounds: { x: NaN, y: 0, width: 320, height: 200 } }), state);
 });
