@@ -35,13 +35,26 @@ Abra `http://localhost:3000`.
 
 - BIOS e Boot Manager: `http://localhost:3000`
 - Portfólio de vídeos Windows XP: `http://localhost:3000/xp`
-- Windows 7 (aviso até a próxima etapa): `http://localhost:3000/win7`
+- Desktop Windows 7: `http://localhost:3000/win7`
 - Estúdio de upload: **`http://localhost:3000/studio`**
 
 O boot aguarda sua escolha: setas e Enter, clique ou toque. A BIOS dura 1,5s
 e pode ser pulada; movimento reduzido remove a espera. Os links do seletor
 também funcionam sem JavaScript. No XP, **Escolher sistema** no menu Iniciar
 retorna ao boot, preservando idioma e preferências de wallpaper.
+
+O Windows 7 tem wallpaper Harmony, ícones e cursores reais, taskbar Aero, menu
+Iniciar com busca e janelas independentes. No desktop, clique seleciona;
+duplo clique ou Enter abre. No celular, um toque abre em tela cheia. Arraste a
+barra de título ou redimensione pelas bordas no desktop. Focada a barra de
+título, setas movem a janela e Shift+setas redimensionam.
+
+Sobre e Contato mostram os dados reais. Fotografias e Games exibem avisos de
+preparação; a integração do acervo Drive e os jogos ainda serão implementados.
+Reiniciar volta ao boot; o menu também permite abrir o XP. **Mostrar área de
+trabalho** minimiza/restaura as janelas visíveis sem reabrir as já minimizadas.
+EN/PT mantém a preferência compartilhada. `npm run test:win7` verifica as regras
+do gerenciador de janelas sem navegador.
 
 ### Configuração futura de fotografias no Google Drive
 
@@ -206,12 +219,13 @@ capimaso-portfolio/
 │   ├── page.tsx                 BIOS e Boot Manager
 │   ├── layout.tsx               Documento, SEO e estrutura mínima
 │   ├── xp/                      Rota e layout isolado do XP
-│   ├── win7/                    Aviso temporário do Windows 7
+│   ├── win7/                    Rota do desktop Windows 7
 │   ├── studio/page.tsx          Estúdio privado local
 │   └── api/studio/upload/route.ts
 ├── src/
 │   ├── boot/                    BIOS, seletor e CSS Modules
 │   ├── os/xp/                   Desktop, apps, imagens, ícones e xp.css
+│   ├── os/win7/                 Shell Aero, taskbar, menu e gerenciador
 │   └── shared/                  Contexto de idioma
 ├── components/                  Legado preservado e exports de compatibilidade
 ├── data/                        Informações editáveis
@@ -219,7 +233,7 @@ capimaso-portfolio/
 ├── public/
 │   ├── images/                  Wallpapers, capas, avatar, thumbs/
 │   ├── icons/                   Cursores originais
-│   └── assets/win7/icons/       Ícones recebidos para a próxima etapa
+│   └── assets/win7/             Ícones, wallpaper, sprite Orb e cursores reais
 ├── docs/references/             Capturas de referência do Windows 7
 ├── PLANS.md                     Plano aprovado e ordem de implementação
 ├── ASSETS_NEEDED.md             Inventário de recursos e pendências

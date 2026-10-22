@@ -1,9 +1,17 @@
 # CAPIMASO XP: manutenção por tarefa
 
-O desktop público está em `/xp`; `/` será o boot. O Estúdio continua em
+O desktop XP está em `/xp`; `/` é o boot. O Estúdio continua em
 `/studio` e recebe seu próprio layout `.xp-shell`. Estilos XP nunca devem
 selecionar elementos fora desse contêiner. Entradas Next permanecem em `app/`;
 implementação ativa está em `src/os/xp/`. Ver plano completo em `PLANS.md`.
+
+O Windows 7 está em `/win7`, implementado em `src/os/win7/` com CSS Modules.
+`window-state.ts` concentra abertura, foco, geometria, minimização e restauração;
+`WindowChrome.tsx` trata gestos e teclado. `npm run test:win7` verifica as regras.
+O CSS aplica a sprite original do Orb em três posições, sem recortar ou alterar
+o PNG. Cursores usam o caminho singular `public/assets/win7/cursor/`.
+Fotografias/Drive e jogos ainda estão em preparação; não fabricar acervo nem
+apresentar Solitaire ou Purble Place como jogáveis nesta etapa.
 
 ## Como pedir mudanças ao Codex
 

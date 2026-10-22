@@ -1,5 +1,13 @@
 # CAPIMASO Dual Boot — plano aprovado
 
+## Progresso — shell Windows 7
+
+Etapas 1–4 concluídas. Nesta rodada, a etapa 5 entrega desktop e shell Aero,
+taskbar, menu com busca e gerenciador de janelas. Por delimitação do pedido,
+a integração Drive fica pendente, assim como os jogos da etapa 6. Fotografias
+e Games abrem avisos de preparação; Sobre e Contato usam dados reais.
+Assets recebidos: Harmony, Orb de três estados e cursores em `cursor/`.
+
 ## Objetivo e decisões
 
 | Rota | Experiência |

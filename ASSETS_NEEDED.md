@@ -7,6 +7,13 @@
 - Categorias de pastas, bibliotecas e sistema: presentes; mapear após inspeção.
 - `docs/references/`: 12 capturas de boot, desktop e aplicativos.
 - XP Bliss, capas, avatares, thumbnails e cursores: preservar caminhos atuais.
+- `public/assets/win7/wallpapers/harmony.jpg`: wallpaper original recebido e usado.
+- `public/assets/win7/theme/start-orb.png`: sprite 106x318 com três estados;
+  exibido em 54x162, posições Y 0/-54/-108, sem modificar o arquivo.
+- `public/assets/win7/cursor/`: cursores originais recebidos; usados Normal
+  Select, Link Select, Move e os quatro de redimensionamento. Diretório singular.
+- Os ICO são servidos diretamente. Os assets incorporados aos commits são os
+  arquivos originais recebidos, sem conversão; os demais permanecem preservados.
 
 Presença não comprova procedência. Capturas orientam comparação visual; não
 substituem wallpaper limpo ou recursos individuais.
@@ -15,9 +22,8 @@ substituem wallpaper limpo ou recursos individuais.
 
 | Recurso | Destino previsto | Situação |
 | --- | --- | --- |
-| Wallpaper Win7 original | public/assets/win7/wallpapers/ | Não encontrado como arquivo separado |
-| Start Orb, estados e recursos Aero | public/assets/win7/theme/ | Não encontrados fora das capturas |
-| Cursores Win7 | public/assets/win7/cursors/ | Não encontrados |
+| Recursos de moldura Aero | public/assets/win7/theme/ | Molduras reconstruídas em CSS com base nas capturas; sprites originais não encontrados |
+| Cursor de seleção de texto | public/assets/win7/cursor/ | Não encontrado; fallback default |
 | Sons XP/Win7 | public/assets/win7/sounds/ e equivalente XP | Não encontrados |
 | Cartas, versos e tabuleiro Solitaire | public/assets/win7/games/solitaire/ | Ícone presente; artes internas ausentes |
 | Menu, cenários e peças Purble Place | public/assets/win7/games/purble-place/ | Ícone presente; artes internas ausentes |
@@ -31,6 +37,11 @@ Ao incorporar arquivos, registrar fonte, nome original, hash e dimensões/estado
 Não gerar imagens por IA nem redesenhar substitutos. Extração de frames ICO para
 PNG é permitida se preservar a arte original. Ausências usam rótulos, cursor
 nativo, fundo sólido ou silêncio e ficam registradas aqui.
+
+Ícones de rede e Central de Ações no tray são decorativos e não indicam o estado
+do computador do visitante. Nenhum som ou controle do sistema operacional real
+é simulado. As molduras, gradientes e controles geométricos são CSS de interface,
+sem criar imagens para substituir recursos ausentes.
 
 Fotografias serão lidas do Google Drive público, configurado via ambiente;
 não preencher o acervo com imagens de demonstração. Chave e pasta são configuração,

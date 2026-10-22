@@ -1,5 +1,11 @@
 # Windows 7 — desktop — 22/10/2026
 
+- `npm run check`, `npm run typecheck`, `npm run build` e seis testes em
+  `npm run test:win7` passaram. Fluxos Edge/Playwright também passaram no servidor
+  de produção, incluindo toque em retrato/paisagem e transições entre sistemas.
+  Comparação do XP confirma geometria/estilos e hashes anteriores preservados.
+  Relatório em `docs/WIN7-VERIFICATION.md` e inventário em `ASSETS_NEEDED.md`.
+
 - Shell conectado ao gerenciador Aero: abrir por duplo clique/Enter (um toque
   no mobile), foco, arraste, oito bordas de redimensionamento, minimizar,
   maximizar/restaurar, fechar e alternar pela taskbar. Mostrar desktop preserva

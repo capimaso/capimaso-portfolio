@@ -20,7 +20,11 @@ Read this file FIRST when editing this repository, even without prior chat conte
 
 ## Architecture
 - `/` is BIOS + Boot Manager (`src/boot/`); `/xp` is the existing video desktop.
-- `/win7` is a temporary notice until the next stage in `PLANS.md`.
+- `/win7` is the Aero desktop shell in `src/os/win7/`, isolated with CSS Modules.
+- Photography Drive integration and playable games are still pending. Preserve
+  the preparation notices until those features are implemented.
+- Win7 original wallpaper/Orb/cursors live in `public/assets/win7/`; cursor
+  directory is singular (`cursor/`). Orb is 106x318, three vertical frames.
 - Scope every XP CSS selector to `.xp-shell`; both XP and Studio use that shell.
 - `src/os/xp/XpDesktop.tsx`: desktop, window manager, start menu, taskbar.
 - `src/os/xp/XPApps.tsx`: app-like window contents, portfolio showcase.

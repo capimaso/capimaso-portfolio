@@ -31,6 +31,19 @@ for(const item of work.filter(x=>x.thumbnail)){
 for(const p of ['src/os/xp/xp.css','app/page.tsx','app/xp/page.tsx','app/xp/layout.tsx','app/win7/page.tsx','app/studio/page.tsx','app/studio/layout.tsx','src/boot/BootScreen.tsx','src/boot/BiosScreen.tsx','src/boot/BootManager.tsx','src/boot/boot.module.css','src/os/xp/XpDesktop.tsx','src/os/xp/XPApps.tsx','public/images/xp-hills.svg','AGENTS.md','README.md','MUDANCAS.md','postcss.config.mjs','lib/locale-dictionary.ts','lib/wallpaper.ts','src/shared/LanguageContext.tsx','src/os/xp/WallpaperSettings.tsx']){
  try{await access(join(root,p));console.log(`✓ ${p}`)}catch{console.error(`✖ faltando ${p}`);errors++}
 }
+// Verify the actual shell asset map, including filenames with spaces.
+const assetMap = await readFile(join(root, 'src/os/win7/assets.ts'), 'utf8');
+const win7Styles = await readFile(join(root, 'src/os/win7/win7.module.css'), 'utf8');
+const shellAssets = new Set([
+ ...Array.from(assetMap.matchAll(/icon\('([^']+)', '([^']+)'\)/g), match => `assets/win7/icons/${match[1]}/${match[2]}.ico`),
+ ...Array.from(win7Styles.matchAll(/url\('([^']+)'\)/g), match => decodeURIComponent(match[1]).replace(/^\//, '')),
+]);
+for (const asset of shellAssets) {
+ try { await access(join(root, 'public', asset)); assert(true, `Win7 asset: ${asset}`); }
+ catch { assert(false, `Win7 asset missing: ${asset}`); }
+}
+const orb = await readFile(join(root, 'public/assets/win7/theme/start-orb.png'));
+assert(orb.readUInt32BE(16) === 106 && orb.readUInt32BE(20) === 318, 'Start Orb: three original 106px frames');
 const desktop=await readFile(join(root,'src/os/xp/XpDesktop.tsx'),'utf8');
 const apps=await readFile(join(root,'src/os/xp/XPApps.tsx'),'utf8');
 const css=await readFile(join(root,'src/os/xp/xp.css'),'utf8');
