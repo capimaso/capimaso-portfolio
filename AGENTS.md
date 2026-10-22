@@ -19,6 +19,9 @@ Read this file FIRST when editing this repository, even without prior chat conte
 5. Video short = Google Drive file link with embedded `/preview` player; long = YouTube URL; intro = `data/media.ts`. Do not add local video binaries.
 
 ## Architecture
+- `/` is BIOS + Boot Manager (`src/boot/`); `/xp` is the existing video desktop.
+- `/win7` is a temporary notice until the next stage in `PLANS.md`.
+- Scope every XP CSS selector to `.xp-shell`; both XP and Studio use that shell.
 - `src/os/xp/XpDesktop.tsx`: desktop, window manager, start menu, taskbar.
 - `src/os/xp/XPApps.tsx`: app-like window contents, portfolio showcase.
 - `src/os/xp/XPIcon.tsx`: local vector icons.

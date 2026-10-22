@@ -1,3 +1,23 @@
+# Dual boot — BIOS e Boot Manager — 22/10/2026
+
+- `.env.example` documenta DRIVE_FOLDER_ID, GOOGLE_DRIVE_API_KEY e
+  DRIVE_FOLDER_RESOURCE_KEY opcional, sem valores nem variáveis públicas.
+  A integração fotográfica permanece para a próxima etapa.
+
+- `/` agora mostra BIOS textual de 1,5s, pulável por teclado ou botão, seguida
+  de escolha manual XP/Vídeos ou Win7/Fotos. Setas, Home/End, Enter, Tab,
+  mouse e toque suportados; links disponíveis mesmo sem JavaScript.
+- Movimento reduzido elimina a espera. EN/PT usa o mesmo idioma salvo pelo XP.
+- Menu Iniciar do XP tem link Escolher sistema. `/win7` mostra aviso bilíngue
+  com retorno ao boot/XP até a implementação do desktop na próxima etapa.
+- Sem imagens novas, sons automáticos ou configuração de hardware fictícia.
+- Validação final: `npm run check`, `npm run typecheck` e `npm run build`
+  passaram. Edge/Playwright validou teclado, clique, toque em 360px, ausência
+  de JavaScript, movimento reduzido e retorno XP → boot sem vazamento de tema.
+  Janelas, galeria, wallpaper e proporções dos embeds preservados. Em produção,
+  as quatro páginas retornam 200 e a API de upload retorna 403. Reprodução
+  remota dos provedores não foi testada. Detalhes em `docs/XP-BASELINE.md`.
+
 # Dual boot — migração XP — 22/10/2026
 
 - Desktop ativo movido para `src/os/xp/` e publicado em `/xp`.

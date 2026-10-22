@@ -19,3 +19,18 @@ Após a migração: comparação automatizada das medidas, fontes, cores, fundos
 bordas e box-sizing passou nas três larguras. Todos os hashes de data/ e public/
 continuam idênticos. Estúdio abre com Tahoma, sem overflow horizontal e com
 retorno a /xp. Sem erros JavaScript detectados no carregamento do desktop.
+
+Validação final desta entrega:
+
+- npm run check, npm run typecheck e npm run build passaram.
+- Boot: setas, Home/End, Enter, mouse, EN/PT, escolha sem timeout, BIOS pulável,
+  navegação sem JavaScript e preferência de movimento reduzido passaram.
+- Retorno XP → boot via navegação cliente mantém a fonte e cursor do boot,
+  mesmo com a folha XP carregada.
+- XP: arrastar, minimizar/restaurar, maximizar/restaurar, fechar, trabalhos,
+  thumbnail ThumbBizu e persistência de wallpaper passaram.
+- Iframes: Drive usa preview sem autoplay em 9:16; YouTube usa autoplay mudo em
+  16:9. Provedores externos bloqueados no teste; reprodução remota não atestada.
+- Servidor de produção: /, /xp, /studio e /win7 retornam 200; POST de upload
+  retorna 403 sem gravar nada. Toque em 360px abre janelas XP na área útil inteira.
+- Comparação final de métricas e hashes passou também no servidor de produção.

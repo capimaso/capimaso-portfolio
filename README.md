@@ -33,8 +33,28 @@ npm run dev
 
 Abra `http://localhost:3000`.
 
-- Portfólio público: `http://localhost:3000`
+- BIOS e Boot Manager: `http://localhost:3000`
+- Portfólio de vídeos Windows XP: `http://localhost:3000/xp`
+- Windows 7 (aviso até a próxima etapa): `http://localhost:3000/win7`
 - Estúdio de upload: **`http://localhost:3000/studio`**
+
+O boot aguarda sua escolha: setas e Enter, clique ou toque. A BIOS dura 1,5s
+e pode ser pulada; movimento reduzido remove a espera. Os links do seletor
+também funcionam sem JavaScript. No XP, **Escolher sistema** no menu Iniciar
+retorna ao boot, preservando idioma e preferências de wallpaper.
+
+### Configuração futura de fotografias no Google Drive
+
+Copie `.env.example` para `.env.local`. Preencha `DRIVE_FOLDER_ID` com o ID
+da pasta pública e `GOOGLE_DRIVE_API_KEY` com a chave de um projeto Google Cloud
+com Drive API v3 habilitada. Compartilhe a pasta e o conteúdo como **Qualquer
+pessoa com o link → Leitor**. Se o link tiver `resourcekey`, copie esse valor
+para `DRIVE_FOLDER_RESOURCE_KEY`. Restrinja a chave à Drive API no Google Cloud.
+
+Essas variáveis serão utilizadas somente no servidor na próxima etapa do
+Windows 7. Não use prefixo `NEXT_PUBLIC_` e não versione `.env.local`.
+O boot, o XP e o Estúdio continuam funcionando sem configuração do Drive.
+Não há integração fotográfica ou consulta remota ao Drive nesta entrega.
 
 `npm run dev` tenta recuperar automaticamente os arquivos da pasta `public` do repositório original **somente se não estiverem presentes**. Se quiser repetir manualmente:
 
@@ -183,21 +203,26 @@ O fundo padrão `public/images/xp-hills.svg` é **uma arte original inspirada no
 ```text
 capimaso-portfolio/
 ├── app/
-│   ├── page.tsx                 Área de trabalho
-│   ├── layout.tsx               SEO e estilos
-│   ├── xp.css                   Tema Luna, layout responsivo
+│   ├── page.tsx                 BIOS e Boot Manager
+│   ├── layout.tsx               Documento, SEO e estrutura mínima
+│   ├── xp/                      Rota e layout isolado do XP
+│   ├── win7/                    Aviso temporário do Windows 7
 │   ├── studio/page.tsx          Estúdio privado local
 │   └── api/studio/upload/route.ts
-├── components/
-│   ├── XpDesktop.tsx            Menu Iniciar, janelas, taskbar
-│   ├── XPApps.tsx               Explorador, Player, serviços etc.
-│   ├── XPIcon.tsx               Ícones do sistema
-│   └── XPImage.tsx              Assets locais + fallback dos originais
+├── src/
+│   ├── boot/                    BIOS, seletor e CSS Modules
+│   ├── os/xp/                   Desktop, apps, imagens, ícones e xp.css
+│   └── shared/                  Contexto de idioma
+├── components/                  Legado preservado e exports de compatibilidade
 ├── data/                        Informações editáveis
 ├── lib/                         Leitura de mídia / helpers
 ├── public/
 │   ├── images/                  Wallpapers, capas, avatar, thumbs/
-│   └── icons/                   Cursores originais
+│   ├── icons/                   Cursores originais
+│   └── assets/win7/icons/       Ícones recebidos para a próxima etapa
+├── docs/references/             Capturas de referência do Windows 7
+├── PLANS.md                     Plano aprovado e ordem de implementação
+├── ASSETS_NEEDED.md             Inventário de recursos e pendências
 ├── scripts/sync-original-assets.mjs
 ├── docs/CODEX-GUIDE.md
 ├── MUDANCAS.md
