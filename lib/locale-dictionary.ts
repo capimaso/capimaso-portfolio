@@ -1,6 +1,23 @@
 /** Single source of truth for interface translations; English is the initial language. */
 export type Language = 'en' | 'pt';
 export const translations: Record<string,string> = {
+ 'Inicialização BIOS':'BIOS startup',
+ 'Sequência de inicialização':'Boot sequence',
+ 'Abrindo o Windows Boot Manager...':'Opening Windows Boot Manager...',
+ 'Pular BIOS':'Skip BIOS',
+ 'Pressione uma tecla para continuar.':'Press a key to continue.',
+ 'Escolha um sistema operacional para iniciar:':'Choose an operating system to start:',
+ 'Use as setas para selecionar e pressione ENTER.':'Use the arrow keys to select, then press ENTER.',
+ 'Escolher sistema':'Choose operating system',
+ 'Reiniciar / Escolher sistema':'Restart / Choose operating system',
+ 'Vídeos':'Videos',
+ 'Fotos':'Photos',
+ 'Selecionar':'Select',
+ 'Iniciar':'Start',
+ 'Portfólio de fotografias':'Photography portfolio',
+ 'O Windows 7 está em construção. Meu portfólio de vídeos já está disponível no Windows XP.':'Windows 7 is under construction. My video portfolio is already available in Windows XP.',
+ 'Voltar ao Boot Manager':'Back to Boot Manager',
+ 'Abrir Windows XP':'Open Windows XP',
  'Cole o link do Google Drive e escolha a capa que aparecerá no portfólio.':'Paste the Google Drive link and choose a cover for your portfolio.',
  'no seu computador. Apenas a capa e o link são salvos no projeto; o vídeo fica no Google Drive.':'on your computer. Only the cover and link are saved in the project; the video stays on Google Drive.',
  'Link do Google Drive':'Google Drive link',

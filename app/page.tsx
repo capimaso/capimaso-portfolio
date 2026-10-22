@@ -1,7 +1,11 @@
-import XpDesktop from '@/src/os/xp/XpDesktop';
-import '@/src/os/xp/xp.css';
-import { getThumbnails } from '@/lib/thumbnails';
-import { getShowcase } from '@/lib/showcase';
+import type { Metadata } from 'next';
+import BootScreen from '@/src/boot/BootScreen';
+
+export const metadata: Metadata = {
+  title: 'CAPIMASO | Windows Boot Manager',
+  description: 'Choose Windows XP for videos or Windows 7 for photography. Tiago / CAPIMASO.',
+};
+
 export default function Home() {
-  return <div className="xp-shell"><XpDesktop thumbnails={getThumbnails()} showcase={getShowcase()} /></div>;
+  return <BootScreen />;
 }

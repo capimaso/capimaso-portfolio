@@ -28,7 +28,7 @@ assert(work.every(x=>!x.thumbnail||x.thumbnail.startsWith('/images/')),'Capas us
 for(const item of work.filter(x=>x.thumbnail)){
  try{await access(join(root,'public',item.thumbnail));console.log(`✓ Capa preservada: ${item.id}`)}catch{assert(false,`Capa ausente: ${item.id}`)}
 }
-for(const p of ['src/os/xp/xp.css','app/page.tsx','app/studio/page.tsx','src/os/xp/XpDesktop.tsx','src/os/xp/XPApps.tsx','public/images/xp-hills.svg','AGENTS.md','README.md','MUDANCAS.md','postcss.config.mjs','lib/locale-dictionary.ts','lib/wallpaper.ts','src/shared/LanguageContext.tsx','src/os/xp/WallpaperSettings.tsx']){
+for(const p of ['src/os/xp/xp.css','app/page.tsx','app/xp/page.tsx','app/xp/layout.tsx','app/win7/page.tsx','app/studio/page.tsx','app/studio/layout.tsx','src/boot/BootScreen.tsx','src/boot/BiosScreen.tsx','src/boot/BootManager.tsx','src/boot/boot.module.css','src/os/xp/XpDesktop.tsx','src/os/xp/XPApps.tsx','public/images/xp-hills.svg','AGENTS.md','README.md','MUDANCAS.md','postcss.config.mjs','lib/locale-dictionary.ts','lib/wallpaper.ts','src/shared/LanguageContext.tsx','src/os/xp/WallpaperSettings.tsx']){
  try{await access(join(root,p));console.log(`✓ ${p}`)}catch{console.error(`✖ faltando ${p}`);errors++}
 }
 const desktop=await readFile(join(root,'src/os/xp/XpDesktop.tsx'),'utf8');
