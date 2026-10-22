@@ -1,0 +1,2 @@
+/* Official upstream scope; low-priority layer keeps local layout adaptations small. */
+@import '7.css/dist/7.scoped.css' layer(win7-base);

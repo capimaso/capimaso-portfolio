@@ -5,6 +5,7 @@ import { useLanguage, useT } from '@/src/shared/LanguageContext';
 import type { Language } from '@/lib/locale-dictionary';
 import { windowApplications as applications, type AppId, type AppWindow } from './types';
 import Win7Icon from './Win7Icon';
+import StartOrb from './StartOrb';
 import styles from './win7.module.css';
 
 type Props = {
@@ -37,9 +38,8 @@ export default function Taskbar({ startOpen, onStart, windows, activeId, onOpen,
     return () => window.clearInterval(timer);
   }, [language]);
 
-  return <footer className={styles.taskbar} aria-label={t('Barra de tarefas')} data-taskbar>
-    <button type="button" className={styles.startOrb} data-start-button aria-label={t('Iniciar')}
-      aria-expanded={startOpen} aria-controls="win7-start-menu" onClick={onStart} />
+  return <footer className={`window glass active ${styles.taskbar}`} aria-label={t('Barra de tarefas')} data-taskbar>
+    <StartOrb open={startOpen} onToggle={onStart} />
     <div className={styles.pinned}>
       {(['photos', 'games'] as const).filter(id => !windows.some(win => win.id === id)).map(id => <button
         type="button" key={id} title={t(applications.find(app => app.id === id)!.label)} onClick={() => onOpen(id)}>

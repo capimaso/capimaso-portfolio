@@ -1,5 +1,15 @@
 # Windows 7 — Google Drive — 22/10/2026
 
+## Base visual 7.css — refatoração incremental
+
+- Plano reescrito com fontes e código consultados, limites dos projetos e etapas
+  futuras de logon/jogos. 7.css 0.21.1 fixado no manifesto e lockfile.
+- Distribuição oficial scoped na camada win7-base: molduras, estados de título,
+  glifos e controles vêm da biblioteca. Taskbar e StartMenu reutilizam seu vidro
+  sem filtros duplicados; adaptações locais tratam layout e dialogs do React.
+- StartOrb separado, frames nativos e escala uniforme; fade/scale do menu e
+  preferência por movimento reduzido mantidos. XP/boot/Estúdio seguem isolados.
+
 ## QA Win7 ? fidelidade do Aero e Menu Iniciar (2026-10-22)
 
 - Taskbar e molduras Aero usam camadas mais transparentes, blur de 7 px e reflexos internos; conte?do das janelas permanece leg?vel.

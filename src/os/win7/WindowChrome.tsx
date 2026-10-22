@@ -64,23 +64,23 @@ export default function WindowChrome({ window: win, active, compact, area, order
 
   return <section ref={panel} data-window={win.id} hidden={win.minimized} tabIndex={-1}
     role="dialog" aria-modal="false" aria-label={title} onPointerDown={onFocus} onFocus={event => { if (!event.currentTarget.contains(event.relatedTarget)) onFocus(); }}
-    className={`${styles.window} ${active ? styles.activeWindow : ''} ${maximized ? styles.maximized : ''}`}
+    className={`window glass ${active ? 'active' : ''} ${styles.window} ${maximized ? styles.maximized : ''}`}
     style={{ left: maximized ? 0 : win.bounds.x, top: maximized ? 0 : win.bounds.y,
       width: maximized ? '100%' : win.bounds.width, height: maximized ? '100%' : win.bounds.height, zIndex: order + 1 }}>
-    <div className={styles.titlebar} tabIndex={0} aria-label={t('Setas movem a janela; Shift e setas redimensionam.')}
+    <div className={`title-bar ${styles.titlebar}`} tabIndex={0} aria-label={t('Setas movem a janela; Shift e setas redimensionam.')}
       onKeyDown={keyboardMove} onPointerDown={event => start(event)} onPointerMove={move}
       onPointerUp={() => { gesture.current = null; }} onPointerCancel={() => { gesture.current = null; }}
       onLostPointerCapture={() => { gesture.current = null; }}
       onDoubleClick={event => { if (!compact && !(event.target as HTMLElement).closest('button')) onMaximize(); }}>
-      <span className={styles.windowTitle}><Win7Icon name={win.id} size={16} /><span>{title}</span></span>
-      <div className={styles.windowButtons}>
-        <button type="button" className={styles.minimize} aria-label={t('Minimizar')} title={t('Minimizar')} onClick={onMinimize}><span /></button>
-        <button type="button" className={styles.maximize} disabled={compact} aria-label={t(win.maximized ? 'Restaurar' : 'Maximizar')}
-          title={t(win.maximized ? 'Restaurar' : 'Maximizar')} onClick={onMaximize}><span className={win.maximized ? styles.restoreGlyph : ''} /></button>
-        <button type="button" className={styles.close} aria-label={t('Fechar')} title={t('Fechar')} onClick={onClose}><span>×</span></button>
+      <span className={`title-bar-text ${styles.windowTitle}`}><Win7Icon name={win.id} size={16} /><span>{title}</span></span>
+      <div className={`title-bar-controls ${styles.windowButtons}`}>
+        <button type="button" className="is-minimize" aria-label={t('Minimizar')} title={t('Minimizar')} onClick={onMinimize} />
+        <button type="button" className={win.maximized ? 'is-restore' : 'is-maximize'} disabled={compact} aria-label={t(win.maximized ? 'Restaurar' : 'Maximizar')}
+          title={t(win.maximized ? 'Restaurar' : 'Maximizar')} onClick={onMaximize} />
+        <button type="button" className="is-close" aria-label={t('Fechar')} title={t('Fechar')} onClick={onClose} />
       </div>
     </div>
-    <div className={styles.windowContent}>{children}</div>
+    <div className={`window-body ${styles.windowContent}`}>{children}</div>
     {!maximized && (['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'] as Direction[]).map(direction => <div
       key={direction} className={`${styles.resizeHandle} ${styles[direction]}`} data-resize={direction} aria-hidden="true"
       onPointerDown={event => start(event, direction)} onPointerMove={move}

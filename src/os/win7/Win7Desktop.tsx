@@ -97,7 +97,7 @@ function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {
     shortcuts.current[next]?.focus();
   }
 
-  return <main ref={root} className={styles.desktop} aria-label={t('Área de trabalho Windows 7')}
+  return <main ref={root} className={`win7 ${styles.desktop}`} aria-label={t('Área de trabalho Windows 7')}
     onPointerDown={event => {
       if (!(event.target as HTMLElement).closest('[data-shortcut]')) setSelected([]);
       if (!(event.target as HTMLElement).closest('[data-start-menu], [data-start-button]')) setStartOpen(false);

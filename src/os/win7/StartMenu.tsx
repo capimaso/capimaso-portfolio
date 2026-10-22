@@ -38,7 +38,7 @@ export default function StartMenu({ open, onOpen }: { open: boolean; onOpen: (id
     buttons[next].focus();
   }
 
-  return <section id="win7-start-menu" className={styles.startMenu} data-start-menu data-open={open} inert={!open}
+  return <section id="win7-start-menu" className={`window glass active ${styles.startMenu}`} data-start-menu data-open={open} inert={!open}
     aria-hidden={!open} aria-label={t('Menu Iniciar')} onKeyDown={navigate}>
     <div className={styles.startLeft}>
       <div className={styles.programs} ref={results} aria-label={t('Programas')}>

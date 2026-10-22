@@ -19,6 +19,11 @@
   outline: 1px dotted currentColor;
   outline-offset: -3px;
 }
+.desktop button { min-width: 0; }
+:is(.shortcut, .startOrb, .pinned button, .task, .languageSwitch button, .showDesktop, .programs button, .allPrograms, .startRight > button, .explorerSidebar button, .photoEntry, .breadcrumbs button) { box-shadow: none; }
+:is(.shortcut, .startOrb, .pinned button, .task, .languageSwitch button, .showDesktop, .programs button, .allPrograms, .startRight > button, .explorerSidebar button, .photoEntry, .breadcrumbs button)::before, :is(.shortcut, .startOrb, .pinned button, .task, .languageSwitch button, .showDesktop, .programs button, .allPrograms, .startRight > button, .explorerSidebar button, .photoEntry, .breadcrumbs button)::after { content: none; }
+:is(.shortcut, .startOrb, .pinned button, .task, .languageSwitch button, .showDesktop, .programs button, .allPrograms, .startRight > button, .explorerSidebar button, .photoEntry, .breadcrumbs button):focus { animation: none; background-image: none; }
+/* No animation is applied to text or to the wallpaper behind the glass. */
 .shortcuts {
   position: absolute;
   top: max(5px, env(safe-area-inset-top));
@@ -59,10 +64,8 @@
   align-items: center;
   border-top: 1px solid #ffffffa0;
   box-shadow: 0 -1px 0 #14283c99, inset 0 1px 0 #ffffff20;
-  background:
-    linear-gradient(180deg, #ffffff38, #ffffff0a 46%, #071c3026 48%, #061a302e),
-    linear-gradient(115deg, #17344c55, #558eb52e 45%, #102a424f);
-  backdrop-filter: blur(7px) saturate(145%);
+  border-radius: 0;
+  --w7-w-bdr: 0px;
 }
 .startOrb {
   flex: 0 0 54px;
@@ -73,8 +76,7 @@
   border: 0;
   background: transparent;
 }
-.startOrb::before {
-  content: '';
+.orbSprite {
   position: absolute;
   pointer-events: none;
   width: 106px;
@@ -87,8 +89,8 @@
   background: transparent url('/assets/win7/theme/start-orb.png') 0 0 / 106px 318px no-repeat;
   image-rendering: -webkit-optimize-contrast;
 }
-.startOrb:hover::before { background-position-y: -106px; }
-.startOrb:active::before, .startOrb[aria-expanded='true']::before { background-position-y: -212px; }
+.startOrb:hover .orbSprite { background-position-y: -106px; }
+.startOrb:active .orbSprite, .startOrb[aria-expanded='true'] .orbSprite { background-position-y: -212px; }
 .pinned, .tasks { height: 100%; display: flex; align-items: center; gap: 3px; }
 .pinned:empty { display: none; }
 .pinned button, .task {
@@ -108,7 +110,7 @@
 .task {
   border-color: #0e2337d9;
   box-shadow: inset 0 0 0 1px #ffffff8c;
-  background: linear-gradient(#ffffff60, #d4e8f02b 49%, #23557640 50%);
+  background: var(--w7-wct-bg);
 }
 .task:hover, .currentTask { background: radial-gradient(ellipse at bottom, #c3edffd9, #ffffff65 70%); }
 .currentTask { box-shadow: inset 0 0 0 1px #ffffffbf, inset 0 -2px 5px #c3f3ff; }
@@ -134,11 +136,8 @@
   grid-template-columns: minmax(0, 255px) minmax(0, 145px);
   padding: 7px;
   gap: 3px;
-  border: 1px solid #102c42;
+  --w7-w-bdr: 7px 7px 0 0;
   border-radius: 7px 7px 0 0;
-  background: linear-gradient(115deg, #b9dfef55, #254a658c 38%, #10283aa8 65%);
-  box-shadow: inset 0 0 0 1px #d3edff80, 2px -2px 12px #0008;
-  backdrop-filter: blur(8px) saturate(140%);
   transform-origin: 28px bottom;
   opacity: 0;
   transform: translateY(5px) scale(.98);
@@ -175,41 +174,34 @@
 /* Aero window frame. Saved geometry is independent from the maximized view. */
 .workspace { position: absolute; inset: 0 0 var(--taskbar-height); pointer-events: none; }
 .window {
-  position: absolute;
   display: flex;
   flex-direction: column;
-  padding: 0 7px 7px;
   min-width: 0;
   min-height: 0;
-  border: 1px solid #485b68;
-  border-radius: 7px;
-  background:
-    linear-gradient(120deg, transparent 12%, #ffffff4d 12.4%, #ffffff0a 22%, transparent 22.4%, transparent 45%, #ffffff40 45.4%, transparent 54%),
-    linear-gradient(125deg, #c8e5f14d, #7bb2d233 40%, #cbe9f13d 65%, #7eafcc40);
-  box-shadow: inset 0 0 0 1px #ffffffb3, 0 3px 14px #0006;
-  backdrop-filter: blur(7px) saturate(140%);
   pointer-events: auto;
 }
+/* 7.css dialogs use :target; these dialogs are positioned by the React manager. */
+.window[role='dialog'] {
+  position: absolute;
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: none;
+}
 .window[hidden] { display: none; }
-.activeWindow { border-color: #2c4b61; background-color: #60a6d21a; box-shadow: inset 0 0 0 1px #eefaffd9, 0 4px 16px #0008; }
-.maximized { border-radius: 0; padding: 0 0 0; border: 0; }
-.titlebar { height: 29px; flex: 0 0 29px; display: flex; align-items: center; min-width: 0; touch-action: none; cursor: url('/assets/win7/cursor/Move.cur'), move; }
-.windowTitle { display: flex; align-items: center; gap: 5px; flex: 1; min-width: 0; padding-left: 1px; text-shadow: 0 0 4px #fff, 0 0 10px #fff, 0 0 12px #fff; }
+.maximized { --w7-w-bdr: 0px; border-radius: 0; border: 0; }
+.titlebar { height: 29px; flex: 0 0 29px; min-width: 0; touch-action: none; cursor: url('/assets/win7/cursor/Move.cur'), move; }
+.windowTitle { display: flex; align-items: center; gap: 5px; flex: 1; min-width: 0; padding-top: 0; }
 .windowTitle > span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .windowTitle img { flex-shrink: 0; }
-.windowButtons { align-self: flex-start; display: flex; margin-top: -1px; margin-right: -1px; border: 1px solid #5a6b7b; border-top: 0; border-radius: 0 0 5px 5px; overflow: hidden; box-shadow: 0 1px #ffffffa0; }
-.windowButtons button { position: relative; width: 27px; height: 20px; display: grid; place-items: center; padding: 0; border: 0; border-right: 1px solid #5a6b7b; background: linear-gradient(#ffffff70 0%, #ffffff30 48%, #91afc126 49%, #405e7133); box-shadow: inset 0 0 0 1px #ffffff55; color: #263c49; }
-.windowButtons button:hover:not(:disabled) { background: linear-gradient(#9bd3f3, #3a91c0 49%, #12638e 50%, #7dc9f6); box-shadow: inset 0 0 0 1px #d6faff, 0 0 8px #4fc3ff; color: #fff; }
-.windowButtons button:disabled { opacity: .45; cursor: default; }
-.windowButtons .close { width: 46px; border-right: 0; background: linear-gradient(#e4b2a6, #c37968 48%, #b2442c 49%, #c27a65); color: #fff; }
-.window:not(.activeWindow) .close { background: linear-gradient(#ffffff60, #b1c7d150); color: #5a6b74; }
-.windowButtons .close:hover { background: linear-gradient(#f9b8a6, #e66d4b 49%, #c42c0a 50%, #e99450); box-shadow: inset 0 0 0 1px #ffe4ad, 0 0 8px #f3410e; }
-.close span { font: bold 20px/16px Arial, sans-serif; text-shadow: 0 1px #74301b; }
-.minimize span { width: 8px; height: 3px; background: currentColor; margin-top: 7px; box-shadow: 0 1px #fff; }
-.maximize span { width: 10px; height: 9px; border: 1px solid currentColor; border-top-width: 3px; box-shadow: 0 1px #fff; }
-.maximize .restoreGlyph { width: 8px; height: 7px; position: relative; margin-top: 3px; margin-left: -2px; }
-.restoreGlyph::after { content: ''; position: absolute; width: 7px; height: 6px; border: 1px solid currentColor; border-top-width: 2px; left: 2px; top: -6px; }
-.windowContent { min-height: 0; flex: 1; overflow: auto; border: 1px solid #6e879b; background: #fff; box-shadow: 0 0 0 1px #ffffffb3; user-select: text; }
+.windowButtons { align-self: flex-start; }
+.windowButtons button { width: 29px; height: 20px; }
+.windowButtons :global(.is-close) { width: 48px; }
+.windowContent { min-height: 0; flex: 1; overflow: auto; background: #fff; user-select: text; }
+.maximized .windowContent { margin: 0; }
+/* Nested app footers are content, not 7.css window action footers. */
+.windowContent footer { margin: 0; box-shadow: none; border-left: 0; border-right: 0; border-bottom: 0; }
+.windowContent footer::before { content: none; }
 .resizeHandle { position: absolute; touch-action: none; }
 .n { top: -1px; left: 7px; right: 7px; height: 5px; cursor: url('/assets/win7/cursor/Vertical%20Resize.cur'), ns-resize; }
 .s { bottom: -1px; left: 7px; right: 7px; height: 6px; cursor: url('/assets/win7/cursor/Vertical%20Resize.cur'), ns-resize; }
@@ -252,8 +244,8 @@
 .calculator { padding: 12px; height: 100%; background: linear-gradient(#edf4fc, #d8e4f2); display: flex; flex-direction: column; gap: 12px; }
 .calculator output { display: block; padding: 10px; border: 1px solid #93a6bd; border-radius: 3px; background: linear-gradient(#e8effb, #fff); text-align: right; font: 24px/1.4 Consolas, monospace; overflow-wrap: anywhere; user-select: text; }
 .calculator > div { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-.calculator button { min-height: 32px; border: 1px solid #879bb4; border-radius: 3px; box-shadow: inset 0 0 0 1px #fff9; background: linear-gradient(#f8fbff, #e2ebf5 48%, #d4dfed 50%, #edf3fa); }
-.calculator button:hover { border-color: #d9982a; background: linear-gradient(#fff4d9, #ffe2a4 48%, #ffcf6c 50%, #ffedc2); }
+.calculator button { min-height: 32px; }
+
 
 /* Photography Explorer: address history, real folders and framed thumbnails. */
 .photoAddressBar { display: flex; align-items: center; gap: 8px; padding: 5px 7px; min-height: 36px; background: linear-gradient(#f9fcff, #e5edf5); border-bottom: 1px solid #a9b9ce; }
@@ -280,7 +272,7 @@
 @keyframes photoLoading { to { opacity: .45; } }
 .photoError { padding: 12px; margin-bottom: 15px; color: #344958; background: #f2f6fa; border: 1px solid #c9d9e7; }
 .photoError p { margin-top: 0; }
-.photoError button, .morePhotos { border: 1px solid #9aafc3; border-radius: 3px; padding: 5px 12px; background: linear-gradient(#fff, #e1eaf3); color: #173e6d; }
+.photoError button, .morePhotos { padding: 5px 12px; }
 .morePhotos { display: block; margin: 18px auto 0; }
 .morePhotos:disabled { opacity: .6; cursor: default; }
 .selectedPhotoName { padding-left: 18px; }
@@ -321,7 +313,7 @@
   .window { border-radius: 0; }
   .titlebar { flex-basis: 34px; height: 34px; padding-left: 5px; cursor: default; }
   .windowButtons button { height: 29px; width: 34px; }
-  .windowButtons .close { width: 44px; }
+  .windowButtons :global(.is-close) { width: 48px; }
   .explorerSidebar { width: 115px; }
   .explorerSidebar button { padding-left: 8px; font-size: 11px; }
   .explorerToolbar > span:last-child { display: none; }

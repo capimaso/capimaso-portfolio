@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import '@/src/os/win7/seven.css';
 import Win7Desktop from '@/src/os/win7/Win7Desktop';
 
 export const metadata: Metadata = {
