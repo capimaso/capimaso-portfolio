@@ -1,5 +1,15 @@
 # Windows 7 — desktop — 22/10/2026
 
+- Shell conectado ao gerenciador Aero: abrir por duplo clique/Enter (um toque
+  no mobile), foco, arraste, oito bordas de redimensionamento, minimizar,
+  maximizar/restaurar, fechar e alternar pela taskbar. Mostrar desktop preserva
+  as janelas e restaura somente as que estavam visíveis.
+- Geometria limitada à área útil; mobile abre em tela cheia acima da taskbar,
+  preservando a geometria desktop. Barra de título oferece movimento por setas
+  e redimensionamento por Shift+setas; controles mantêm rótulos EN/PT.
+- Sobre/Contato usam informações reais. Fotografias e Games abrem janelas de
+  preparação; esta rodada não implementa Drive nem jogos.
+
 - Componentes de taskbar e menu Iniciar em duas colunas usam Aero, busca
   bilíngue, relógio/data locais, atalhos e Reiniciar. O Start Orb usa o sprite
   original 106x318: quadros de 54px em Y=0/-54/-108 após escala.

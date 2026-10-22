@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "check": "node scripts/check-project.mjs"
+    "check": "node scripts/check-project.mjs",
+    "test:win7": "node --test scripts/test-win7-state.mjs"
   },
   "dependencies": {
     "next": "16.3.6",

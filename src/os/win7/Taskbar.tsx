@@ -61,7 +61,7 @@ export default function Taskbar({ startOpen, onStart, windows, activeId, onOpen,
           aria-pressed={lang === language} onClick={() => onLanguage(lang)}>{lang.toUpperCase()}</button>)}
       </div>
       <span className={styles.systemIcon} role="img" aria-label={t('Rede')} title={t('Rede')}><Win7Icon name="network" size={16} /></span>
-      <span className={styles.systemIcon} role="img" aria-label={t('Sons do sistema indisponíveis')} title={t('Sons do sistema indisponíveis')}><Win7Icon name="volume" size={16} /></span>
+      <span className={styles.systemIcon} role="img" aria-label={t('Central de Ações')} title={t('Central de Ações')}><Win7Icon name="notifications" size={16} /></span>
       <div className={styles.clock} title={clock.full}><time>{clock.time}</time><span>{clock.date}</span></div>
     </div>
     <button type="button" className={styles.showDesktop} aria-label={t('Mostrar área de trabalho')} title={t('Mostrar área de trabalho')} onClick={onShowDesktop} />

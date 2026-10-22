@@ -4,7 +4,7 @@
   position: relative;
   width: 100%;
   height: 100dvh;
-  overflow: hidden;
+  overflow: clip;
   background: #1575b1 url('/assets/win7/wallpapers/harmony.jpg') center / cover no-repeat;
   color: #111;
   font: 12px/1.4 'Segoe UI', Tahoma, sans-serif;
@@ -14,7 +14,7 @@
 .desktop *, .desktop *::before, .desktop *::after { box-sizing: border-box; }
 .desktop button, .desktop input, .desktop textarea { font: inherit; }
 .desktop button, .desktop a { cursor: url('/assets/win7/cursor/Link%20Select.cur'), pointer; }
-.desktop input, .desktop textarea { cursor: text; }
+.desktop input, .desktop textarea { cursor: default; }
 .desktop button:focus-visible, .desktop a:focus-visible, .desktop input:focus-visible {
   outline: 1px dotted currentColor;
   outline-offset: -3px;
@@ -143,6 +143,81 @@
 .restart:hover { background-color: #ffffff50; }
 .noResults { padding: 12px; color: #555; }
 
+/* Aero window frame. Saved geometry is independent from the maximized view. */
+.workspace { position: absolute; inset: 0 0 var(--taskbar-height); pointer-events: none; }
+.window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 0 7px 7px;
+  min-width: 0;
+  min-height: 0;
+  border: 1px solid #485b68;
+  border-radius: 7px;
+  background: linear-gradient(125deg, #d8e8f1b0 0%, #bad2e185 15%, #e9f4faad 26%, #89b4cc7a 42%, #e5f4fc88 60%, #b7d8eb77);
+  box-shadow: inset 0 0 0 1px #ffffffb3, 0 3px 14px #0006;
+  backdrop-filter: blur(12px) saturate(125%);
+  pointer-events: auto;
+}
+.window[hidden] { display: none; }
+.activeWindow { border-color: #2c4b61; background-color: #87badd40; box-shadow: inset 0 0 0 1px #eefaff, 0 4px 16px #0008; }
+.maximized { border-radius: 0; padding: 0 0 0; border: 0; }
+.titlebar { height: 29px; flex: 0 0 29px; display: flex; align-items: center; min-width: 0; touch-action: none; cursor: url('/assets/win7/cursor/Move.cur'), move; }
+.windowTitle { display: flex; align-items: center; gap: 5px; flex: 1; min-width: 0; padding-left: 1px; text-shadow: 0 0 4px #fff, 0 0 10px #fff, 0 0 12px #fff; }
+.windowTitle > span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.windowTitle img { flex-shrink: 0; }
+.windowButtons { align-self: flex-start; display: flex; margin-top: -1px; margin-right: -1px; border: 1px solid #5a6b7b; border-top: 0; border-radius: 0 0 5px 5px; overflow: hidden; box-shadow: 0 1px #ffffffa0; }
+.windowButtons button { position: relative; width: 27px; height: 20px; display: grid; place-items: center; padding: 0; border: 0; border-right: 1px solid #5a6b7b; background: linear-gradient(#ffffff70 0%, #ffffff30 48%, #91afc126 49%, #405e7133); box-shadow: inset 0 0 0 1px #ffffff55; color: #263c49; }
+.windowButtons button:hover:not(:disabled) { background: linear-gradient(#9bd3f3, #3a91c0 49%, #12638e 50%, #7dc9f6); box-shadow: inset 0 0 0 1px #d6faff, 0 0 8px #4fc3ff; color: #fff; }
+.windowButtons button:disabled { opacity: .45; cursor: default; }
+.windowButtons .close { width: 46px; border-right: 0; background: linear-gradient(#e4b2a6, #c37968 48%, #b2442c 49%, #c27a65); color: #fff; }
+.window:not(.activeWindow) .close { background: linear-gradient(#ffffff60, #b1c7d150); color: #5a6b74; }
+.windowButtons .close:hover { background: linear-gradient(#f9b8a6, #e66d4b 49%, #c42c0a 50%, #e99450); box-shadow: inset 0 0 0 1px #ffe4ad, 0 0 8px #f3410e; }
+.close span { font: bold 20px/16px Arial, sans-serif; text-shadow: 0 1px #74301b; }
+.minimize span { width: 8px; height: 3px; background: currentColor; margin-top: 7px; box-shadow: 0 1px #fff; }
+.maximize span { width: 10px; height: 9px; border: 1px solid currentColor; border-top-width: 3px; box-shadow: 0 1px #fff; }
+.maximize .restoreGlyph { width: 8px; height: 7px; position: relative; margin-top: 3px; margin-left: -2px; }
+.restoreGlyph::after { content: ''; position: absolute; width: 7px; height: 6px; border: 1px solid currentColor; border-top-width: 2px; left: 2px; top: -6px; }
+.windowContent { min-height: 0; flex: 1; overflow: auto; border: 1px solid #6e879b; background: #fff; box-shadow: 0 0 0 1px #ffffffb3; user-select: text; }
+.resizeHandle { position: absolute; touch-action: none; }
+.n { top: -1px; left: 7px; right: 7px; height: 5px; cursor: url('/assets/win7/cursor/Vertical%20Resize.cur'), ns-resize; }
+.s { bottom: -1px; left: 7px; right: 7px; height: 6px; cursor: url('/assets/win7/cursor/Vertical%20Resize.cur'), ns-resize; }
+.e { right: -1px; top: 7px; bottom: 7px; width: 6px; cursor: url('/assets/win7/cursor/Horizontal%20Resize.cur'), ew-resize; }
+.w { left: -1px; top: 7px; bottom: 7px; width: 6px; cursor: url('/assets/win7/cursor/Horizontal%20Resize.cur'), ew-resize; }
+.ne, .nw, .se, .sw { width: 10px; height: 10px; }
+.ne { top: -1px; right: -1px; cursor: url('/assets/win7/cursor/Diagonal%20Resize%202.cur'), nesw-resize; }
+.sw { bottom: -1px; left: -1px; cursor: url('/assets/win7/cursor/Diagonal%20Resize%202.cur'), nesw-resize; }
+.nw { top: -1px; left: -1px; cursor: url('/assets/win7/cursor/Diagonal%20Resize%201.cur'), nwse-resize; }
+.se { bottom: -1px; right: -1px; cursor: url('/assets/win7/cursor/Diagonal%20Resize%201.cur'), nwse-resize; }
+
+/* Real portfolio content; the photo library and games remain upcoming features. */
+.explorer { height: 100%; display: flex; flex-direction: column; }
+.addressBar { display: flex; align-items: center; gap: 10px; padding: 7px 10px; min-height: 33px; background: linear-gradient(#fff, #e8eef5); border-bottom: 1px solid #a9b9ce; font-size: 11px; }
+.addressBar strong { font-weight: normal; }
+.explorerToolbar { display: flex; gap: 30px; padding: 6px 16px; min-height: 29px; background: linear-gradient(#f8fcff, #e5edf5 48%, #dbe6f2 50%, #eaf2fa); border-bottom: 1px solid #b8c9db; font-size: 11px; color: #293e50; }
+.explorerColumns { display: flex; flex: 1; min-height: 0; }
+.explorerSidebar { width: 165px; flex-shrink: 0; padding: 15px 0; border-right: 1px solid #d5dfeb; background: #f6f9fc; }
+.explorerSidebar strong { display: block; padding: 0 14px 5px; font-weight: 600; }
+.explorerSidebar button { width: 100%; display: flex; align-items: center; gap: 6px; padding: 5px 12px 5px 24px; background: none; border: 1px solid transparent; text-align: left; }
+.explorerSidebar button:hover, .explorerSidebar button[aria-current='page'] { border-color: #b7d4ee; background: linear-gradient(#f1f8fe, #d9eafb); }
+.explorerBody { flex: 1; min-width: 0; padding: 20px; overflow: auto; }
+.explorerBody h1 { color: #1e4270; font-size: 20px; font-weight: normal; margin: 0 0 18px; }
+.emptyLibrary { display: flex; align-items: center; flex-direction: column; padding: 30px 8px; text-align: center; color: #666; }
+.explorerStatus { min-height: 26px; padding: 4px 14px; background: #f0f4f9; border-top: 1px solid #d4dce5; color: #566572; font-size: 11px; }
+.about, .contact { padding: 24px; color: #222; line-height: 1.7; }
+.about header { display: flex; gap: 18px; align-items: center; border-bottom: 1px solid #d9e2ed; padding-bottom: 18px; }
+.about header img { object-fit: cover; border: 1px solid #8a9ba8; padding: 2px; }
+.about h1, .contact h1 { color: #1e4270; font-size: 20px; font-weight: normal; margin: 0; }
+.about header p { margin: 3px 0 0; }
+.contactRow { display: flex; gap: 8px; align-items: center; border-bottom: 1px solid #dce4ed; padding: 14px 0; }
+.contactRow > div { display: flex; flex: 1; min-width: 0; flex-direction: column; overflow-wrap: anywhere; }
+.contactRow a, .contactRow button { color: #173e6d; background: linear-gradient(#fff, #e6edf4); border: 1px solid #a6b4c3; border-radius: 2px; padding: 3px 10px; text-decoration: none; }
+.gamesList { display: flex; flex-wrap: wrap; gap: 28px; padding: 20px 0; }
+.gameItem { display: flex; width: 110px; align-items: center; flex-direction: column; gap: 8px; text-align: center; }
+.gameItem strong { font-weight: normal; }
+.gameItem span { font-size: 11px; color: #687886; }
+.noScript { position: absolute; top: 10px; left: 90px; padding: 15px; background: #fff; color: #111; }
+
 @media (max-width: 719px) {
   .pinned { display: none; }
   .task { width: 43px; }
@@ -152,6 +227,17 @@
   .clock { min-width: 64px; padding: 0 3px; font-size: 10px; }
   .showDesktop { width: 16px; }
   .startMenu { grid-template-columns: minmax(0, 1fr) 132px; }
+  .window { border-radius: 0; }
+  .titlebar { flex-basis: 34px; height: 34px; padding-left: 5px; cursor: default; }
+  .windowButtons button { height: 29px; width: 34px; }
+  .windowButtons .close { width: 44px; }
+  .explorerSidebar { width: 115px; }
+  .explorerSidebar button { padding-left: 8px; font-size: 11px; }
+  .explorerToolbar > span:last-child { display: none; }
+  .explorerBody { padding: 14px; }
+  .contact, .about { padding: 16px; }
+  .contactRow { flex-wrap: wrap; }
+  .contactRow > div { flex-basis: 100%; }
 }
 @media (max-height: 430px) {
   .startRight { padding-top: 5px; overflow-y: auto; }
