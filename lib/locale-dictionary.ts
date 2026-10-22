@@ -1,6 +1,10 @@
 /** Single source of truth for interface translations; English is the initial language. */
 export type Language = 'en' | 'pt';
 export const translations: Record<string,string> = {
+ 'Área de trabalho Windows 7':'Windows 7 desktop',
+ 'Fotografias':'Photographs',
+ 'Sobre':'About',
+ 'Games':'Games',
  'Inicialização BIOS':'BIOS startup',
  'Sequência de inicialização':'Boot sequence',
  'Abrindo o Windows Boot Manager...':'Opening Windows Boot Manager...',

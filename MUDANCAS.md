@@ -1,3 +1,10 @@
+# Windows 7 — desktop — 22/10/2026
+
+- `/win7` recebe shell independente com Harmony, ícones ICO reais e cursores
+  locais. Seleção por clique, Ctrl/Cmd para múltiplos e navegação por setas.
+- CSS Modules limita o tema à área Windows 7. EN/PT compartilha a preferência
+  existente, sem modificar o wallpaper ou os dados do XP.
+
 # Dual boot — BIOS e Boot Manager — 22/10/2026
 
 - `.env.example` documenta DRIVE_FOLDER_ID, GOOGLE_DRIVE_API_KEY e
