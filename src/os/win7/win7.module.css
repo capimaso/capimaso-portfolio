@@ -22,7 +22,7 @@
 .desktop button { min-width: 0; }
 :is(.shortcut, .startOrb, .pinned button, .task, .languageSwitch button, .showDesktop, .programs button, .allPrograms, .startRight > button, .explorerSidebar button, .photoEntry, .breadcrumbs button) { box-shadow: none; }
 :is(.shortcut, .startOrb, .pinned button, .task, .languageSwitch button, .showDesktop, .programs button, .allPrograms, .startRight > button, .explorerSidebar button, .photoEntry, .breadcrumbs button)::before, :is(.shortcut, .startOrb, .pinned button, .task, .languageSwitch button, .showDesktop, .programs button, .allPrograms, .startRight > button, .explorerSidebar button, .photoEntry, .breadcrumbs button)::after { content: none; }
-:is(.shortcut, .startOrb, .pinned button, .task, .languageSwitch button, .showDesktop, .programs button, .allPrograms, .startRight > button, .explorerSidebar button, .photoEntry, .breadcrumbs button):focus { animation: none; background-image: none; }
+:is(.shortcut, .startOrb, .pinned button, .task, .languageSwitch button, .showDesktop, .programs button, .allPrograms, .startRight > button, .explorerSidebar button, .photoEntry, .breadcrumbs button):focus { animation: none; }
 /* No animation is applied to text or to the wallpaper behind the glass. */
 .shortcuts {
   position: absolute;
