@@ -59,8 +59,10 @@
   align-items: center;
   border-top: 1px solid #ffffffa0;
   box-shadow: 0 -1px 0 #14283c99, inset 0 1px 0 #ffffff20;
-  background: linear-gradient(110deg, #193144b3, #315e7e88 45%, #132a3ebd);
-  backdrop-filter: blur(14px) saturate(130%);
+  background:
+    linear-gradient(180deg, #ffffff38, #ffffff0a 46%, #071c3026 48%, #061a302e),
+    linear-gradient(115deg, #17344c55, #558eb52e 45%, #102a424f);
+  backdrop-filter: blur(7px) saturate(145%);
 }
 .startOrb {
   flex: 0 0 54px;
@@ -69,10 +71,24 @@
   margin-top: -7px;
   padding: 0;
   border: 0;
-  background: transparent url('/assets/win7/theme/start-orb.png') 0 0 / 54px 162px no-repeat;
+  background: transparent;
 }
-.startOrb:hover { background-position-y: -54px; }
-.startOrb:active, .startOrb[aria-expanded='true'] { background-position-y: -108px; }
+.startOrb::before {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  width: 106px;
+  height: 106px;
+  left: 50%;
+  top: 50%;
+  margin: -53px 0 0 -53px;
+  /* Native sprite frames, uniformly reduced by exactly 1/2. No cropping or stretch. */
+  transform: scale(.5);
+  background: transparent url('/assets/win7/theme/start-orb.png') 0 0 / 106px 318px no-repeat;
+  image-rendering: -webkit-optimize-contrast;
+}
+.startOrb:hover::before { background-position-y: -106px; }
+.startOrb:active::before, .startOrb[aria-expanded='true']::before { background-position-y: -212px; }
 .pinned, .tasks { height: 100%; display: flex; align-items: center; gap: 3px; }
 .pinned:empty { display: none; }
 .pinned button, .task {
@@ -120,9 +136,22 @@
   gap: 3px;
   border: 1px solid #102c42;
   border-radius: 7px 7px 0 0;
-  background: linear-gradient(115deg, #6f9eb8d9, #152d40ed 65%);
+  background: linear-gradient(115deg, #b9dfef55, #254a658c 38%, #10283aa8 65%);
   box-shadow: inset 0 0 0 1px #d3edff80, 2px -2px 12px #0008;
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(8px) saturate(140%);
+  transform-origin: 28px bottom;
+  opacity: 0;
+  transform: translateY(5px) scale(.98);
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 140ms ease-out, transform 160ms ease-out, visibility 0s linear 160ms;
+}
+.startMenu[data-open='true'] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
 }
 .startLeft { min-height: 0; display: flex; flex-direction: column; border: 1px solid #e1e5ec; border-radius: 4px; overflow: hidden; background: #fff; }
 .programs { flex: 1; min-height: 0; overflow: auto; padding: 4px; }
@@ -154,13 +183,15 @@
   min-height: 0;
   border: 1px solid #485b68;
   border-radius: 7px;
-  background: linear-gradient(125deg, #d8e8f1b0 0%, #bad2e185 15%, #e9f4faad 26%, #89b4cc7a 42%, #e5f4fc88 60%, #b7d8eb77);
+  background:
+    linear-gradient(120deg, transparent 12%, #ffffff4d 12.4%, #ffffff0a 22%, transparent 22.4%, transparent 45%, #ffffff40 45.4%, transparent 54%),
+    linear-gradient(125deg, #c8e5f14d, #7bb2d233 40%, #cbe9f13d 65%, #7eafcc40);
   box-shadow: inset 0 0 0 1px #ffffffb3, 0 3px 14px #0006;
-  backdrop-filter: blur(12px) saturate(125%);
+  backdrop-filter: blur(7px) saturate(140%);
   pointer-events: auto;
 }
 .window[hidden] { display: none; }
-.activeWindow { border-color: #2c4b61; background-color: #87badd40; box-shadow: inset 0 0 0 1px #eefaff, 0 4px 16px #0008; }
+.activeWindow { border-color: #2c4b61; background-color: #60a6d21a; box-shadow: inset 0 0 0 1px #eefaffd9, 0 4px 16px #0008; }
 .maximized { border-radius: 0; padding: 0 0 0; border: 0; }
 .titlebar { height: 29px; flex: 0 0 29px; display: flex; align-items: center; min-width: 0; touch-action: none; cursor: url('/assets/win7/cursor/Move.cur'), move; }
 .windowTitle { display: flex; align-items: center; gap: 5px; flex: 1; min-width: 0; padding-left: 1px; text-shadow: 0 0 4px #fff, 0 0 10px #fff, 0 0 12px #fff; }
@@ -217,6 +248,12 @@
 .gameItem strong { font-weight: normal; }
 .gameItem span { font-size: 11px; color: #687886; }
 .noScript { position: absolute; top: 10px; left: 90px; padding: 15px; background: #fff; color: #111; }
+.notepad { display: block; resize: none; width: 100%; height: 100%; min-height: 100%; border: 0; padding: 5px; background: #fff; color: #111; font: 14px/1.4 Consolas, monospace !important; user-select: text; }
+.calculator { padding: 12px; height: 100%; background: linear-gradient(#edf4fc, #d8e4f2); display: flex; flex-direction: column; gap: 12px; }
+.calculator output { display: block; padding: 10px; border: 1px solid #93a6bd; border-radius: 3px; background: linear-gradient(#e8effb, #fff); text-align: right; font: 24px/1.4 Consolas, monospace; overflow-wrap: anywhere; user-select: text; }
+.calculator > div { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.calculator button { min-height: 32px; border: 1px solid #879bb4; border-radius: 3px; box-shadow: inset 0 0 0 1px #fff9; background: linear-gradient(#f8fbff, #e2ebf5 48%, #d4dfed 50%, #edf3fa); }
+.calculator button:hover { border-color: #d9982a; background: linear-gradient(#fff4d9, #ffe2a4 48%, #ffcf6c 50%, #ffedc2); }
 
 /* Photography Explorer: address history, real folders and framed thumbnails. */
 .photoAddressBar { display: flex; align-items: center; gap: 8px; padding: 5px 7px; min-height: 36px; background: linear-gradient(#f9fcff, #e5edf5); border-bottom: 1px solid #a9b9ce; }
@@ -267,7 +304,10 @@
 .viewerZoom output { min-width: 39px; text-align: center; font-size: 11px; color: #344d65; }
 .viewerControls .viewerDownload { font-weight: 600; }
 
-@media (prefers-reduced-motion: reduce) { .photoSkeleton { animation: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .photoSkeleton { animation: none; }
+  .startMenu { transition: none; transform: none; }
+}
 
 @media (max-width: 719px) {
   .pinned { display: none; }

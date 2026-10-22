@@ -1,5 +1,12 @@
 # Windows 7 — Google Drive — 22/10/2026
 
+## QA Win7 ? fidelidade do Aero e Menu Iniciar (2026-10-22)
+
+- Taskbar e molduras Aero usam camadas mais transparentes, blur de 7 px e reflexos internos; conte?do das janelas permanece leg?vel.
+- Start Orb preserva frames nativos de 106x106 da sprite 106x318 e reduz ambos os eixos exatamente a 50%, incluindo normal, hover e pressed.
+- Menu Iniciar permanece montado para animar abertura e fechamento com fade/scale; fechado fica invis?vel, inert e fora da navega??o. Respeita prefer?ncia por movimento reduzido e reinicia a busca ao abrir.
+- Acess?rios t?m estilos locais no Win7; nenhum CSS do XP foi alterado.
+
 ## QA Win7 ? originais, downloads e busca (2026-10-22)
 
 - Photo Viewer carrega e valida o original pelo proxy antes de exibir, cancela requisi??es antigas e libera URLs tempor?rias. O download reutiliza os mesmos bytes, mant?m o nome e aguarda 60 segundos antes de liberar seu Blob.

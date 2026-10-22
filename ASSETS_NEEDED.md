@@ -9,7 +9,8 @@
 - XP Bliss, capas, avatares, thumbnails e cursores: preservar caminhos atuais.
 - `public/assets/win7/wallpapers/harmony.jpg`: wallpaper original recebido e usado.
 - `public/assets/win7/theme/start-orb.png`: sprite 106x318 com três estados;
-  exibido em 54x162, posições Y 0/-54/-108, sem modificar o arquivo.
+  frames nativos 106x106, posições Y 0/-106/-212 em pseudo-elemento reduzido
+  uniformemente a 50%; sem esticar, recortar ou modificar o arquivo.
 - `public/assets/win7/cursor/`: cursores originais recebidos; usados Normal
   Select, Link Select, Move e os quatro de redimensionamento. Diretório singular.
 - Os ICO são servidos diretamente. Os assets incorporados aos commits são os

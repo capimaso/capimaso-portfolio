@@ -8,7 +8,7 @@ import { applications, windowApplications, type AppId } from './types';
 import Win7Icon from './Win7Icon';
 import styles from './win7.module.css';
 
-export default function StartMenu({ onOpen }: { onOpen: (id: AppId) => void }) {
+export default function StartMenu({ open, onOpen }: { open: boolean; onOpen: (id: AppId) => void }) {
   const t = useT();
   const [search, setSearch] = useState('');
   const [allPrograms, setAllPrograms] = useState(false);
@@ -20,7 +20,9 @@ export default function StartMenu({ onOpen }: { onOpen: (id: AppId) => void }) {
     && normalize(`${t(app.label)} ${app.label} ${app.id} ${app.id === 'photos' ? 'fotos photos pictures imagens bibliotecas libraries' : ''} ${app.id === 'notepad' ? 'notepad notas texto text' : ''}`)
       .includes(normalize(search.trim())));
 
-  useEffect(() => { input.current?.focus(); }, []);
+  useEffect(() => {
+    if (open) { setSearch(''); setAllPrograms(false); input.current?.focus(); }
+  }, [open]);
 
   function navigate(event: KeyboardEvent) {
     if (event.key === 'Enter' && event.target === input.current && matching.length) {
@@ -36,7 +38,8 @@ export default function StartMenu({ onOpen }: { onOpen: (id: AppId) => void }) {
     buttons[next].focus();
   }
 
-  return <section id="win7-start-menu" className={styles.startMenu} data-start-menu aria-label={t('Menu Iniciar')} onKeyDown={navigate}>
+  return <section id="win7-start-menu" className={styles.startMenu} data-start-menu data-open={open} inert={!open}
+    aria-hidden={!open} aria-label={t('Menu Iniciar')} onKeyDown={navigate}>
     <div className={styles.startLeft}>
       <div className={styles.programs} ref={results} aria-label={t('Programas')}>
         {matching.map(app => <button type="button" key={app.id} onClick={() => onOpen(app.id)}>
