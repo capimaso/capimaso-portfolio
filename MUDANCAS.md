@@ -1,3 +1,14 @@
+# Windows 7 — Google Drive — 22/10/2026
+
+- APIs de listagem paginada e proxy de miniaturas/originais em `/api/photos`.
+  Apenas pastas e imagens raster compatíveis; navegação limitada à raiz configurada.
+- Credenciais lidas somente no servidor. `DRIVE_FOLDER_ID` aceita ID ou link de
+  pasta, sem alterar `.env.local`. Erros retornam códigos seguros, sem respostas
+  brutas do provedor. A chave vai em header e nunca no JSON ou URL do cliente.
+- Cache de metadados/listagem por 60s, atualização explícita, suporte a resource
+  keys e validação de ancestralidade antes de entregar arquivos. Download usa
+  bytes originais e Content-Disposition attachment com nome UTF-8.
+
 # Windows 7 — desktop — 22/10/2026
 
 - `npm run check`, `npm run typecheck`, `npm run build` e seis testes em
