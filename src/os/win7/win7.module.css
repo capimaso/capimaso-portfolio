@@ -247,8 +247,25 @@
 .morePhotos { display: block; margin: 18px auto 0; }
 .morePhotos:disabled { opacity: .6; cursor: default; }
 .selectedPhotoName { padding-left: 18px; }
-.photoViewer { height: 100%; display: grid; place-items: center; background: #151515; }
-.photoViewer > img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.photoViewer { height: 100%; min-height: 0; display: flex; flex-direction: column; overflow: hidden; background: #151515; }
+.viewerHeading { display: flex; justify-content: space-between; gap: 15px; flex-shrink: 0; min-height: 29px; padding: 5px 12px; border-bottom: 1px solid #a9b9ca; background: linear-gradient(#f6f9fc, #dae5ef); color: #273f55; font-size: 11px; }
+.viewerHeading > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.viewerHeading > span:last-child { flex-shrink: 0; }
+.viewerStage { position: relative; flex: 1; min-height: 0; overflow: auto; background: #151515; }
+.viewerCanvas { min-width: 100%; min-height: 100%; display: grid; place-items: center; }
+.viewerImage { display: block; max-width: none; max-height: none; object-fit: contain; user-select: none; }
+.viewerMessage { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); margin: 0; color: #ddd; text-align: center; width: min(90%, 420px); }
+.viewerMessage.photoError { color: #344958; }
+.viewerFailure { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 7px 12px; color: #f5e2ce; font-size: 11px; border-top: 1px solid #4f4841; background: #342c25; }
+.viewerFailure button { background: #f4f7fa; border: 1px solid #9aafc3; padding: 3px 8px; color: #173e6d; }
+.viewerControls { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 9px 22px; padding: 8px 12px; flex-shrink: 0; min-height: 54px; border-top: 1px solid #b4c2d2; background: linear-gradient(#fafcff, #e6edf5 45%, #d4dfeb 46%, #edf3f9); }
+.viewerNavigation, .viewerZoom { display: flex; align-items: center; gap: 8px; }
+.viewerControls button { border: 1px solid #8dabc5; border-radius: 4px; padding: 5px 10px; min-height: 30px; background: linear-gradient(#fff, #e5eef7 48%, #cddce9 49%, #f3f7fa); color: #214a70; box-shadow: inset 0 0 0 1px #fff; }
+.viewerControls button:hover:not(:disabled) { background: linear-gradient(#eefaff, #bcdff7); border-color: #4a94c8; }
+.viewerControls button:disabled { opacity: .5; cursor: default; }
+.viewerControls .viewerPrevious, .viewerControls .viewerNext { border-radius: 50%; width: 34px; height: 34px; padding: 0; font-size: 16px; color: white; border-color: #417aa8; background: linear-gradient(#c0e5ff, #3887c5 49%, #1264a3 50%, #73b8e9); text-shadow: 0 1px #12416d; }
+.viewerZoom output { min-width: 39px; text-align: center; font-size: 11px; color: #344d65; }
+.viewerControls .viewerDownload { font-weight: 600; }
 
 @media (prefers-reduced-motion: reduce) { .photoSkeleton { animation: none; } }
 
@@ -275,6 +292,9 @@
   .photosGrid { grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); }
   .photoAddressBar { gap: 4px; padding: 5px 3px; }
   .selectedPhotoName { display: none; }
+  .viewerControls { padding: 5px; gap: 6px 12px; }
+  .viewerControls button { min-height: 34px; padding: 5px 8px; }
+  .viewerZoom { gap: 4px; }
 }
 @media (max-height: 430px) {
   .startRight { padding-top: 5px; overflow-y: auto; }

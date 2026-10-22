@@ -1,6 +1,16 @@
 /** Single source of truth for interface translations; English is the initial language. */
 export type Language = 'en' | 'pt';
 export const translations: Record<string,string> = {
+ 'Carregando fotografia...':'Loading photograph...',
+ 'Não foi possível abrir esta fotografia.':'This photograph could not be opened.',
+ 'Anterior':'Previous',
+ 'Próximo':'Next',
+ 'Diminuir zoom':'Zoom out',
+ 'Aumentar zoom':'Zoom in',
+ 'Zoom':'Zoom',
+ 'Ajustar à janela':'Fit to window',
+ 'Baixar':'Download',
+ 'Baixando...':'Downloading...',
  'Avançar':'Forward',
  'Visualizador de Fotos do Windows':'Windows Photo Viewer',
  'Carregando fotografias...':'Loading photographs...',

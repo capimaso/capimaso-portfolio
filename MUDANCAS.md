@@ -1,5 +1,11 @@
 # Windows 7 — Google Drive — 22/10/2026
 
+- Photo Viewer em janela Aero independente, fundo escuro, anterior/próximo na
+  mesma pasta (inclusive próximas páginas), zoom 5–800%, ajuste à janela e
+  download dos bytes originais. Teclas esquerda/direita, +/- e 0 suportadas.
+- Download só inicia após resposta válida; falhas de imagem, paginação ou
+  download exibem erro e opção de tentar novamente. Fechar cancela requisições.
+
 - Explorer de fotografias conectado à raiz real, com histórico voltar/avançar,
   breadcrumbs clicáveis, sidebar, miniaturas em molduras, seleção, paginação,
   skeletons e mensagens de erro EN/PT. Enter/duplo clique abre; mobile usa um toque.

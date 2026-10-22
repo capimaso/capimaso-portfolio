@@ -10,7 +10,7 @@ export async function fetchPhotoListing(location: PhotoLocation, options: { toke
   if (location.path?.length) params.set('path', location.path.join('/'));
   if (options.token) params.set('pageToken', options.token);
   if (options.refresh) params.set('refresh', '1');
-  const response = await fetch(`/api/photos?${params}`, { signal: options.signal, cache: 'no-store' });
+  const response = await fetch(`/api/photos${params.size ? `?${params}` : ''}`, { signal: options.signal, cache: 'no-store' });
   const body = await response.json();
   if (!response.ok) throw new PhotoRequestError(body.error?.code || 'unavailable');
   return body as PhotoListing;
