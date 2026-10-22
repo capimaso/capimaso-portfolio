@@ -41,7 +41,7 @@ async function fixture(run, options = {}) {
   globalThis.fetch = async (url, init) => {
     const u = new URL(url); calls.push({ url: u, init });
     assert(!u.searchParams.has('key'));
-    if (options.respond) { const response = await options.respond(u, init); if (response) return response; }
+    if (options.respond) { const response = await options.respond(u, init, files); if (response) return response; }
     if (u.hostname === 'lh3.googleusercontent.com') {
       assert(!init.headers?.['X-Goog-Api-Key']);
       return new Response('thumbnail bytes', { headers: { 'Content-Type': 'image/jpeg' } });
@@ -113,7 +113,18 @@ test('cold-instance paths work when public metadata omits parents, but invented 
   assert.equal(response.status, 200);
   const bad = await image(new Request(`http://local/api/photos/outside/image?path=${root}/album`), { params: Promise.resolve({ id: 'outside' }) });
   assert.equal(bad.status, 403);
-}));
+}, { respond: (url, _init, files) => {
+  if (url.pathname.endsWith('/files') || url.searchParams.get('alt') === 'media') return;
+  const file = files[url.pathname.split('/').at(-1)];
+  if (file) return Response.json({ ...file, parents: undefined });
+} }));
+
+test('binary redirects cannot send the API key or browser to an arbitrary host', () => fixture(async ({ calls, root }) => {
+  const response = await image(new Request(`http://local/api/photos/photo/image?path=${root}/album`), { params: Promise.resolve({ id: 'photo' }) });
+  assert.equal(response.status, 502);
+  assert(!calls.some(call => call.url.hostname === 'example.com'));
+  assert.equal(response.headers.get('Location'), null);
+}, { respond: url => url.searchParams.get('alt') === 'media' ? new Response(null, { status: 302, headers: { Location: 'https://example.com/untrusted' } }) : undefined }));
 
 test('missing configuration and quota failures return sanitized codes', async () => {
   await fixture(async () => {
@@ -129,3 +140,10 @@ test('missing configuration and quota failures return sanitized codes', async ()
     assert(body.includes('rate_limited')); assert(!body.includes(fakeKey));
   }, { respond: () => Response.json({ error: { message: fakeKey, errors: [{ reason: 'userRateLimitExceeded' }] } }, { status: 403 }) });
 });
+
+test('temporary Google HTML challenges become retryable errors without relaying the page', () => fixture(async ({ root }) => {
+  const response = await image(new Request(`http://local/api/photos/photo/image?path=${root}/album`), { params: Promise.resolve({ id: 'photo' }) });
+  assert.equal(response.status, 429);
+  assert.equal(response.headers.get('Retry-After'), '60');
+  assert.deepEqual(await response.json(), { error: { code: 'rate_limited' } });
+}, { respond: url => url.searchParams.get('alt') === 'media' ? new Response('<html>temporary provider challenge</html>', { status: 403, headers: { 'Content-Type': 'text/html' } }) : undefined }));

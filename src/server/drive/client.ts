@@ -63,6 +63,11 @@ export async function driveRequest(config: DriveConfig, path: string, params: Re
     });
   } catch { throw new DriveError('unavailable', 502); }
   if (!response.ok && !(response.status >= 300 && response.status < 400)) {
+    // Google's temporary automation challenge is HTML, not a Drive permission
+    // error. Do not retry around the challenge or relay its page to the client.
+    if (response.status === 403 && response.headers.get('content-type')?.includes('text/html')) {
+      await response.body?.cancel(); throw new DriveError('rate_limited', 429);
+    }
     const body = await response.json().catch(() => null);
     throw providerError(response.status, body?.error?.errors?.[0]?.reason);
   }
@@ -85,7 +90,11 @@ export async function googleImageRequest(input: string) {
       if (!location) throw new DriveError('unavailable', 502);
       url = new URL(location, url); continue;
     }
-    if (!response.ok) { await response.body?.cancel(); throw providerError(response.status); }
+    if (!response.ok) {
+      const challenged = response.status === 403 && response.headers.get('content-type')?.includes('text/html');
+      await response.body?.cancel();
+      throw challenged ? new DriveError('rate_limited', 429) : providerError(response.status);
+    }
     return response;
   }
   throw new DriveError('unavailable', 502);

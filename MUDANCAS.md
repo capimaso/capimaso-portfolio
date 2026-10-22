@@ -1,5 +1,8 @@
 # Windows 7 — Google Drive — 22/10/2026
 
+- Limites de quota e bloqueios temporários HTML do Google retornam 429 com
+  Retry-After, sem repassar a página do provedor nem tentar contornar o bloqueio.
+
 - Photo Viewer em janela Aero independente, fundo escuro, anterior/próximo na
   mesma pasta (inclusive próximas páginas), zoom 5–800%, ajuste à janela e
   download dos bytes originais. Teclas esquerda/direita, +/- e 0 suportadas.
