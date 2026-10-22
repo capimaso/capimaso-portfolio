@@ -2,6 +2,12 @@
 
 ## Base visual 7.css — refatoração incremental
 
+- Busca separada em catálogo bilíngue e consulta paginada das pastas reais da
+  raiz do Drive. Debounce/cancelamento e cache de 60 s evitam consultas ociosas;
+  falha remota não impede Calculadora/Bloco de notas e outros atalhos locais.
+  Resultado de pasta restaura o Explorer existente no endereço correto, mantendo
+  geometria; o caminho continua sendo validado pelo backend original.
+
 - useWindowManager centraliza ações e área útil; useWindowGesture separa captura
   de ponteiro, atualização por frame e cleanup. Geometria pura cobre oito bordas.
   Foco repetido é idempotente; frames atrasados não alteram janelas minimizadas

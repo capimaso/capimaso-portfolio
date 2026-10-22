@@ -1,6 +1,8 @@
 /** Single source of truth for interface translations; English is the initial language. */
 export type Language = 'en' | 'pt';
 export const translations: Record<string,string> = {
+ 'Pastas do Drive':'Drive folders',
+ 'Carregando pastas...':'Loading folders...',
  'Calculadora':'Calculator',
  'Resultado':'Result',
  'Limpar':'Clear',

@@ -111,7 +111,7 @@ function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {
       <WindowManager windows={state.windows} activeId={activeId} compact={compact} area={area}
         dispatch={dispatch} onOpen={open} onClose={manager.close} onView={view} />
     </div>
-    <StartMenu open={startOpen} onOpen={open} />
+    <StartMenu open={startOpen} onOpen={open} onBrowse={folder => { setStartOpen(false); manager.browse(folder); }} />
     <Taskbar startOpen={startOpen} onStart={() => setStartOpen(value => !value)} windows={state.windows}
       activeId={activeId} onOpen={open} onTask={manager.task}
       onShowDesktop={manager.showDesktop} onLanguage={onLanguage} />

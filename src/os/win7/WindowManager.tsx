@@ -17,6 +17,6 @@ export default function WindowManager({ windows, activeId, compact, area, dispat
     onClose={() => onClose(win.id)} onMinimize={() => dispatch({ type: 'minimize', id: win.id })}
     onMaximize={() => dispatch({ type: 'maximize', id: win.id })}
     onBounds={bounds => dispatch({ type: 'bounds', id: win.id, bounds })}>
-    <AppContent id={win.id} onOpen={onOpen} onView={onView} selection={win.selection} />
+    <AppContent id={win.id} onOpen={onOpen} onView={onView} selection={win.selection} folder={win.folder} />
   </WindowChrome>);
 }

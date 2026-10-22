@@ -11,6 +11,8 @@ const moduleURL = source => `data:text/javascript;base64,${Buffer.from(source).t
 const typesURL = moduleURL(compile(await readFile(new URL('../src/os/win7/types.ts', import.meta.url), 'utf8')));
 const geometryURL = moduleURL(compile(await readFile(new URL('../src/os/win7/window-geometry.ts', import.meta.url), 'utf8')));
 const { gestureBounds } = await import(geometryURL);
+const catalogURL = moduleURL(compile(await readFile(new URL('../src/os/win7/program-catalog.ts', import.meta.url), 'utf8')).replace("'./types'", JSON.stringify(typesURL)));
+const { searchPrograms } = await import(catalogURL);
 const reducerSource = compile(await readFile(new URL('../src/os/win7/window-state.ts', import.meta.url), 'utf8'));
 const { windowReducer: reduce, initialWindows, activeWindow, fitBounds } = await import(moduleURL(reducerSource.replaceAll("'./window-geometry'", JSON.stringify(geometryURL)).replace("'./types'", JSON.stringify(typesURL))));
 const area = { width: 1440, height: 860 };
@@ -110,4 +112,27 @@ test('late gesture frames cannot overwrite minimized or maximized restore geomet
     assert.deepEqual(late.windows[0].bounds, state.windows[0].bounds);
   }
   assert.equal(reduce(state, { type: 'bounds', id: 'photos', bounds: { x: NaN, y: 0, width: 320, height: 200 } }), state);
+});
+
+test('program search matches bilingual names, accents and aliases without adding unavailable apps', () => {
+  const t = label => ({ Calculadora: 'Calculator', 'Bloco de notas': 'Notepad', Fotografias: 'Photographs' })[label] || label;
+  for (const query of ['calc', 'Calculadora', 'calculator']) assert.equal(searchPrograms(query, t)[0].id, 'calculator');
+  for (const query of ['NOTEPAD', 'bloco de notas', 'texto']) assert.equal(searchPrograms(query, t)[0].id, 'notepad');
+  for (const query of ['fotógrafias', 'bibliotecas', 'photos']) assert.equal(searchPrograms(query, t)[0].id, 'photos');
+  assert.equal(searchPrograms('', t).some(app => app.id === 'calculator'), false);
+  assert.equal(searchPrograms('', t, true).some(app => app.id === 'calculator'), true);
+  assert.deepEqual(searchPrograms('nonexistent program', t, true), []);
+});
+
+test('opening a Drive search destination restores the existing Explorer and preserves geometry', () => {
+  let state = open(initialWindows, 'photos');
+  const original = state.windows[0].bounds;
+  state = reduce(state, { type: 'minimize', id: 'photos' });
+  const folder = [{ id: 'root', name: 'Photos' }, { id: 'album', name: 'Café' }];
+  state = reduce(state, { type: 'open', id: 'photos', area, folder });
+  assert.equal(state.windows.length, 1);
+  assert.equal(state.windows[0].folder, folder);
+  assert.deepEqual(state.windows[0].bounds, original);
+  assert.equal(state.windows[0].minimized, false);
+  assert.equal(activeWindow(state.windows), 'photos');
 });

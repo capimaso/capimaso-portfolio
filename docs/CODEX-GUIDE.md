@@ -6,6 +6,13 @@ selecionar elementos fora desse contêiner. Entradas Next permanecem em `app/`;
 implementação ativa está em `src/os/xp/`. Ver plano completo em `PLANS.md`.
 
 O Windows 7 está em `/win7`, implementado em `src/os/win7/` com CSS Modules.
+O tema usa `7.css/dist/7.scoped.css` na camada `win7-base` via `seven.css` e
+contêiner `.win7`; não importar sua versão global. Molduras usam classes oficiais
+`window glass`, `title-bar` e controles `is-*`. Taskbar/Menu reutilizam o vidro
+da biblioteca, com layout local. `useWindowManager` adapta estado/área útil;
+`useWindowGesture` trata ponteiro e frames, `window-geometry` contém geometria pura.
+`program-catalog` e `useStartSearch` combinam apps locais e pastas públicas da raiz
+sem crawling recursivo; destinos de busca são enviados ao Explorer existente.
 `window-state.ts` concentra abertura, foco, geometria, minimização e restauração;
 `WindowChrome.tsx` trata gestos e teclado. `npm run test:win7` verifica as regras.
 O CSS aplica a sprite original do Orb em três posições, sem recortar ou alterar

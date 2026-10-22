@@ -7,16 +7,16 @@ import { socials } from '@/data/socials';
 import { applications, type AppId } from '../types';
 import Win7Icon from '../Win7Icon';
 import styles from '../win7.module.css';
-import type { PhotoSelection } from '@/src/lib/photos';
+import type { PhotoFolder, PhotoSelection } from '@/src/lib/photos';
 import Explorer from './Explorer';
 import PhotoViewer from './PhotoViewer';
 import SystemTools from './SystemTools';
 
-export default function AppContent({ id, onOpen, onView, selection }: { id: AppId; onOpen: (id: AppId) => void; onView: (selection: PhotoSelection) => void; selection?: PhotoSelection }) {
+export default function AppContent({ id, onOpen, onView, selection, folder }: { id: AppId; onOpen: (id: AppId) => void; onView: (selection: PhotoSelection) => void; selection?: PhotoSelection; folder?: PhotoFolder[] }) {
   const t = useT();
   const [notice, setNotice] = useState('');
   if (id === 'calculator' || id === 'notepad') return <SystemTools id={id} />;
-  if (id === 'photos') return <Explorer onOpen={onOpen} onView={onView} />;
+  if (id === 'photos') return <Explorer onOpen={onOpen} onView={onView} initialTrail={folder} />;
   if (id === 'photoViewer') return selection ? <PhotoViewer selection={selection} /> : null;
   if (id === 'about') return <article className={styles.about}>
     <header><img src="/images/profile.jpg" width={72} height={72} alt={profile.brand} /><div><h1>{profile.name} / {profile.brand}</h1><p>{t(profile.role)}</p></div></header>

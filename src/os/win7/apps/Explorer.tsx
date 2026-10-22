@@ -9,11 +9,16 @@ import { fetchPhotoListing, photoErrorMessage, type PhotoLocation } from './phot
 import styles from '../win7.module.css';
 
 type Location = PhotoLocation & { trail: PhotoFolder[] };
-type Props = { onOpen: (id: AppId) => void; onView: (selection: PhotoSelection) => void };
+type Props = { onOpen: (id: AppId) => void; onView: (selection: PhotoSelection) => void; initialTrail?: PhotoFolder[] };
 
-export default function Explorer({ onOpen, onView }: Props) {
+function destination(trail: PhotoFolder[] = []): Location {
+  return { id: trail.at(-1)?.id, path: trail.slice(0, -1).map(folder => folder.id), trail };
+}
+
+export default function Explorer({ onOpen, onView, initialTrail }: Props) {
   const t = useT(), language = useLanguage();
-  const [history, setHistory] = useState<Location[]>([{ trail: [] }]);
+  const [history, setHistory] = useState<Location[]>(() => [destination(initialTrail)]);
+  const lastDestination = useRef(initialTrail);
   const [position, setPosition] = useState(0);
   const [revision, setRevision] = useState(0);
   const [data, setData] = useState<PhotoListing | null>(null);
@@ -24,6 +29,12 @@ export default function Explorer({ onOpen, onView }: Props) {
   const requests = useRef<AbortController | null>(null);
   const generation = useRef(0);
   const location = history[position];
+
+  useEffect(() => {
+    if (lastDestination.current === initialTrail) return;
+    lastDestination.current = initialTrail;
+    setHistory([destination(initialTrail)]); setPosition(0); setRevision(0);
+  }, [initialTrail]);
 
   useEffect(() => {
     const controller = new AbortController();

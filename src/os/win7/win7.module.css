@@ -170,6 +170,10 @@
 .restart { margin-top: auto; align-self: flex-start; border: 1px solid #173044; border-radius: 3px; padding: 4px 16px; background: linear-gradient(#cadbe780, #9cb1c030 50%, #24435d80 51%); box-shadow: inset 0 0 0 1px #ffffff70; color: white; text-decoration: none; }
 .restart:hover { background-color: #ffffff50; }
 .noResults { padding: 12px; color: #555; }
+.searchHeading { margin: 6px 4px 0; padding: 3px 0; border-bottom: 1px solid #dce6f0; color: #1e4270; font-size: 11px; }
+.searchStatus { padding: 4px 7px; color: #555; font-size: 11px; }
+.searchStatus p { margin: 4px 0; }
+.programs .searchStatus button { min-height: 25px; padding: 4px; }
 
 /* Aero window frame. Saved geometry is independent from the maximized view. */
 .workspace { position: absolute; inset: 0 0 var(--taskbar-height); pointer-events: none; }
