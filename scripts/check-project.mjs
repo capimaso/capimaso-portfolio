@@ -28,14 +28,14 @@ assert(work.every(x=>!x.thumbnail||x.thumbnail.startsWith('/images/')),'Capas us
 for(const item of work.filter(x=>x.thumbnail)){
  try{await access(join(root,'public',item.thumbnail));console.log(`✓ Capa preservada: ${item.id}`)}catch{assert(false,`Capa ausente: ${item.id}`)}
 }
-for(const p of ['app/xp.css','app/page.tsx','app/studio/page.tsx','components/XpDesktop.tsx','components/XPApps.tsx','public/images/xp-hills.svg','AGENTS.md','README.md','MUDANCAS.md','postcss.config.mjs','lib/locale-dictionary.ts','lib/wallpaper.ts','components/LanguageContext.tsx','components/WallpaperSettings.tsx']){
+for(const p of ['src/os/xp/xp.css','app/page.tsx','app/studio/page.tsx','src/os/xp/XpDesktop.tsx','src/os/xp/XPApps.tsx','public/images/xp-hills.svg','AGENTS.md','README.md','MUDANCAS.md','postcss.config.mjs','lib/locale-dictionary.ts','lib/wallpaper.ts','src/shared/LanguageContext.tsx','src/os/xp/WallpaperSettings.tsx']){
  try{await access(join(root,p));console.log(`✓ ${p}`)}catch{console.error(`✖ faltando ${p}`);errors++}
 }
-const desktop=await readFile(join(root,'components/XpDesktop.tsx'),'utf8');
-const apps=await readFile(join(root,'components/XPApps.tsx'),'utf8');
-const css=await readFile(join(root,'app/xp.css'),'utf8');
-const icons=await readFile(join(root,'components/XPIcon.tsx'),'utf8');
-const context=await readFile(join(root,'components/LanguageContext.tsx'),'utf8');
+const desktop=await readFile(join(root,'src/os/xp/XpDesktop.tsx'),'utf8');
+const apps=await readFile(join(root,'src/os/xp/XPApps.tsx'),'utf8');
+const css=await readFile(join(root,'src/os/xp/xp.css'),'utf8');
+const icons=await readFile(join(root,'src/os/xp/XPIcon.tsx'),'utf8');
+const context=await readFile(join(root,'src/shared/LanguageContext.tsx'),'utf8');
 assert(context.includes("@/lib/locale-dictionary")&&desktop.includes("@/lib/locale-dictionary"),'Traduções importadas sem conflito com i18n.tsx legado');
 assert(desktop.includes('xp-language-switch')&&desktop.includes("useState<Language>('en')"),'Alternador EN/PT e inglês inicial');
 assert(desktop.includes('WallpaperSettings')&&css.includes('.wallpaper-settings'),'Papel de parede configurável');

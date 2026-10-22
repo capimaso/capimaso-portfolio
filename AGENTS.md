@@ -19,11 +19,11 @@ Read this file FIRST when editing this repository, even without prior chat conte
 5. Video short = Google Drive file link with embedded `/preview` player; long = YouTube URL; intro = `data/media.ts`. Do not add local video binaries.
 
 ## Architecture
-- `components/XpDesktop.tsx`: desktop, window manager, start menu, taskbar.
-- `components/XPApps.tsx`: app-like window contents, portfolio showcase.
-- `components/XPIcon.tsx`: local vector icons.
-- `components/XPImage.tsx`: serves local image first, then original GitHub if not synchronized.
-- `app/xp.css`: all styling; extend by sections rather than piling on overrides.
+- `src/os/xp/XpDesktop.tsx`: desktop, window manager, start menu, taskbar.
+- `src/os/xp/XPApps.tsx`: app-like window contents, portfolio showcase.
+- `src/os/xp/XPIcon.tsx`: local vector icons.
+- `src/os/xp/XPImage.tsx`: serves local image first, then original GitHub if not synchronized.
+- `src/os/xp/xp.css`: all styling; extend by sections rather than piling on overrides.
 - `data/showcase.json`: list of work. Only edits here for new/updated projects.
 - `app/studio/page.tsx`: local form for a Google Drive video link and thumbnail upload.
 - `app/api/studio/upload/route.ts`: DEV-ONLY disk persistence. Do not enable on production without authentication+storage.
@@ -39,6 +39,16 @@ Read this file FIRST when editing this repository, even without prior chat conte
 
 ## Edição 2.1
 - UI é bilíngue (`en` padrão e `pt`) com dicionário em `lib/i18n.ts`. Não criar texto apenas em português fora do Estúdio; usar `useT` para rótulos públicos.
-- Wallpapers: `components/WallpaperSettings.tsx` e `lib/wallpaper.ts`; imagens do navegador não são conteúdo público.
+- Wallpapers: `src/os/xp/WallpaperSettings.tsx` e `lib/wallpaper.ts`; imagens do navegador não são conteúdo público.
 - Player deve preservar proporção 16:9 / 9:16. YouTube mantém autoplay mudo; Google Drive inicia pelo controle do próprio player, sem autoplay forçado.
 - Ícones do Start são SVG, cursores seguem de `public/icons/`.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

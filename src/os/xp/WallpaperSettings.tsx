@@ -1,6 +1,6 @@
 'use client';
 import { useRef, useState } from 'react';
-import { useT } from './LanguageContext';
+import { useT } from '@/src/shared/LanguageContext';
 import { DEFAULT_WALLPAPER, type WallpaperSetting, wallpaperURL } from '@/lib/wallpaper';
 import XPIcon from './XPIcon';
 

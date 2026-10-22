@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPoi
 import XPApps, { type Program, type Selection } from './XPApps';
 import XPIcon, { type IconName } from './XPIcon';
 import XPImage from './XPImage';
-import { LanguageProvider } from './LanguageContext';
+import { LanguageProvider } from '@/src/shared/LanguageContext';
 import WallpaperSettings from './WallpaperSettings';
 import { tr, type Language } from '@/lib/locale-dictionary';
 import { DEFAULT_WALLPAPER, WALLPAPER_SETTING_KEY, getWallpaperImage, saveWallpaperImage, wallpaperURL, type WallpaperSetting } from '@/lib/wallpaper';

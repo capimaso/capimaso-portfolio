@@ -12,7 +12,7 @@ import { isLocalVideo, youtubeEmbed, youtubePoster } from '@/lib/showcase';
 import { googleDriveEmbed } from '@/lib/google-drive.mjs';
 import XPIcon from './XPIcon';
 import XPImage from './XPImage';
-import { useT } from './LanguageContext';
+import { useT } from '@/src/shared/LanguageContext';
 export type Program = 'welcome'|'computer'|'work'|'about'|'skills'|'services'|'contact'|'recycle'|'player'|'viewer'|'properties';
 export type Selection = { item?: ShowcaseItem; image?: Thumbnail };
 export type XPAppProps = { app: Program; showcase: ShowcaseItem[]; thumbnails: Thumbnail[]; selection: Selection; open:(app:Program, selection?:Selection)=>void; notify:(message:string)=>void };

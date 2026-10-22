@@ -1,5 +1,10 @@
 # CAPIMASO XP: manutenção por tarefa
 
+O desktop público está em `/xp`; `/` será o boot. O Estúdio continua em
+`/studio` e recebe seu próprio layout `.xp-shell`. Estilos XP nunca devem
+selecionar elementos fora desse contêiner. Entradas Next permanecem em `app/`;
+implementação ativa está em `src/os/xp/`. Ver plano completo em `PLANS.md`.
+
 ## Como pedir mudanças ao Codex
 
 Exemplo: "Leia AGENTS.md e README.md. Quero adicionar 2 Shorts com links do Google Drive sem mexer no design nem apagar imagens. Mantenha o padrão Windows XP; edite data/showcase.json e copie apenas os posters para public/images/. Rode os testes."
@@ -10,9 +15,9 @@ Exemplo: "Leia AGENTS.md. Preciso de uma nova aba no Meu computador. Faça mudan
 
 ## Guia de decisões
 
-- **Cores e tema:** `app/xp.css`, preferir alterar regra original da seção em vez de adicionar override no final.
-- **Navegação/janelas:** `components/XpDesktop.tsx`, objeto `labels` e `shortcuts`.
-- **Meu portfólio e apps:** `components/XPApps.tsx`, switch final e apps específicos.
+- **Cores e tema:** `src/os/xp/xp.css`, preferir alterar regra original da seção em vez de adicionar override no final.
+- **Navegação/janelas:** `src/os/xp/XpDesktop.tsx`, objeto `labels` e `shortcuts`.
+- **Meu portfólio e apps:** `src/os/xp/XPApps.tsx`, switch final e apps específicos.
 - **Adicionar trabalho:** `data/showcase.json` (observar `format` + `video` + `thumbnail`).
 - **Foto, capa, vídeo:** capas em `public/images`, vídeos no Google Drive; não incluir MP4/WebM no projeto.
 - **Player:** curtos usam links de arquivo do Google Drive convertidos para `/preview` por `lib/google-drive.mjs`; longos usam `youtube-nocookie`. Links Instagram legados continuam externos.
@@ -36,9 +41,9 @@ O `npm run dev`/`npm run build` executa a sincronização de imagens originais q
 
 ## Ajustes 2.1: idioma, papel de parede, player, cursor
 
-- **Idioma:** `lib/i18n.ts` contém o dicionário, `components/LanguageContext.tsx` fornece `useT`. O default é inglês na primeira visita; a preferência `capimaso-xp-language` em `localStorage` sincroniza desktop e Estúdio. Preservar ambas as opções EN e PT.
-- **Wallpaper:** `lib/wallpaper.ts` define `DEFAULT_WALLPAPER`, gerencia IndexedDB e calcula URLs. `components/WallpaperSettings.tsx` mostra as opções. Para publicar Bliss, adicionar um arquivo autorizado em `public/images/xp-bliss.jpg` e atualizar o default no arquivo de configuração. Nunca codificar a imagem carregada pelo usuário diretamente no código.
-- **Vídeos:** `components/XPApps.tsx` contém `Player`, com autoplay mudo no YouTube e reprodução manual no Google Drive. Os tamanhos são feitos por CSS container query units em `app/xp.css` (`.player-screen`). Testar Google Drive portrait e YouTube landscape.
-- **Cursores:** manter os originais `public/icons/cursor.svg`, `cursor-pointer.svg`, `cursor-text.svg` e `cursor-drag.svg`, recuperáveis pelo script de sincronização e usados em `app/xp.css`.
-- **Menu Iniciar:** ícones `logoff` e `power` criados em `components/XPIcon.tsx`, renderizados em `components/XpDesktop.tsx` (função `StartMenu`).
+- **Idioma:** `lib/locale-dictionary.ts` contém o dicionário, `src/shared/LanguageContext.tsx` fornece `useT`. O default é inglês na primeira visita; a preferência `capimaso-xp-language` em `localStorage` sincroniza desktop e Estúdio. Preservar ambas as opções EN e PT.
+- **Wallpaper:** `lib/wallpaper.ts` define `DEFAULT_WALLPAPER`, gerencia IndexedDB e calcula URLs. `src/os/xp/WallpaperSettings.tsx` mostra as opções. Para publicar Bliss, adicionar um arquivo autorizado em `public/images/xp-bliss.jpg` e atualizar o default no arquivo de configuração. Nunca codificar a imagem carregada pelo usuário diretamente no código.
+- **Vídeos:** `src/os/xp/XPApps.tsx` contém `Player`, com autoplay mudo no YouTube e reprodução manual no Google Drive. Os tamanhos são feitos por CSS container query units em `src/os/xp/xp.css` (`.player-screen`). Testar Google Drive portrait e YouTube landscape.
+- **Cursores:** manter os originais `public/icons/cursor.svg`, `cursor-pointer.svg`, `cursor-text.svg` e `cursor-drag.svg`, recuperáveis pelo script de sincronização e usados em `src/os/xp/xp.css`.
+- **Menu Iniciar:** ícones `logoff` e `power` criados em `src/os/xp/XPIcon.tsx`, renderizados em `src/os/xp/XpDesktop.tsx` (função `StartMenu`).
 - **Não apagar dados do usuário:** confira `data/showcase.json` antes de aplicar ZIPs futuros; ele é alterado em tempo de desenvolvimento pelo Estúdio.

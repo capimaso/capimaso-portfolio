@@ -1,3 +1,15 @@
+# Dual boot — migração XP — 22/10/2026
+
+- Desktop ativo movido para `src/os/xp/` e publicado em `/xp`.
+- Tema limitado ao contêiner `.xp-shell`, inclusive no Estúdio. Layout raiz
+  mantém somente estrutura; regras de fontes, controles e cursores não vazam.
+- Estúdio retorna a `/xp`; API, dados, mídias, preferências e players preservados.
+- Contexto de idioma compartilhado em `src/shared/`; exports de compatibilidade
+  preservam os componentes antigos sem reativá-los.
+- Check/typecheck passaram. Edge/Playwright confirmou as mesmas medidas, fontes,
+  cores e bordas iniciais em 360/768/1440px, Estúdio estilizado e hashes de todos
+  os dados/assets inalterados.
+
 # Correção do build na Vercel — 18/10/2026
 
 - Logs do deployment `dpl_6ud6GjyMJU4BUNestoJNtLYR4Kws` confirmaram falha na checagem TypeScript: componentes do desktop antigo, não importados pela aplicação XP atual, e duas traduções duplicadas.

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import './xp.css';
+import './globals.css';
 import { profile } from '@/data/profile';
 
 export const metadata: Metadata = {

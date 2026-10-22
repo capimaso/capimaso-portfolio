@@ -163,10 +163,10 @@ A thumbnail é extraída do YouTube quando `thumbnail` está vazia. Links antigo
 | Serviços e valores | [`data/services.ts`](data/services.ts) |
 | Recados reais de clientes | [`data/comments.ts`](data/comments.ts) |
 | Vídeo do botão azul “Vídeo de apresentação” | [`data/media.ts`](data/media.ts) |
-| Cores, formas, responsividade e XP Luna | [`app/xp.css`](app/xp.css) |
-| Ícones e interação das janelas/menu | [`components/XpDesktop.tsx`](components/XpDesktop.tsx) |
-| Conteúdo interno de cada programa | [`components/XPApps.tsx`](components/XPApps.tsx) |
-| Ícones vetoriais locais | [`components/XPIcon.tsx`](components/XPIcon.tsx) |
+| Cores, formas, responsividade e XP Luna | [`src/os/xp/xp.css`](src/os/xp/xp.css) |
+| Ícones e interação das janelas/menu | [`src/os/xp/XpDesktop.tsx`](src/os/xp/XpDesktop.tsx) |
+| Conteúdo interno de cada programa | [`src/os/xp/XPApps.tsx`](src/os/xp/XPApps.tsx) |
+| Ícones vetoriais locais | [`src/os/xp/XPIcon.tsx`](src/os/xp/XPIcon.tsx) |
 | Cadastro local de link Drive e capa | [`app/api/studio/upload/route.ts`](app/api/studio/upload/route.ts) |
 | Sincronizar mídias originais | [`scripts/sync-original-assets.mjs`](scripts/sync-original-assets.mjs) |
 

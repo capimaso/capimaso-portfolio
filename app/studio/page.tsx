@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useState, type FormEvent, type ChangeEvent } from 'react';
 import Link from 'next/link';
-import XPIcon from '@/components/XPIcon';
-import XPImage from '@/components/XPImage';
+import XPIcon from '@/src/os/xp/XPIcon';
+import XPImage from '@/src/os/xp/XPImage';
 import { tr, type Language } from '@/lib/locale-dictionary';
 import { googleDriveEmbed } from '@/lib/google-drive.mjs';
 
@@ -53,7 +53,7 @@ export default function Studio() {
   }
  }
  return <main className="studio-page"><div className="studio-window">
-  <div className="xp-titlebar"><div className="xp-window-title"><XPIcon kind="video" size={20}/> {t('Estúdio CAPIMASO — importar mídia')}</div><Link className="studio-close" href="/" aria-label={t('Fechar')}>×</Link></div>
+  <div className="xp-titlebar"><div className="xp-window-title"><XPIcon kind="video" size={20}/> {t('Estúdio CAPIMASO — importar mídia')}</div><Link className="studio-close" href="/xp" aria-label={t('Fechar')}>×</Link></div>
   <div className="studio-lang-switch" role="group" aria-label="Language / Idioma"><button className={language === 'en' ? 'chosen' : ''} onClick={() => changeLanguage('en')}>EN</button><button className={language === 'pt' ? 'chosen' : ''} onClick={() => changeLanguage('pt')}>PT</button></div>
   <div className="studio-content">
    <header className="studio-heading"><XPImage src="/images/profile.jpg" alt="CAPIMASO"/><div><p>{t('CAPIMASO / GERENCIADOR LOCAL')}</p><h1>{t('Adicionar Reel / Short')}</h1><span>{t('Cole o link do Google Drive e escolha a capa que aparecerá no portfólio.')}</span></div></header>
@@ -71,7 +71,7 @@ export default function Studio() {
      <div className="studio-preview-cover">{coverUrl ? <img src={coverUrl} alt={t('Prévia da capa escolhida')}/> : <div className="cover-empty"><XPIcon kind="image" size={50}/> {t('Sem capa')}</div>}</div>
     </div>}
     {message && <div className={`studio-message ${status}`} role="status">{message}</div>}
-    <div className="studio-actions"><Link className="xp-button" href="/">{t('Voltar ao desktop')}</Link><button disabled={status === 'sending'} className="xp-button xp-button-primary" type="submit">{status === 'sending' ? t('Salvando...') : t('✓ Adicionar ao showcase')}</button></div>
+    <div className="studio-actions"><Link className="xp-button" href="/xp">{t('Voltar ao desktop')}</Link><button disabled={status === 'sending'} className="xp-button xp-button-primary" type="submit">{status === 'sending' ? t('Salvando...') : t('✓ Adicionar ao showcase')}</button></div>
    </form>
   </div>
  </div></main>;
