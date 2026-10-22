@@ -1,5 +1,9 @@
 # Windows 7 — desktop — 22/10/2026
 
+- Componentes de taskbar e menu Iniciar em duas colunas usam Aero, busca
+  bilíngue, relógio/data locais, atalhos e Reiniciar. O Start Orb usa o sprite
+  original 106x318: quadros de 54px em Y=0/-54/-108 após escala.
+
 - `/win7` recebe shell independente com Harmony, ícones ICO reais e cursores
   locais. Seleção por clique, Ctrl/Cmd para múltiplos e navegação por setas.
 - CSS Modules limita o tema à área Windows 7. EN/PT compartilha a preferência
