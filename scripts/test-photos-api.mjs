@@ -147,3 +147,27 @@ test('temporary Google HTML challenges become retryable errors without relaying 
   assert.equal(response.headers.get('Retry-After'), '60');
   assert.deepEqual(await response.json(), { error: { code: 'rate_limited' } });
 }, { respond: url => url.searchParams.get('alt') === 'media' ? new Response('<html>temporary provider challenge</html>', { status: 403, headers: { 'Content-Type': 'text/html' } }) : undefined }));
+
+const photoTypesURL = await compile('../src/lib/photos.ts');
+const photoClient = await import(await compile('../src/os/win7/apps/photo-client.ts', { '@/src/lib/photos': photoTypesURL }));
+test('original client preserves proxy path and bytes; rejects errors, empty bodies and HTML', async () => {
+  const saved = globalThis.fetch;
+  try {
+    globalThis.fetch = async (url, init) => {
+      assert.equal(url, '/api/photos/photo/image?variant=original&path=root%2Falbum');
+      assert.equal(init.signal instanceof AbortSignal, true);
+      return new Response('original bytes', { headers: { 'Content-Type': 'image/jpeg' } });
+    };
+    const blob = await photoClient.fetchPhotoOriginal('photo', ['root', 'album'], new AbortController().signal);
+    assert.equal(await blob.text(), 'original bytes');
+    for (const response of [Response.json({error:{code:'rate_limited'}},{status:429}), new Response('',{headers:{'Content-Type':'image/jpeg'}}), new Response('<html>error</html>',{headers:{'Content-Type':'text/html'}})]) {
+      globalThis.fetch = async () => response;
+      await assert.rejects(photoClient.fetchPhotoOriginal('photo', ['root']), photoClient.PhotoRequestError);
+    }
+    globalThis.fetch = async url => {
+      assert.equal(new URL(url, 'http://test').searchParams.get('download'), '1');
+      return new Response('bytes', {headers:{'Content-Type':'image/jpeg'}});
+    };
+    await photoClient.fetchPhotoOriginal('photo', ['root'], undefined, true);
+  } finally { globalThis.fetch = saved; }
+});

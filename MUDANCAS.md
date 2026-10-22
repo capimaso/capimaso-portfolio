@@ -1,5 +1,12 @@
 # Windows 7 — Google Drive — 22/10/2026
 
+## QA Win7 ? originais, downloads e busca (2026-10-22)
+
+- Photo Viewer carrega e valida o original pelo proxy antes de exibir, cancela requisi??es antigas e libera URLs tempor?rias. O download reutiliza os mesmos bytes, mant?m o nome e aguarda 60 segundos antes de liberar seu Blob.
+- Erros do Drive aparecem no visualizador com tentativa manual; transfer?ncias de originais t?m timeout de 60 segundos. Nenhuma chave chega ao cliente.
+- Busca e Todos os programas incluem acess?rios funcionais Calculadora e Bloco de notas, al?m de pastas e aplicativos existentes; busca aceita nomes em portugu?s e ingl?s e termos como fotos e bibliotecas. ?cone da Calculadora pendente registrado em ASSETS_NEEDED.md.
+- Verifica??o: API real retornou original JPEG (HTTP 200); navegador confirmou visualiza??o, navega??o, zoom e download com bytes id?nticos. Testes automatizados cobrem respostas inv?lidas e prote??o do proxy.
+
 - Check, typecheck, build, nove testes do backend e sete do gerenciador passaram.
   Teste real listou pastas, abriu imagens e validou download idêntico por hash.
   Testes simulados de erro, paginação e mobile passaram também em produção.

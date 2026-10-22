@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { useT } from '@/src/shared/LanguageContext';
 import { photoImageURL, type PhotoSelection } from '@/src/lib/photos';
-import { fetchPhotoListing, photoErrorMessage, PhotoRequestError } from './photo-client';
+import { fetchPhotoListing, fetchPhotoOriginal, photoErrorMessage, PhotoRequestError } from './photo-client';
 import styles from '../win7.module.css';
 
 export default function PhotoViewer({ selection }: { selection: PhotoSelection }) {
@@ -14,6 +14,8 @@ export default function PhotoViewer({ selection }: { selection: PhotoSelection }
   const [size, setSize] = useState({ width: 1, height: 1 });
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const [retry, setRetry] = useState(0);
+  const [original, setOriginal] = useState<{ source: string; url: string; blob: Blob } | null>(null);
+  const [loadError, setLoadError] = useState<unknown>(null);
   const [paging, setPaging] = useState(false);
   const [pageError, setPageError] = useState<unknown>(null);
   const [downloading, setDownloading] = useState(false);
@@ -34,11 +36,21 @@ export default function PhotoViewer({ selection }: { selection: PhotoSelection }
     };
   }, [selection]);
 
+  const source = image ? photoImageURL(image.id, 'original', false, gallery.path) : '';
   useEffect(() => {
+    const controller = new AbortController();
+    let objectURL: string | undefined;
+    setOriginal(null); setLoadError(null);
+    if (image) void fetchPhotoOriginal(image.id, gallery.path, controller.signal).then(blob => {
+      if (controller.signal.aborted) return;
+      objectURL = URL.createObjectURL(blob);
+      setOriginal({ source, url: objectURL, blob });
+    }).catch(error => { if (!controller.signal.aborted) { setLoadError(error); setStatus('error'); } });
     setZoom(null); setStatus('loading'); setDownloadError(null);
     setNatural({ width: image?.width || 1, height: image?.height || 1 });
     stage.current?.scrollTo(0, 0);
-  }, [image?.id, retry]);
+    return () => { controller.abort(); if (objectURL) URL.revokeObjectURL(objectURL); };
+  }, [source, retry]);
 
   useEffect(() => {
     const element = stage.current;
@@ -83,19 +95,17 @@ export default function PhotoViewer({ selection }: { selection: PhotoSelection }
     const controller = requests.current;
     setDownloading(true); setDownloadError(null);
     try {
-      const response = await fetch(photoImageURL(image.id, 'original', true, gallery.path), { signal: controller?.signal });
-      if (!response.ok) {
-        const error = await response.json().catch(() => null);
-        throw new PhotoRequestError(error?.error?.code || 'unavailable');
+      let blob = original?.source === source ? original.blob : undefined;
+      if (!blob) {
+        blob = await fetchPhotoOriginal(image.id, gallery.path, controller?.signal, true);
       }
-      const blob = await response.blob();
       if (controller?.signal.aborted) return;
       const url = URL.createObjectURL(blob);
       downloadURLs.current.add(url);
       const link = document.createElement('a');
       link.href = url; link.download = image.name;
       document.body.appendChild(link); link.click(); link.remove();
-      window.setTimeout(() => { URL.revokeObjectURL(url); downloadURLs.current.delete(url); }, 1000);
+      window.setTimeout(() => { URL.revokeObjectURL(url); downloadURLs.current.delete(url); }, 60_000);
     } catch (error) { if (!controller?.signal.aborted) setDownloadError(error); }
     finally { if (!controller?.signal.aborted) setDownloading(false); }
   }
@@ -114,14 +124,14 @@ export default function PhotoViewer({ selection }: { selection: PhotoSelection }
     <header className={styles.viewerHeading}><span>{image.name}</span><span aria-live="polite">{gallery.index + 1} / {gallery.images.length}{gallery.nextPageToken ? '+' : ''}</span></header>
     <div ref={stage} className={styles.viewerStage} tabIndex={0} aria-label={image.name}>
       <div className={styles.viewerCanvas} style={{ width: Math.max(size.width, natural.width * scale), height: Math.max(size.height, natural.height * scale) }}>
-        <img key={`${image.id}:${retry}`} className={styles.viewerImage}
-          src={`${photoImageURL(image.id, 'original', false, gallery.path)}${retry ? `&reload=${retry}` : ''}`} alt={image.name} draggable={false}
+        {original?.source === source && <img key={`${image.id}:${retry}`} className={styles.viewerImage}
+          src={original.url} data-original-src={source} alt={image.name} draggable={false}
           style={{ width: natural.width * scale, height: natural.height * scale, visibility: status === 'ready' ? 'visible' : 'hidden' }}
           onLoad={event => { setNatural({ width: event.currentTarget.naturalWidth, height: event.currentTarget.naturalHeight }); setStatus('ready'); }}
-          onError={() => setStatus('error')} />
+          onError={() => setStatus('error')} />}
       </div>
       {status === 'loading' && <p className={styles.viewerMessage} role="status">{t('Carregando fotografia...')}</p>}
-      {status === 'error' && <div className={`${styles.viewerMessage} ${styles.photoError}`} role="alert"><p>{t('Não foi possível abrir esta fotografia.')}</p><button type="button" onClick={() => setRetry(value => value + 1)}>{t('Tentar novamente')}</button></div>}
+      {status === 'error' && <div className={`${styles.viewerMessage} ${styles.photoError}`} role="alert"><p>{t(loadError ? photoErrorMessage(loadError) : 'Não foi possível abrir esta fotografia.')}</p><button type="button" onClick={() => setRetry(value => value + 1)}>{t('Tentar novamente')}</button></div>}
     </div>
     {(pageError !== null || downloadError !== null) && <div className={styles.viewerFailure} role="alert">
       <span>{t(photoErrorMessage(pageError || downloadError))}</span>

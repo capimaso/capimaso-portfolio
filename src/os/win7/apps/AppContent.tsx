@@ -10,10 +10,12 @@ import styles from '../win7.module.css';
 import type { PhotoSelection } from '@/src/lib/photos';
 import Explorer from './Explorer';
 import PhotoViewer from './PhotoViewer';
+import SystemTools from './SystemTools';
 
 export default function AppContent({ id, onOpen, onView, selection }: { id: AppId; onOpen: (id: AppId) => void; onView: (selection: PhotoSelection) => void; selection?: PhotoSelection }) {
   const t = useT();
   const [notice, setNotice] = useState('');
+  if (id === 'calculator' || id === 'notepad') return <SystemTools id={id} />;
   if (id === 'photos') return <Explorer onOpen={onOpen} onView={onView} />;
   if (id === 'photoViewer') return selection ? <PhotoViewer selection={selection} /> : null;
   if (id === 'about') return <article className={styles.about}>

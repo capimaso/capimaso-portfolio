@@ -3,6 +3,8 @@ const icon = (group: string, file: string) => `/assets/win7/icons/${encodeURICom
 export const win7Assets = {
   photos: icon('Special Folders', 'imageres_113'),
   folder: icon('Standard Folders', 'imageres_3'),
+  calculator: icon('Standard Folders', 'imageres_3'), // Original Calculator icon not supplied; use the existing folder fallback.
+  notepad: icon('Default Programs', 'notepad_2'),
   photoViewer: icon('Libraries', 'imageres_1003'),
   about: icon('Special Folders', 'imageres_123'),
   contact: icon('Shell32.dll', 'imageres_20'),

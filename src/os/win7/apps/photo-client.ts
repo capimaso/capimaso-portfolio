@@ -1,9 +1,20 @@
 import type { PhotoErrorCode, PhotoListing } from '@/src/lib/photos';
+import { photoImageURL } from '@/src/lib/photos';
 
 export class PhotoRequestError extends Error {
   constructor(public code: PhotoErrorCode) { super(code); }
 }
 export type PhotoLocation = { id?: string; path?: string[] };
+export async function fetchPhotoOriginal(id: string, path: string[], signal?: AbortSignal, download = false): Promise<Blob> {
+  const response = await fetch(photoImageURL(id, 'original', download, path), { signal });
+  if (!response.ok) {
+    const body = await response.json().catch(() => null);
+    throw new PhotoRequestError(body?.error?.code || 'unavailable');
+  }
+  const blob = await response.blob();
+  if (!blob.size || !blob.type.startsWith('image/')) throw new PhotoRequestError('unavailable');
+  return blob;
+}
 export async function fetchPhotoListing(location: PhotoLocation, options: { token?: string; refresh?: boolean; signal?: AbortSignal } = {}): Promise<PhotoListing> {
   const params = new URLSearchParams();
   if (location.id) params.set('folderId', location.id);

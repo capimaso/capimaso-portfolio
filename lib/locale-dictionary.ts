@@ -1,6 +1,10 @@
 /** Single source of truth for interface translations; English is the initial language. */
 export type Language = 'en' | 'pt';
 export const translations: Record<string,string> = {
+ 'Calculadora':'Calculator',
+ 'Resultado':'Result',
+ 'Limpar':'Clear',
+ 'Texto':'Text',
  'Carregando fotografia...':'Loading photograph...',
  'Não foi possível abrir esta fotografia.':'This photograph could not be opened.',
  'Anterior':'Previous',

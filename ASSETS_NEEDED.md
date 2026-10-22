@@ -20,6 +20,9 @@ substituem wallpaper limpo ou recursos individuais.
 
 ## Pendentes
 
+- Ícone original da Calculadora do Windows 7: não encontrado no catálogo recebido;
+  o atalho usa temporariamente o ícone real de pasta já disponível.
+
 | Recurso | Destino previsto | Situação |
 | --- | --- | --- |
 | Recursos de moldura Aero | public/assets/win7/theme/ | Molduras reconstruídas em CSS com base nas capturas; sprites originais não encontrados |

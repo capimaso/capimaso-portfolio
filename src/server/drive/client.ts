@@ -59,7 +59,7 @@ export async function driveRequest(config: DriveConfig, path: string, params: Re
     response = await fetch(url, {
       headers: { 'X-Goog-Api-Key': config.apiKey,
         ...(keys.size ? { 'X-Goog-Drive-Resource-Keys': [...keys].map(([id, key]) => `${id}/${key}`).join(',') } : {}) },
-      cache: 'no-store', redirect: 'manual', signal: AbortSignal.timeout(15000),
+      cache: 'no-store', redirect: 'manual', signal: AbortSignal.timeout(params.alt === 'media' ? 60_000 : 15_000),
     });
   } catch { throw new DriveError('unavailable', 502); }
   if (!response.ok && !(response.status >= 300 && response.status < 400)) {

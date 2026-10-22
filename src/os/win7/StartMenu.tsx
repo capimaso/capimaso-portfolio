@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { useT } from '@/src/shared/LanguageContext';
 import { profile } from '@/data/profile';
-import { applications, type AppId } from './types';
+import { applications, windowApplications, type AppId } from './types';
 import Win7Icon from './Win7Icon';
 import styles from './win7.module.css';
 
@@ -15,8 +15,10 @@ export default function StartMenu({ onOpen }: { onOpen: (id: AppId) => void }) {
   const input = useRef<HTMLInputElement>(null);
   const results = useRef<HTMLDivElement>(null);
   const normalize = (value: string) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-  const matching = applications.filter(app => (allPrograms || app.id !== 'recycle' || search.trim())
-    && normalize(t(app.label)).includes(normalize(search.trim())));
+  const catalog = windowApplications.filter(app => app.id !== 'photoViewer');
+  const matching = catalog.filter(app => (allPrograms || search.trim() || applications.some(item => item.id === app.id && item.id !== 'recycle'))
+    && normalize(`${t(app.label)} ${app.label} ${app.id} ${app.id === 'photos' ? 'fotos photos pictures imagens bibliotecas libraries' : ''} ${app.id === 'notepad' ? 'notepad notas texto text' : ''}`)
+      .includes(normalize(search.trim())));
 
   useEffect(() => { input.current?.focus(); }, []);
 

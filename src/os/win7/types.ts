@@ -1,7 +1,7 @@
 import type { PhotoSelection } from '@/src/lib/photos';
 
 export type DesktopAppId = 'photos' | 'about' | 'contact' | 'games' | 'recycle';
-export type AppId = DesktopAppId | 'photoViewer';
+export type AppId = DesktopAppId | 'photoViewer' | 'calculator' | 'notepad';
 export type Bounds = { x: number; y: number; width: number; height: number };
 export type WorkArea = { width: number; height: number };
 export type AppWindow = { id: AppId; bounds: Bounds; minimized: boolean; maximized: boolean; selection?: PhotoSelection };
@@ -16,5 +16,7 @@ export const applications: { id: DesktopAppId; label: string; width: number; hei
 
 export const windowApplications: { id: AppId; label: string; width: number; height: number }[] = [
   ...applications,
+  { id: 'calculator', label: 'Calculadora', width: 340, height: 400 },
+  { id: 'notepad', label: 'Bloco de notas', width: 640, height: 450 },
   { id: 'photoViewer', label: 'Visualizador de Fotos do Windows', width: 940, height: 650 },
 ];
