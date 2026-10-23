@@ -11,9 +11,11 @@ import type { PhotoFolder, PhotoSelection } from '@/src/lib/photos';
 import Explorer from './Explorer';
 import PhotoViewer from './PhotoViewer';
 import SystemTools from './SystemTools';
+import { useSoundManager } from '../SoundManager';
 
 export default function AppContent({ id, onOpen, onView, selection, folder }: { id: AppId; onOpen: (id: AppId) => void; onView: (selection: PhotoSelection) => void; selection?: PhotoSelection; folder?: PhotoFolder[] }) {
   const t = useT();
+  const sounds = useSoundManager();
   const [notice, setNotice] = useState('');
   if (id === 'calculator' || id === 'notepad') return <SystemTools id={id} />;
   if (id === 'photos') return <Explorer onOpen={onOpen} onView={onView} initialTrail={folder} />;
@@ -29,7 +31,7 @@ export default function AppContent({ id, onOpen, onView, selection, folder }: { 
       {social.href && <a href={social.href} target={social.href.startsWith('mailto:') ? undefined : '_blank'} rel="noopener noreferrer">{t('Abrir')}</a>}
       <button type="button" onClick={async () => {
         try { await navigator.clipboard.writeText(social.value); setNotice(t('Contato copiado!')); }
-        catch { setNotice(t('Selecione e copie o contato.')); }
+        catch { setNotice(t('Selecione e copie o contato.')); sounds.play('error'); }
       }}>{t('Copiar')}</button>
     </div>)}
     <p role="status">{notice}</p>

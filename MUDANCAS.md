@@ -1,5 +1,14 @@
 # Windows 7 — Google Drive — 22/10/2026
 
+## Auditoria final — Áudio
+
+- SoundManager global habilitado pela entrada: logon, startup do desktop,
+  voltar/avançar, minimizar (incluindo taskbar/mostrar desktop) e falhas reais da
+  galeria/busca. Erros consecutivos têm limite para evitar repetição excessiva.
+- Servidor informa apenas WAV existentes; ausência não gera requests nem som.
+  Arquivos ausentes documentados em public/assets/win7/sounds/README.md. Rejeição
+  de autoplay/decodificação é silenciosa; sair libera os elementos de áudio.
+
 ## Auditoria final — Explorer
 
 - Refresh verde/azul dentro da barra de endereço; histórico mantém botões redondos

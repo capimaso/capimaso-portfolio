@@ -25,6 +25,9 @@ substituem wallpaper limpo ou recursos individuais.
 
 ## Pendentes
 
+- `sounds/logon.wav`, `startup.wav`, `navigation.wav`, `minimize.wav`, `error.wav`:
+  ainda ausentes. Eventos e fallback silencioso implementados; ver sounds/README.md.
+
 - Ícone original da Calculadora do Windows 7: não encontrado no catálogo recebido;
   o atalho usa temporariamente o ícone real de pasta já disponível.
 

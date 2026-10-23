@@ -5,9 +5,11 @@ import { useT } from '@/src/shared/LanguageContext';
 import { photoImageURL, type PhotoSelection } from '@/src/lib/photos';
 import { fetchPhotoListing, fetchPhotoOriginal, photoErrorMessage, PhotoRequestError } from './photo-client';
 import styles from '../win7.module.css';
+import { useSoundManager } from '../SoundManager';
 
 export default function PhotoViewer({ selection }: { selection: PhotoSelection }) {
   const t = useT();
+  const sounds = useSoundManager();
   const [gallery, setGallery] = useState(selection);
   const [zoom, setZoom] = useState<number | null>(null);
   const [natural, setNatural] = useState({ width: 1, height: 1 });
@@ -45,12 +47,12 @@ export default function PhotoViewer({ selection }: { selection: PhotoSelection }
       if (controller.signal.aborted) return;
       objectURL = URL.createObjectURL(blob);
       setOriginal({ source, url: objectURL, blob });
-    }).catch(error => { if (!controller.signal.aborted) { setLoadError(error); setStatus('error'); } });
+    }).catch(error => { if (!controller.signal.aborted) { setLoadError(error); setStatus('error'); sounds.play('error'); } });
     setZoom(null); setStatus('loading'); setDownloadError(null);
     setNatural({ width: image?.width || 1, height: image?.height || 1 });
     stage.current?.scrollTo(0, 0);
     return () => { controller.abort(); if (objectURL) URL.revokeObjectURL(objectURL); };
-  }, [source, retry]);
+  }, [source, retry, sounds]);
 
   useEffect(() => {
     const element = stage.current;
@@ -86,7 +88,7 @@ export default function PhotoViewer({ selection }: { selection: PhotoSelection }
       }
       if (!controller?.signal.aborted) setGallery(current => ({ ...current, images, nextPageToken: token,
         index: images.length > current.images.length ? current.index + 1 : current.index }));
-    } catch (error) { if (!controller?.signal.aborted) setPageError(error); }
+    } catch (error) { if (!controller?.signal.aborted) { setPageError(error); sounds.play('error'); } }
     finally { if (!controller?.signal.aborted) setPaging(false); }
   }
 
@@ -106,7 +108,7 @@ export default function PhotoViewer({ selection }: { selection: PhotoSelection }
       link.href = url; link.download = image.name;
       document.body.appendChild(link); link.click(); link.remove();
       window.setTimeout(() => { URL.revokeObjectURL(url); downloadURLs.current.delete(url); }, 60_000);
-    } catch (error) { if (!controller?.signal.aborted) setDownloadError(error); }
+    } catch (error) { if (!controller?.signal.aborted) { setDownloadError(error); sounds.play('error'); } }
     finally { if (!controller?.signal.aborted) setDownloading(false); }
   }
 
@@ -128,7 +130,7 @@ export default function PhotoViewer({ selection }: { selection: PhotoSelection }
           src={original.url} data-original-src={source} alt={image.name} draggable={false}
           style={{ width: natural.width * scale, height: natural.height * scale, visibility: status === 'ready' ? 'visible' : 'hidden' }}
           onLoad={event => { setNatural({ width: event.currentTarget.naturalWidth, height: event.currentTarget.naturalHeight }); setStatus('ready'); }}
-          onError={() => setStatus('error')} />}
+          onError={() => { setStatus('error'); sounds.play('error'); }} />}
       </div>
       {status === 'loading' && <p className={styles.viewerMessage} role="status">{t('Carregando fotografia...')}</p>}
       {status === 'error' && <div className={`${styles.viewerMessage} ${styles.photoError}`} role="alert"><p>{t(loadError ? photoErrorMessage(loadError) : 'Não foi possível abrir esta fotografia.')}</p><button type="button" onClick={() => setRetry(value => value + 1)}>{t('Tentar novamente')}</button></div>}

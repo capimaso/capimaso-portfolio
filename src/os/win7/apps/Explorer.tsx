@@ -7,6 +7,7 @@ import type { AppId } from '../types';
 import Win7Icon from '../Win7Icon';
 import { fetchPhotoListing, photoErrorMessage, type PhotoLocation } from './photo-client';
 import styles from '../win7.module.css';
+import { useSoundManager } from '../SoundManager';
 
 type Location = PhotoLocation & { trail: PhotoFolder[] };
 type Props = { onOpen: (id: AppId) => void; onView: (selection: PhotoSelection) => void; initialTrail?: PhotoFolder[] };
@@ -17,6 +18,7 @@ function destination(trail: PhotoFolder[] = []): Location {
 
 export default function Explorer({ onOpen, onView, initialTrail }: Props) {
   const t = useT(), language = useLanguage();
+  const sounds = useSoundManager();
   const [history, setHistory] = useState<Location[]>(() => [destination(initialTrail)]);
   const lastDestination = useRef(initialTrail);
   const [position, setPosition] = useState(0);
@@ -43,16 +45,16 @@ export default function Explorer({ onOpen, onView, initialTrail }: Props) {
     setLoading(true); setMore(false); setError(null); setData(null); setSelected(null);
     fetchPhotoListing(location, { signal: controller.signal, refresh: revision > 0 })
       .then(result => { if (generation.current === current) setData(result); })
-      .catch(failure => { if (!controller.signal.aborted && generation.current === current) setError(failure); })
+      .catch(failure => { if (!controller.signal.aborted && generation.current === current) { setError(failure); sounds.play('error'); } })
       .finally(() => { if (generation.current === current) setLoading(false); });
     return () => controller.abort();
-  }, [location, revision]);
+  }, [location, revision, sounds]);
 
   function navigate(next: Location) {
     setHistory(current => [...current.slice(0, position + 1), next]);
     setPosition(position + 1); setRevision(0);
   }
-  function step(delta: number) { setPosition(value => value + delta); setRevision(0); }
+  function step(delta: number) { sounds.play('navigation'); setPosition(value => value + delta); setRevision(0); }
   const trail = data?.breadcrumbs || location.trail;
   const items = [...(data?.items || [])].sort((a, b) => Number(b.kind === 'folder') - Number(a.kind === 'folder') || a.name.localeCompare(b.name, language, { numeric: true }));
 
@@ -74,7 +76,7 @@ export default function Explorer({ onOpen, onView, initialTrail }: Props) {
       const result = await fetchPhotoListing(location, { token: data.nextPageToken, signal: requests.current?.signal });
       if (generation.current === current) setData(previous => previous ? { ...result,
         items: [...new Map([...previous.items, ...result.items].map(item => [item.id, item])).values()] } : result);
-    } catch (failure) { if (!requests.current?.signal.aborted && generation.current === current) setError(failure); }
+    } catch (failure) { if (!requests.current?.signal.aborted && generation.current === current) { setError(failure); sounds.play('error'); } }
     finally { if (generation.current === current) setMore(false); }
   }
 

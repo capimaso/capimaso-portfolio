@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "check": "node scripts/check-project.mjs",
     "test:win7": "node --test scripts/test-win7-state.mjs",
-    "test:photos": "node --test scripts/test-photos-api.mjs"
+    "test:photos": "node --test scripts/test-photos-api.mjs",
+    "test:sounds": "node --test scripts/test-win7-sounds.mjs"
   },
   "dependencies": {
     "7.css": "0.21.1",

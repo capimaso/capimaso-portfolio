@@ -12,10 +12,11 @@ import { useWindowManager } from './useWindowManager';
 import styles from './win7.module.css';
 import type { PhotoSelection } from '@/src/lib/photos';
 import Logon from './Logon';
+import SoundManagerProvider, { useSoundManager } from './SoundManager';
+import type { Win7Sound } from '@/src/lib/win7-sounds';
 
-export default function Win7Desktop() {
+export default function Win7Desktop({ availableSounds = [] }: { availableSounds?: Win7Sound[] }) {
   const [language, setLanguage] = useState<Language>('en');
-  const [entered, setEntered] = useState(false);
   useEffect(() => {
     try {
       const saved = localStorage.getItem('capimaso-xp-language');
@@ -28,12 +29,24 @@ export default function Win7Desktop() {
     setLanguage(next);
     try { localStorage.setItem('capimaso-xp-language', next); } catch {}
   }
-  return <LanguageProvider language={language}>{entered ? <Desktop onLanguage={changeLanguage} />
-    : <Logon onEnter={() => setEntered(true)} onLanguage={changeLanguage} />}</LanguageProvider>;
+  return <LanguageProvider language={language}><SoundManagerProvider available={availableSounds}>
+    <Session onLanguage={changeLanguage} />
+  </SoundManagerProvider></LanguageProvider>;
+}
+
+function Session({ onLanguage }: { onLanguage: (language: Language) => void }) {
+  const [entered, setEntered] = useState(false);
+  const sounds = useSoundManager();
+  return entered ? <Desktop onLanguage={onLanguage} /> : <Logon onLanguage={onLanguage} onEnter={() => {
+    sounds.enable(); sounds.play('logon'); setEntered(true);
+  }} />;
 }
 
 function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {
   const t = useT();
+  const sounds = useSoundManager();
+  const started = useRef(false);
+  useEffect(() => { if (!started.current) { started.current = true; sounds.play('startup'); } }, [sounds]);
   const [selected, setSelected] = useState<AppId[]>([]);
   const shortcuts = useRef<(HTMLButtonElement | null)[]>([]);
   const root = useRef<HTMLElement>(null);

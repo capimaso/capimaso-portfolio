@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import { useT } from '@/src/shared/LanguageContext';
 import styles from '../win7.module.css';
+import { useSoundManager } from '../SoundManager';
 
 // Small standard accessories, kept in their windows when minimized.
 export default function SystemTools({ id }: { id: 'calculator' | 'notepad' }) {
   const t = useT();
+  const sounds = useSoundManager();
   const [text, setText] = useState('');
   const [value, setValue] = useState('0');
   const [stored, setStored] = useState<number | null>(null);
@@ -27,6 +29,7 @@ export default function SystemTools({ id }: { id: 'calculator' | 'notepad' }) {
     const result = stored === null || !operation || replace ? number
       : operation === '+' ? stored + number : operation === '−' ? stored - number
         : operation === '×' ? stored * number : stored / number;
+    if (!Number.isFinite(result)) sounds.play('error');
     setValue(Number.isFinite(result) ? String(Number(result.toPrecision(12))) : 'Error');
     setStored(key === '=' ? null : result);
     setOperation(key === '=' ? null : key); setReplace(true);
