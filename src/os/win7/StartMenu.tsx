@@ -50,7 +50,7 @@ export default function StartMenu({ open, onOpen, onBrowse }: { open: boolean; o
   return <section id="win7-start-menu" className={`window glass active ${styles.startMenu}`} data-start-menu data-open={open} inert={!open}
     aria-hidden={!open} aria-label={t('Menu Iniciar')} onKeyDown={navigate}>
     <div className={styles.startLeft}>
-      <div className={styles.programs} ref={results} aria-label={t('Programas')}>
+      <div className={`has-scrollbar ${styles.programs}`} ref={results} aria-label={t('Programas')}>
         {search.trim() && matching.length > 0 && <p className={styles.searchHeading}>{t('Programas')}</p>}
         {matching.map(app => <button type="button" key={app.id} onClick={() => onOpen(app.id)}>
           <Win7Icon name={app.id} /><span>{t(app.label)}</span>

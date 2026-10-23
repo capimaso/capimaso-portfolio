@@ -122,7 +122,7 @@ export default function PhotoViewer({ selection }: { selection: PhotoSelection }
   if (!image) return null;
   return <div className={styles.photoViewer} data-photo-viewer data-current-photo={image.id} onKeyDown={keyboard}>
     <header className={styles.viewerHeading}><span>{image.name}</span><span aria-live="polite">{gallery.index + 1} / {gallery.images.length}{gallery.nextPageToken ? '+' : ''}</span></header>
-    <div ref={stage} className={styles.viewerStage} tabIndex={0} aria-label={image.name}>
+    <div ref={stage} className={`has-scrollbar ${styles.viewerStage}`} tabIndex={0} aria-label={image.name}>
       <div className={styles.viewerCanvas} style={{ width: Math.max(size.width, natural.width * scale), height: Math.max(size.height, natural.height * scale) }}>
         {original?.source === source && <img key={`${image.id}:${retry}`} className={styles.viewerImage}
           src={original.url} data-original-src={source} alt={image.name} draggable={false}

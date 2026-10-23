@@ -84,6 +84,7 @@ export default function Explorer({ onOpen, onView, initialTrail }: Props) {
         <button type="button" disabled={position === 0} onClick={() => step(-1)} aria-label={t('Voltar')} title={t('Voltar')}>←</button>
         <button type="button" disabled={position === history.length - 1} onClick={() => step(1)} aria-label={t('Avançar')} title={t('Avançar')}>→</button>
       </div>
+      <div className={styles.addressField}>
       <nav className={styles.breadcrumbs} aria-label={t('Endereço')}>
         <Win7Icon name="photos" size={16} />
         {!trail.length && <span>{t('Fotografias')}</span>}
@@ -95,18 +96,21 @@ export default function Explorer({ onOpen, onView, initialTrail }: Props) {
           </button>
         </span>)}
       </nav>
-      <button type="button" className={styles.refreshPhotos} onClick={() => setRevision(value => value + 1)} aria-label={t('Atualizar')} title={t('Atualizar')}>⟳</button>
+      <button type="button" className={styles.refreshPhotos} onClick={() => setRevision(value => value + 1)} aria-label={t('Atualizar')} title={t('Atualizar')}>
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.8 5A5.4 5.4 0 1 0 13 10" fill="none" stroke="#3189b2" strokeWidth="1.7" /><path d="m9.5 5 3.8.5L13.8 2" fill="none" stroke="#42995e" strokeWidth="1.7" /></svg>
+      </button>
+      </div>
     </div>
     <div className={styles.explorerToolbar}><span>{t('Fotografias')}</span><span>{data?.folder.name || t('Bibliotecas')}</span></div>
     <div className={styles.explorerColumns}>
-      <nav className={styles.explorerSidebar} aria-label={t('Outros lugares')}>
+      <nav className={`has-scrollbar ${styles.explorerSidebar}`} aria-label={t('Outros lugares')}>
         <strong>{t('Favoritos')}</strong>
         <button type="button" onClick={() => navigate({ trail: [] })}><Win7Icon name="photos" size={16} />{t('Fotografias')}</button>
         <button type="button" onClick={() => onOpen('about')}><Win7Icon name="about" size={16} />{t('Sobre')}</button>
         <button type="button" onClick={() => onOpen('contact')}><Win7Icon name="contact" size={16} />{t('Contato')}</button>
         <button type="button" onClick={() => onOpen('games')}><Win7Icon name="games" size={16} />{t('Games')}</button>
       </nav>
-      <div className={styles.explorerBody} aria-busy={loading || more}>
+      <div className={`has-scrollbar ${styles.explorerBody}`} aria-busy={loading || more}>
         <h1>{data?.folder.name || trail.at(-1)?.name || t('Fotografias')}</h1>
         {loading && <><p role="status">{t('Carregando fotografias...')}</p><div className={styles.photosGrid} aria-hidden="true">{Array.from({ length: 8 }, (_, index) => <div key={index} className={styles.photoSkeleton} />)}</div></>}
         {error !== null && <div className={styles.photoError} role="alert"><p>{t(photoErrorMessage(error))}</p>

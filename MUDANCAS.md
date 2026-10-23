@@ -1,5 +1,12 @@
 # Windows 7 — Google Drive — 22/10/2026
 
+## Auditoria final — Explorer
+
+- Refresh verde/azul dentro da barra de endereço; histórico mantém botões redondos
+  com gel radial e brilho interno, sem fade. Rodapé branco com contagem à esquerda.
+- Scrollbars WebKit com thumb azul em gradiente e setas da biblioteca 7.css;
+  fallback nativo colorido nos demais motores. Galeria, histórico e proxy preservados.
+
 ## Auditoria final — Aero
 
 - Taskbar com gradiente escuro translúcido, blur de 15 px, borda branca superior

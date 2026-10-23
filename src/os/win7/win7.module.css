@@ -244,14 +244,14 @@
 .addressBar strong { font-weight: normal; }
 .explorerToolbar { display: flex; gap: 30px; padding: 6px 16px; min-height: 29px; background: linear-gradient(#f8fcff, #e5edf5 48%, #dbe6f2 50%, #eaf2fa); border-bottom: 1px solid #b8c9db; font-size: 11px; color: #293e50; }
 .explorerColumns { display: flex; flex: 1; min-height: 0; }
-.explorerSidebar { width: 165px; flex-shrink: 0; padding: 15px 0; border-right: 1px solid #d5dfeb; background: #f6f9fc; }
+.explorerSidebar { width: 165px; flex-shrink: 0; padding: 15px 0; border-right: 1px solid #d5dfeb; background: #f6f9fc; overflow-y: auto; }
 .explorerSidebar strong { display: block; padding: 0 14px 5px; font-weight: 600; }
 .explorerSidebar button { width: 100%; display: flex; align-items: center; gap: 6px; padding: 5px 12px 5px 24px; background: none; border: 1px solid transparent; text-align: left; }
 .explorerSidebar button:hover, .explorerSidebar button[aria-current='page'] { border-color: #b7d4ee; background: linear-gradient(#f1f8fe, #d9eafb); }
 .explorerBody { flex: 1; min-width: 0; padding: 20px; overflow: auto; }
 .explorerBody h1 { color: #1e4270; font-size: 20px; font-weight: normal; margin: 0 0 18px; }
 .emptyLibrary { display: flex; align-items: center; flex-direction: column; padding: 30px 8px; text-align: center; color: #666; }
-.explorerStatus { min-height: 26px; padding: 4px 14px; background: #f0f4f9; border-top: 1px solid #d4dce5; color: #566572; font-size: 11px; }
+.explorerStatus { min-height: 26px; padding: 4px 14px; background: #fff; border: 0; color: #68747f; font-size: 11px; text-align: left; }
 .about, .contact { padding: 24px; color: #222; line-height: 1.7; }
 .about header { display: flex; gap: 18px; align-items: center; border-bottom: 1px solid #d9e2ed; padding-bottom: 18px; }
 .about header img { object-fit: cover; border: 1px solid #8a9ba8; padding: 2px; }
@@ -275,14 +275,33 @@
 /* Photography Explorer: address history, real folders and framed thumbnails. */
 .photoAddressBar { display: flex; align-items: center; gap: 8px; padding: 5px 7px; min-height: 36px; background: linear-gradient(#f9fcff, #e5edf5); border-bottom: 1px solid #a9b9ce; }
 .historyButtons { display: flex; gap: 4px; flex-shrink: 0; }
-.historyButtons button { width: 25px; height: 25px; padding: 0; border: 1px solid #4b7397; border-radius: 50%; background: linear-gradient(#cde8ff, #3c91ce 48%, #1d6dac 50%, #71b3db); box-shadow: inset 0 0 0 1px #edf8ff; color: #fff; font-size: 19px; line-height: 20px; text-shadow: 0 1px #235b86; }
+.historyButtons button { width: 25px; height: 25px; padding: 0; border: 1px solid #4b7397; border-radius: 50%; background: radial-gradient(ellipse at 50% 0, #ffffffcc, #ffffff00 66%), radial-gradient(ellipse at bottom, #91deff, #1469ac 70%); box-shadow: inset 0 0 0 1px #edf8ff, 0 1px 2px #0003; color: #fff; font-size: 19px; line-height: 20px; text-shadow: 0 1px #235b86; }
+.historyButtons button::before, .historyButtons button::after { content: none; }
+.historyButtons button:hover:not(:disabled) { filter: brightness(1.2); }
+.historyButtons button:active:not(:disabled) { filter: brightness(.85); }
 .historyButtons button:disabled { background: linear-gradient(#f8fafc, #d6e1e9); border-color: #a4b3c1; color: #a8b6c2; text-shadow: none; cursor: default; }
-.breadcrumbs { flex: 1; min-width: 0; display: flex; align-items: center; gap: 6px; overflow: auto; min-height: 24px; padding: 0 5px; border: 1px solid #a4b4c5; background: #fff; box-shadow: inset 0 1px 2px #0002; white-space: nowrap; scrollbar-width: thin; }
+.addressField { flex: 1; min-width: 0; display: flex; align-items: center; border: 1px solid #a4b4c5; background: #fff; box-shadow: inset 0 1px 2px #0002; }
+.breadcrumbs { flex: 1; min-width: 0; display: flex; align-items: center; gap: 6px; overflow: auto; min-height: 24px; padding: 0 5px; white-space: nowrap; scrollbar-width: none; }
 .breadcrumbs > img { flex-shrink: 0; }
 .breadcrumbs > span { display: flex; align-items: center; gap: 5px; }
 .breadcrumbs button { padding: 2px 4px; border: 1px solid transparent; background: none; font-size: 11px; white-space: nowrap; }
 .breadcrumbs button:hover { border-color: #b0cee7; background: #e5f2fc; }
-.refreshPhotos { width: 25px; height: 25px; flex-shrink: 0; border: 1px solid #a4b4c5; background: linear-gradient(#fff, #e0e9f2); color: #366888; font-size: 20px !important; line-height: 20px; }
+.refreshPhotos { display: grid; place-items: center; width: 25px; height: 24px; flex-shrink: 0; padding: 0; border: 0; border-left: 1px solid #b8c7d5; border-radius: 0; box-shadow: none; background: transparent; }
+.refreshPhotos::before, .refreshPhotos::after { content: none; }
+.refreshPhotos:hover { background: #e4f3ff; }
+/* Arrow resources come from 7.css's has-scrollbar; thumbs are blue in this shell. */
+.desktop :global(.has-scrollbar)::-webkit-scrollbar { width: 16px; height: 16px; }
+.desktop :global(.has-scrollbar)::-webkit-scrollbar-track { background: linear-gradient(to right, #e8eef5, #f8fbfe); }
+.desktop :global(.has-scrollbar)::-webkit-scrollbar-thumb {
+  border: 1px solid #6f9fbe; border-radius: 4px;
+  background: linear-gradient(to right, #e6f6ff, #b5ddf5 46%, #8cbde0 50%, #d0ecff);
+  box-shadow: inset 0 0 0 1px #ffffffcc;
+}
+.desktop :global(.has-scrollbar)::-webkit-scrollbar-thumb:horizontal { background: linear-gradient(#e6f6ff, #b5ddf5 46%, #8cbde0 50%, #d0ecff); }
+.desktop :global(.has-scrollbar)::-webkit-scrollbar-thumb:hover { background: linear-gradient(to right, #d9f5ff, #72c6f2); }
+.desktop :global(.has-scrollbar)::-webkit-scrollbar-thumb:active { background: #72b6df; }
+.desktop :global(.has-scrollbar)::-webkit-scrollbar-corner { background: #f3f8fc; }
+@supports not selector(::-webkit-scrollbar) { .desktop :global(.has-scrollbar) { scrollbar-color: #8cbde0 #edf3f8; scrollbar-width: auto; } }
 .photosGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(116px, 1fr)); gap: 15px 8px; align-content: start; }
 .photoEntry { display: flex; min-width: 0; align-items: center; flex-direction: column; gap: 6px; padding: 7px 3px; border: 1px solid transparent; border-radius: 3px; background: transparent; color: #222; }
 .photoEntry:hover { background: linear-gradient(#f3f9ff, #e2f0fc); border-color: #c5dced; }

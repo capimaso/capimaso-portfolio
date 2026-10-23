@@ -51,7 +51,7 @@ export default function WindowChrome({ window: win, active, compact, area, order
         <button type="button" className="is-close" aria-label={t('Fechar')} title={t('Fechar')} onClick={onClose} />
       </div>
     </div>
-    <div className={`window-body ${styles.windowContent}`}>{children}</div>
+    <div className={`window-body has-scrollbar ${styles.windowContent}`}>{children}</div>
     {!maximized && (['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'] as ResizeDirection[]).map(direction => <div
       key={direction} className={`${styles.resizeHandle} ${styles[direction]}`} data-resize={direction} aria-hidden="true"
       onPointerDown={event => gesture.start(event, direction)} {...gesture.handlers} />)}
