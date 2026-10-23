@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { useT } from '@/src/shared/LanguageContext';
 import { profile } from '@/data/profile';
-import { applications, type AppId } from './types';
+import { windowApplications as applications, type AppId } from './types';
 import type { PhotoFolder, PhotoItem } from '@/src/lib/photos';
 import { normalizeSearch, searchPrograms } from './program-catalog';
 import { useStartSearch } from './useStartSearch';
@@ -77,7 +77,7 @@ export default function StartMenu({ open, onOpen, onBrowse }: { open: boolean; o
     <div className={styles.startRight}>
       <img className={styles.userPicture} src="/images/profile.jpg" alt={profile.brand} draggable={false} />
       <strong className={styles.userName}>{profile.name}</strong>
-      {(['photos', 'games', 'about', 'contact'] as const).map(id => <button type="button" key={id} onClick={() => onOpen(id)}>
+      {(['photos', 'games', 'about', 'contact', 'controlPanel'] as const).map(id => <button type="button" key={id} onClick={() => onOpen(id)}>
         {t(applications.find(app => app.id === id)!.label)}
       </button>)}
       <div className={styles.startSeparator} />

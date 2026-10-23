@@ -1,3 +1,9 @@
+## Painel de Controle Win7
+
+- Nova janela acessível pelo Iniciar e pela busca, em ícones grandes conforme config.png. Personalizar troca entre os dois wallpapers reais, com preferência local exclusiva do Win7; logon e XP preservados.
+- Som controla o SoundManager global: mute pausa áudio corrente e bloqueia todos os eventos até reativar. Cinco testes de áudio aprovados, incluindo assinatura de estado e mute/desmute.
+- Só são apresentados os dois ajustes funcionais desta rodada. Ícone de Personalização usa a biblioteca de imagens real recebida enquanto o ícone específico está pendente.
+
 ## Contato de fotografia
 
 - Instagram do Contato Win7 atualizado para @capimaso.jpg, incluindo link e cópia. Contatos XP preservados; dados específicos em data/win7-socials.ts.

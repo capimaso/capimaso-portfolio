@@ -60,3 +60,5 @@ não preencher o acervo com imagens de demonstração. Chave e pasta são config
 não assets gráficos. Fontes usam Tahoma/Segoe UI instaladas, sem redistribuição.
 
 - Cursor ocupado disponível: public/assets/win7/cursor/Busy.ani; Busy.cur contém o primeiro frame original, sem alteração, para uso compatível no navegador.
+
+- Painel de Controle: imageres_27.ico e audiosrv_203.ico disponíveis no acervo local. Ícone específico de Personalização (monitor/pincel da referência config.png) não localizado; usa Libraries/imageres_1003.ico recebido, sem fabricar arte.

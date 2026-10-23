@@ -1,6 +1,17 @@
 /** Single source of truth for interface translations; English is the initial language. */
 export type Language = 'en' | 'pt';
 export const translations: Record<string,string> = {
+ 'Personalizar':'Personalization',
+ 'Som':'Sound',
+ 'Pesquisar Painel de Controle':'Search Control Panel',
+ 'Ajuste as configurações do seu dispositivo':'Adjust your device settings',
+ 'Exibir por:':'View by:',
+ 'Ícones grandes':'Large icons',
+ 'Sons do sistema':'System sounds',
+ 'O sistema está silenciado.':'The system is muted.',
+ 'Os sons do sistema estão ativados.':'System sounds are enabled.',
+ 'Ativar som':'Unmute system',
+ 'Silenciar sistema':'Mute system',
  'Tela de boas-vindas do Windows 7':'Windows 7 welcome screen',
  'Senha':'Password',
  'Entrar':'Sign in',

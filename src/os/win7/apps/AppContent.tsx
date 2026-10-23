@@ -12,11 +12,13 @@ import Explorer from './Explorer';
 import PhotoViewer from './PhotoViewer';
 import SystemTools from './SystemTools';
 import { useSoundManager } from '../SoundManager';
+import ControlPanel from './ControlPanel';
 
 export default function AppContent({ id, onOpen, onView, selection, folder }: { id: AppId; onOpen: (id: AppId) => void; onView: (selection: PhotoSelection) => void; selection?: PhotoSelection; folder?: PhotoFolder[] }) {
   const t = useT();
   const sounds = useSoundManager();
   const [notice, setNotice] = useState('');
+  if (id === 'controlPanel') return <ControlPanel />;
   if (id === 'calculator' || id === 'notepad') return <SystemTools id={id} />;
   if (id === 'photos') return <Explorer onOpen={onOpen} onView={onView} initialTrail={folder} />;
   if (id === 'photoViewer') return selection ? <PhotoViewer selection={selection} /> : null;

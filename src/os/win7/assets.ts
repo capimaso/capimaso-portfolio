@@ -1,6 +1,9 @@
 const icon = (group: string, file: string) => `/assets/win7/icons/${encodeURIComponent(group)}/${encodeURIComponent(file)}.ico`;
 
 export const win7Assets = {
+  controlPanel: icon('Control Panel', 'imageres_27'),
+  personalization: icon('Libraries', 'imageres_1003'),
+  sound: icon('Filetypes, Devices, Miscellaneous', 'audiosrv_203'),
   photos: icon('Special Folders', 'imageres_113'),
   folder: icon('Standard Folders', 'imageres_3'),
   calculator: icon('Standard Folders', 'imageres_3'), // Original Calculator icon not supplied; use the existing folder fallback.

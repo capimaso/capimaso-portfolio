@@ -14,6 +14,7 @@ import type { PhotoSelection } from '@/src/lib/photos';
 import Logon from './Logon';
 import SoundManagerProvider, { useSoundManager } from './SoundManager';
 import type { Win7Sound } from '@/src/lib/win7-sounds';
+import DesktopSettingsProvider, { useDesktopSettings } from './DesktopSettings';
 
 export default function Win7Desktop({ availableSounds = [] }: { availableSounds?: Win7Sound[] }) {
   const [language, setLanguage] = useState<Language>('en');
@@ -50,7 +51,7 @@ function Session({ onLanguage }: { onLanguage: (language: Language) => void }) {
 
   if (phase === 'loading') return <div ref={loading} className={styles.logonTransition} data-win7-loading
     role="status" aria-label={t('Carregando...')} aria-busy="true" tabIndex={-1} />;
-  return phase === 'desktop' ? <Desktop onLanguage={onLanguage} /> : <Logon onLanguage={onLanguage} onEnter={() => {
+  return phase === 'desktop' ? <DesktopSettingsProvider><Desktop onLanguage={onLanguage} /></DesktopSettingsProvider> : <Logon onLanguage={onLanguage} onEnter={() => {
     if (phase !== 'logon') return;
     sounds.enable(); sounds.play('logon'); setPhase('loading');
   }} />;
@@ -58,6 +59,7 @@ function Session({ onLanguage }: { onLanguage: (language: Language) => void }) {
 
 function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {
   const t = useT();
+  const { wallpaper } = useDesktopSettings();
   const sounds = useSoundManager();
   const started = useRef(false);
   useEffect(() => { if (!started.current) { started.current = true; sounds.play('startup'); } }, [sounds]);
@@ -118,6 +120,7 @@ function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {
   }
 
   return <main ref={root} className={`win7 ${styles.desktop}`} aria-label={t('Área de trabalho Windows 7')}
+    style={{ backgroundImage: `url('/assets/win7/wallpapers/${wallpaper}')` }}
     onPointerDown={event => {
       if (!(event.target as HTMLElement).closest('[data-shortcut]')) setSelected([]);
       if (!(event.target as HTMLElement).closest('[data-start-menu], [data-start-button]')) setStartOpen(false);

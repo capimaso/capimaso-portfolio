@@ -46,3 +46,22 @@ test('consecutive errors do not create an overlapping error storm', () => {
   for (let index = 0; index < 30; index++) manager.play('error');
   assert.equal(tracks.length, 1); assert.equal(tracks[0].plays, 1);
 });
+
+test('global mute stops existing audio and blocks all events until unmuted', () => {
+  const { manager, tracks } = fixture(['logon', 'navigation']);
+  let changes = 0;
+  const unsubscribe = manager.subscribe(() => { changes++; });
+  manager.enable(); manager.play('logon');
+  const pauses = tracks[0].pauses;
+  manager.setMuted(true);
+  assert.equal(manager.getMuted(), true);
+  assert.equal(tracks[0].muted, true);
+  assert(tracks[0].pauses > pauses);
+  manager.play('navigation'); manager.play('logon');
+  assert.equal(tracks.length, 1); assert.equal(tracks[0].plays, 1);
+  manager.setMuted(true); assert.equal(changes, 1);
+  manager.setMuted(false); manager.play('logon'); manager.play('navigation');
+  assert.equal(tracks[0].muted, false); assert.equal(tracks[0].plays, 2);
+  assert.equal(tracks.length, 2); assert.equal(changes, 2);
+  unsubscribe(); manager.setMuted(true); assert.equal(changes, 2);
+});

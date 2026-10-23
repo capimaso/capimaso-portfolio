@@ -3,6 +3,7 @@ import { applications, windowApplications } from './types';
 export const normalizeSearch = (value: string) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 
 const aliases: Record<string, string> = {
+  controlPanel: 'control panel settings painel controle configurações personalization sound som aparência',
   photos: 'fotos photos pictures imagens bibliotecas libraries',
   notepad: 'notepad notas texto text',
   calculator: 'calculator calc calculadora',
