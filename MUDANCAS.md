@@ -2,7 +2,7 @@
 
 - Nova janela acessível pelo Iniciar e pela busca, em ícones grandes conforme config.png. Personalizar troca entre os dois wallpapers reais, com preferência local exclusiva do Win7; logon e XP preservados.
 - Som controla o SoundManager global: mute pausa áudio corrente e bloqueia todos os eventos até reativar. Cinco testes de áudio aprovados, incluindo assinatura de estado e mute/desmute.
-- Só são apresentados os dois ajustes funcionais desta rodada. Ícone de Personalização usa a biblioteca de imagens real recebida enquanto o ícone específico está pendente.
+- Só são apresentados os dois ajustes funcionais desta rodada. Personalização usa o monitor/pincel original imageres_151.ico, identificado no acervo local; grade mantém a largura das colunas da referência.
 
 ## Contato de fotografia
 

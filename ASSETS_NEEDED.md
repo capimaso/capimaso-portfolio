@@ -61,4 +61,4 @@ não assets gráficos. Fontes usam Tahoma/Segoe UI instaladas, sem redistribuiç
 
 - Cursor ocupado disponível: public/assets/win7/cursor/Busy.ani; Busy.cur contém o primeiro frame original, sem alteração, para uso compatível no navegador.
 
-- Painel de Controle: imageres_27.ico e audiosrv_203.ico disponíveis no acervo local. Ícone específico de Personalização (monitor/pincel da referência config.png) não localizado; usa Libraries/imageres_1003.ico recebido, sem fabricar arte.
+- Painel de Controle: imageres_27.ico disponível. Personalização usa o monitor/pincel original em Filetypes, Devices, Miscellaneous/imageres_151.ico. Alto-falante da referência não localizado: Som usa audiosrv_203.ico original recebido (monitor com nota musical).

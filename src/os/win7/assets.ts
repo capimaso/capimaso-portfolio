@@ -2,7 +2,7 @@ const icon = (group: string, file: string) => `/assets/win7/icons/${encodeURICom
 
 export const win7Assets = {
   controlPanel: icon('Control Panel', 'imageres_27'),
-  personalization: icon('Libraries', 'imageres_1003'),
+  personalization: icon('Filetypes, Devices, Miscellaneous', 'imageres_151'),
   sound: icon('Filetypes, Devices, Miscellaneous', 'audiosrv_203'),
   photos: icon('Special Folders', 'imageres_113'),
   folder: icon('Standard Folders', 'imageres_3'),

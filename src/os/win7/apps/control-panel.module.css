@@ -5,7 +5,7 @@
 .heading > span { font-size: 11px; white-space: nowrap; color: #555; }
 .heading strong { color: #17657a; font-weight: 400; }
 .content { flex: 1; min-height: 0; overflow: auto; padding: 18px; }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(225px, 1fr)); align-content: start; gap: 6px 22px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(225px, 1fr)); align-content: start; gap: 6px 22px; }
 .panel .tile { display: flex; align-items: center; gap: 12px; min-height: 60px; padding: 5px; border: 1px solid transparent; border-radius: 2px; background: transparent; box-shadow: none; color: #008b84; text-align: left; font-size: 14px; }
 .panel .tile::before, .panel .tile::after, .panel .wallpaper::before, .panel .wallpaper::after { content: none; }
 .panel .tile:hover { border-color: #c3dff5; background-color: #eaf5fd; }
