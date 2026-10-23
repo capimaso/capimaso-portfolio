@@ -8,6 +8,7 @@ import { fitBounds } from './window-state';
 import styles from './win7.module.css';
 import { useWindowGesture } from './useWindowGesture';
 import type { ResizeDirection } from './window-geometry';
+import { useWindowMotion } from './useWindowMotion';
 
 type Props = {
   window: AppWindow; active: boolean; compact: boolean; area: WorkArea; order: number;
@@ -20,6 +21,7 @@ export default function WindowChrome({ window: win, active, compact, area, order
   const panel = useRef<HTMLElement>(null);
   const gesture = useWindowGesture(win, compact, area, onFocus, onBounds);
   const maximized = compact || win.maximized;
+  const hidden = useWindowMotion(panel, win, compact);
   const title = t(applications.find(app => app.id === win.id)!.label);
 
   useEffect(() => {
@@ -35,7 +37,7 @@ export default function WindowChrome({ window: win, active, compact, area, order
       : { ...win.bounds, x: win.bounds.x + dx, y: win.bounds.y + dy }, area));
   }
 
-  return <section ref={panel} data-window={win.id} hidden={win.minimized} tabIndex={-1}
+  return <section ref={panel} data-window={win.id} hidden={hidden} inert={win.minimized} aria-hidden={win.minimized || undefined} tabIndex={-1}
     role="dialog" aria-modal="false" aria-label={title} onPointerDown={onFocus} onFocus={event => { if (!event.currentTarget.contains(event.relatedTarget)) onFocus(); }}
     className={`window glass ${active ? 'active' : ''} ${styles.window} ${maximized ? styles.maximized : ''}`}
     style={{ left: maximized ? 0 : win.bounds.x, top: maximized ? 0 : win.bounds.y,

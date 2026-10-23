@@ -36,7 +36,7 @@ export function windowReducer(state: WindowState, action: WindowAction): WindowS
       return next === windows ? state : { ...state, windows: next };
     }
     case 'close': return { windows: windows.filter(win => win.id !== action.id), desktopRestore: state.desktopRestore.filter(id => id !== action.id) };
-    case 'minimize': return { ...state, windows: windows.map(win => win.id === action.id ? { ...win, minimized: true } : win) };
+    case 'minimize': return { ...state, windows: windows.map(win => win.id === action.id ? { ...win, minimized: true, minimizeTarget: 'taskbar' } : win) };
     case 'maximize': return { ...state, windows: focus(windows.map(win => win.id === action.id ? { ...win, maximized: !win.maximized } : win), action.id) };
     case 'task': return activeWindow(windows) === action.id
       ? windowReducer(state, { type: 'minimize', id: action.id })
@@ -48,7 +48,7 @@ export function windowReducer(state: WindowState, action: WindowAction): WindowS
     case 'fit': return { ...state, windows: windows.map(win => ({ ...win, bounds: fitBounds(win.bounds, action.area) })) };
     case 'desktop': {
       const visible = windows.filter(win => !win.minimized).map(win => win.id);
-      if (visible.length) return { windows: windows.map(win => ({ ...win, minimized: true })), desktopRestore: visible };
+      if (visible.length) return { windows: windows.map(win => win.minimized ? win : { ...win, minimized: true, minimizeTarget: 'desktop' }), desktopRestore: visible };
       return { windows: windows.map(win => state.desktopRestore.includes(win.id) ? { ...win, minimized: false } : win), desktopRestore: [] };
     }
   }

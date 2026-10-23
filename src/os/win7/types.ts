@@ -4,7 +4,7 @@ export type DesktopAppId = 'photos' | 'about' | 'contact' | 'games' | 'recycle';
 export type AppId = DesktopAppId | 'photoViewer' | 'calculator' | 'notepad' | 'controlPanel';
 export type Bounds = { x: number; y: number; width: number; height: number };
 export type WorkArea = { width: number; height: number };
-export type AppWindow = { id: AppId; bounds: Bounds; minimized: boolean; maximized: boolean; selection?: PhotoSelection; folder?: PhotoFolder[] };
+export type AppWindow = { id: AppId; bounds: Bounds; minimized: boolean; maximized: boolean; minimizeTarget?: 'taskbar' | 'desktop'; selection?: PhotoSelection; folder?: PhotoFolder[] };
 
 export const applications: { id: DesktopAppId; label: string; width: number; height: number }[] = [
   { id: 'photos', label: 'Fotografias', width: 820, height: 560 },

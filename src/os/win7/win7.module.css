@@ -212,6 +212,7 @@
 /* Aero window frame. Saved geometry is independent from the maximized view. */
 .workspace { position: absolute; inset: 0 0 var(--taskbar-height); pointer-events: none; }
 .window {
+  transform-origin: center center;
   display: flex;
   flex-direction: column;
   min-width: 0;

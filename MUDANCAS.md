@@ -1,3 +1,13 @@
+## Animações Aero de janelas
+
+- Minimizar por controle, taskbar ou Mostrar Área de Trabalho mantém a janela
+  visível durante 300 ms, com translate/scale(.1)/opacity até o destino medido.
+  Restauração faz o percurso inverso; maximizar/restaurar tamanho usa FLIP.
+- Estado, geometria e apps continuam no reducer; o hook de apresentação adia
+  hidden até terminar, permite reversão a partir do frame atual e cancela ao
+  fechar. Janelas minimizadas ficam inert durante a saída. Movimento reduzido
+  dispensa a animação. Treze testes de janelas aprovados.
+
 ## Áudio — boas-vindas e volume global
 
 - Bandeja recebe alto-falante SVG e popup vertical conforme volume.png, com

@@ -124,6 +124,20 @@ test('program search matches bilingual names, accents and aliases without adding
   assert.deepEqual(searchPrograms('nonexistent program', t, true), []);
 });
 
+test('minimization records its visual destination and show desktop preserves already hidden apps', () => {
+  let state = open(open(initialWindows, 'about'), 'photos');
+  state = reduce(state, { type: 'minimize', id: 'about' });
+  assert.equal(state.windows.find(win => win.id === 'about').minimizeTarget, 'taskbar');
+  state = reduce(state, { type: 'desktop' });
+  assert.equal(state.windows.find(win => win.id === 'about').minimizeTarget, 'taskbar');
+  assert.equal(state.windows.find(win => win.id === 'photos').minimizeTarget, 'desktop');
+  state = reduce(state, { type: 'desktop' });
+  assert.equal(state.windows.find(win => win.id === 'about').minimized, true);
+  assert.equal(state.windows.find(win => win.id === 'photos').minimized, false);
+  state = reduce(state, { type: 'task', id: 'photos' });
+  assert.equal(state.windows.find(win => win.id === 'photos').minimizeTarget, 'taskbar');
+});
+
 test('opening a Drive search destination restores the existing Explorer and preserves geometry', () => {
   let state = open(initialWindows, 'photos');
   const original = state.windows[0].bounds;
