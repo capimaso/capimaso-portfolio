@@ -20,7 +20,8 @@
 - Os ICO são servidos diretamente. Os assets incorporados aos commits são os
   arquivos originais recebidos, sem conversão; os demais permanecem preservados.
 - `public/assets/win7/sounds/`: 303 WAVs e 3 MIDIs recebidos na raiz e em 13
-  temas. Os cinco eventos usam os WAVs originais da raiz por mapeamento explícito
+  temas, mais o MP3 windows-7-startup recebido posteriormente. Os seis eventos usam
+  os arquivos originais da raiz por mapeamento explícito
   em `src/lib/sounds-map.ts`. Origem, metadados e hashes em `ASSETS.md`.
 
 Presença não comprova procedência. Capturas orientam comparação visual; não
@@ -40,7 +41,7 @@ substituem wallpaper limpo ou recursos individuais.
 | Sons XP | Equivalente XP | Não incorporados nesta rodada |
 | Cartas, versos e tabuleiro Solitaire | public/assets/win7/games/solitaire/ | Ícone presente; artes internas ausentes |
 | Menu, cenários e peças Purble Place | public/assets/win7/games/purble-place/ | Ícone presente; artes internas ausentes |
-| Procedência dos recursos recebidos | Este inventário e ASSETS.md | Cinco WAVs têm origem imediata e hashes registrados; fonte externa/licença não informadas |
+| Procedência dos recursos recebidos | Este inventário e ASSETS.md | Áudios usados têm origem imediata e hashes registrados; fonte externa/licença não informadas |
 
 Busca: arquivos locais, recursos originais fornecidos pelo proprietário e
 https://win7icons.visnalize.com/ para lacunas de ícones. Referência visual:

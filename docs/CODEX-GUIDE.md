@@ -10,9 +10,11 @@ O Windows 7 está em `/win7`, implementado em `src/os/win7/` com CSS Modules.
 sem autenticação, persistência ou transmissão do campo visual. A entrada mostra
 tela preta fixa com cursor original Busy.cur (frame do Busy.ani) por 700 ms, com cleanup do timer ao desmontar.
 Harmony no logon, desktop-logo.jpg na área de trabalho. Eventos de áudio passam
-pelo SoundManager do contexto e só são habilitados na entrada. O servidor lista
+pelo SoundManager do contexto. Startup tenta tocar ao aparecer o logon; se o
+autoplay for bloqueado, é repetido na interação de entrada. Demais sons exigem
+essa interação. O servidor lista
 WAV existentes pelos caminhos de `src/lib/sounds-map.ts`, compartilhado com o
-player. Os cinco eventos usam nomes Microsoft originais da raiz; incluir ou
+player. Os seis eventos usam arquivos originais da raiz (startup MP3, demais WAVs); incluir ou
 trocar arquivos exige reiniciar dev/rebuild. Ver `test:sounds` e `ASSETS.md`.
 Hover/pressed e brilhos usam fade de 200 ms; Orb cruza frames por opacidade,
 com background-position declarado no botão. Movimento reduzido remove apenas animações espaciais, preservando realces de cor/opacidade. Taskbar usa blur
@@ -36,6 +38,12 @@ jogáveis até essa etapa ser implementada. Não fabricar acervo.
 do `DesktopSettings.tsx` (chave própria `capimaso-win7-wallpaper`, sem afetar o XP
 ou o logon) e mute global do SoundManager. `useSystemMuted` assina o estado;
 silenciar pausa áudios ativos e bloqueia novos eventos até reativar.
+`VolumeControl.tsx` controla o mesmo manager na bandeja: volume inicial 80%,
+slider vertical 0–100%, Ding após 150 ms sem mudanças, mute e Escape.
+`useWindowMotion.ts` anima transform/opacity por WAAPI durante 300 ms, adia
+hidden e mantém janelas inert ao minimizar. `minimizeTarget` guarda o destino
+taskbar/Mostrar Desktop para a restauração; maximizar usa FLIP. Cancelar e
+reverter a partir do frame atual; movimento reduzido ignora animações.
 Menu Iniciar troca o avatar pelo ícone original após 500 ms de hover/foco,
 com crossfade de 200 ms. Cancelar ao sair/trocar item, mudar busca/lista, fechar
 ou desmontar; manter a última imagem montada durante o fade de retorno.

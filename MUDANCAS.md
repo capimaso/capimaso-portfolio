@@ -7,6 +7,12 @@
   hidden até terminar, permite reversão a partir do frame atual e cancela ao
   fechar. Janelas minimizadas ficam inert durante a saída. Movimento reduzido
   dispensa a animação. Treze testes de janelas aprovados.
+- Check, typecheck e build aprovados. Edge de produção confirmou animações
+  e reversão, destinos da taskbar/Mostrar Desktop, redução de movimento e
+  preservação de conteúdo/geometria. Redimensionar de mobile para desktop
+  não revela janelas minimizadas. Popup validado em 1440 e 360 px.
+- Áudio validado com autoplay permitido e bloqueado: MP3 no logon ou nova
+  tentativa na entrada, sem startup do desktop; slider, Ding e teclado funcionam.
 
 ## Áudio — boas-vindas e volume global
 

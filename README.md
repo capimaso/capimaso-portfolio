@@ -80,10 +80,18 @@ do gerenciador de janelas sem navegador.
 Hover e pressed usam fade suave de 200 ms, respeitando movimento reduzido.
 O Explorer tem Refresh dentro do endereço,
 rodapé branco e scrollbars azuis com setas. Sons do sistema usam SoundManager
-global após a entrada, com cinco WAVs originais mapeados em `src/lib/sounds-map.ts`.
+global com arquivos originais mapeados em `src/lib/sounds-map.ts`. Startup MP3
+tenta tocar ao aparecer o logon (com nova tentativa na entrada se bloqueado);
+o desktop não dispara startup. Volume inicial 80%, ajustável pelo slider vertical
+da bandeja, com prévia Ding e mute compartilhado com o Painel de Controle.
 Arquivos ausentes ou reprodução bloqueada mantêm o fallback silencioso.
 Consulte `public/assets/win7/sounds/README.md`; `npm run test:sounds` verifica
 os eventos, a ausência dos arquivos e o tratamento de bloqueio de reprodução.
+
+Minimizar e restaurar animam a janela por 300 ms até/de seu botão na taskbar;
+Mostrar Área de Trabalho usa o canto inferior direito. Maximizar/restaurar tamanho
+também anima, preservando a geometria e o conteúdo. Movimento reduzido dispensa
+essas animações.
 
 ### Configuração de fotografias no Google Drive
 

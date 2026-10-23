@@ -55,6 +55,10 @@ ou código venham a ser incorporados. Não executar instaladores nativos das fon
 - src/os/win7/Win7Desktop.tsx: composição, atalhos e preferência de idioma.
 - StartOrb.tsx, StartMenu.tsx, Taskbar.tsx: responsabilidades separadas do shell.
 - WindowManager.tsx: composição React; WindowChrome.tsx: markup oficial 7.css.
+- useWindowMotion.ts: animações WAAPI de 300 ms para minimizar/restaurar e
+  maximizar (FLIP), separadas do reducer e dos gestos; hidden só após a saída.
+- VolumeControl.tsx: bandeja e slider vertical conforme volume.png, com volume
+  global inicial 80%, mute e feedback Ding. Startup MP3 pertence ao logon.
 - useWindowManager.ts: ações, estado e área útil; window-state.ts: reducer puro.
 - useWindowGesture.ts: pointer capture e requestAnimationFrame;
   window-geometry.ts: movimento/resize sem dependência de DOM.
@@ -111,6 +115,10 @@ alternar tarefa, mostrar desktop e ajustar área útil.
   acima das janelas. Foco nunca seleciona janela minimizada.
 - Minimizar preserva componentes montados; fechar desmonta/cancela recursos.
   Maximizar preserva o retângulo normal para restaurar exatamente.
+- Minimizar anima até o botão real da tarefa; Mostrar Desktop usa o canto
+  inferior direito. Guardar minimizeTarget para o percurso inverso, bloquear
+  interação durante a saída e permitir reversão do frame atual. Movimento
+  reduzido oculta/restaura imediatamente. Drag/resize não recebem transições.
 - Pointer capture; ignorar botões secundários/ponteiros extras; atualização
   no máximo uma vez por frame e flush da última posição em pointerup.
   Limpar captura/frames em cancel, perda de captura, minimizar, maximizar e fechar.
@@ -189,5 +197,7 @@ limitação e manter indisponível. Sons opcionais após ativação explícita.
    navegador. Conferir hashes de dados/assets e ausência de chave no frontend;
    documentar ganhos observados e limitações. Não fazer deploy automaticamente.
 7. Jogos permanecem futuros. Logon, Control Panel (wallpaper e mute) e infraestrutura
-   de sons estão concluídos. Cinco WAVs reais da raiz estão mapeados em
-   src/lib/sounds-map.ts; nomes, variantes de temas e bytes originais preservados.
+   de sons estão concluídos. Seis eventos (startup MP3, logon, Ding, navegação,
+   minimizar e erro WAV) usam src/lib/sounds-map.ts; nomes, variantes e bytes
+   originais preservados. Startup tenta tocar no logon, com fallback na interação
+   caso autoplay seja bloqueado; não há disparo de startup ao montar o desktop.
