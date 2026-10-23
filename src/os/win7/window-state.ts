@@ -48,7 +48,7 @@ export function windowReducer(state: WindowState, action: WindowAction): WindowS
     case 'fit': return { ...state, windows: windows.map(win => ({ ...win, bounds: fitBounds(win.bounds, action.area) })) };
     case 'desktop': {
       const visible = windows.filter(win => !win.minimized).map(win => win.id);
-      if (visible.length) return { windows: windows.map(win => win.minimized ? win : { ...win, minimized: true, minimizeTarget: 'desktop' }), desktopRestore: visible };
+      if (visible.length) return { windows: windows.map(win => win.minimized ? win : { ...win, minimized: true, minimizeTarget: 'taskbar' }), desktopRestore: visible };
       return { windows: windows.map(win => state.desktopRestore.includes(win.id) ? { ...win, minimized: false } : win), desktopRestore: [] };
     }
   }

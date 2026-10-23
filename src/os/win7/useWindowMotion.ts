@@ -77,7 +77,7 @@ export function useWindowMotion(panel: RefObject<HTMLElement | null>, win: AppWi
     }
     setHidden(false);
     node.style.willChange = 'transform, opacity';
-    const animation = node.animate(frames, { duration: 300, easing: 'ease-in-out', fill: 'both' });
+    const animation = node.animate(frames, { duration: 250, easing: 'ease-in-out', fill: 'both' });
     running.current = animation;
     animation.onfinish = () => {
       if (running.current !== animation) return;

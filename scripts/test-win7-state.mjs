@@ -130,7 +130,7 @@ test('minimization records its visual destination and show desktop preserves alr
   assert.equal(state.windows.find(win => win.id === 'about').minimizeTarget, 'taskbar');
   state = reduce(state, { type: 'desktop' });
   assert.equal(state.windows.find(win => win.id === 'about').minimizeTarget, 'taskbar');
-  assert.equal(state.windows.find(win => win.id === 'photos').minimizeTarget, 'desktop');
+  assert.equal(state.windows.find(win => win.id === 'photos').minimizeTarget, 'taskbar');
   state = reduce(state, { type: 'desktop' });
   assert.equal(state.windows.find(win => win.id === 'about').minimized, true);
   assert.equal(state.windows.find(win => win.id === 'photos').minimized, false);

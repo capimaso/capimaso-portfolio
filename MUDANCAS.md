@@ -1,3 +1,9 @@
+## Polimento Aero — 250 ms
+
+- Minimização/restauração e maximização usam 250 ms ease-in-out para transform
+  e opacity. Mostrar Desktop agora envia cada janela ao seu botão de tarefa,
+  mantendo restauração seletiva e reversão da animação em andamento.
+
 ## Seleção e hover de ícones Win7
 
 - Arrastar com botão esquerdo em área vazia desenha seleção azul translúcida

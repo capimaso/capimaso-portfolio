@@ -234,7 +234,7 @@
   opacity: 1;
   visibility: visible;
   transform: none;
-  transition: none;
+  transition: transform .25s ease-in-out, opacity .25s ease-in-out;
 }
 .window[hidden] { display: none; }
 .maximized { --w7-w-bdr: 0px; border-radius: 0; border: 0; }
@@ -381,6 +381,7 @@
 .viewerControls .viewerDownload { font-weight: 600; }
 
 @media (prefers-reduced-motion: reduce) {
+  .window[role='dialog'] { transition: none; }
   .photoSkeleton { animation: none; }
   .startMenu { transition: none; transform: none; }
   /* Color/opacity feedback stays available; only spatial motion is reduced. */
