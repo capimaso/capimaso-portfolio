@@ -15,6 +15,14 @@
 .desktop button, .desktop input, .desktop textarea { font: inherit; }
 .desktop button, .desktop a { cursor: url('/assets/win7/cursor/Link%20Select.cur'), pointer; }
 .desktop input, .desktop textarea { cursor: default; }
+/* Native state changes are immediate, including 7.css pseudo-element highlights. */
+.desktop :is(button:not([data-shortcut]), a, input, select, textarea, [role='button']),
+.desktop :is(button:not([data-shortcut]), a, input, select, textarea, [role='button']) *,
+.desktop :is(button:not([data-shortcut]), a, input, select, textarea, [role='button'])::before,
+.desktop :is(button:not([data-shortcut]), a, input, select, textarea, [role='button'])::after {
+  transition: none !important;
+  animation: none !important;
+}
 .desktop button:focus-visible, .desktop a:focus-visible, .desktop input:focus-visible {
   outline: 1px dotted currentColor;
   outline-offset: -3px;
@@ -140,10 +148,10 @@
   border-radius: 7px 7px 0 0;
   transform-origin: 28px bottom;
   opacity: 0;
-  transform: translateY(5px) scale(.98);
+  transform: none;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 140ms ease-out, transform 160ms ease-out, visibility 0s linear 160ms;
+  transition: none;
 }
 .startMenu[data-open='true'] {
   opacity: 1;

@@ -1,5 +1,11 @@
 # Windows 7 — Google Drive — 22/10/2026
 
+## Auditoria final — Hover
+
+- Estados hover/pressed/focus são instantâneos em botões, links e campos do Win7,
+  incluindo pseudo-elementos e brilho do 7.css. Animação de pulso removida dos
+  controles. Menu Iniciar abre/fecha imediatamente; seleção dos ícones é preservada.
+
 ## Auditoria final — Logon
 
 - `/win7` apresenta boas-vindas com Harmony, avatar real, CAPIMASO e entrada por
