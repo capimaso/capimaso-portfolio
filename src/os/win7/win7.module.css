@@ -1,5 +1,5 @@
 /* Windows 7 Aero. All rules belong to this shell; XP keeps its own theme. */
-.logonTransition { position: fixed; inset: 0; z-index: 9999; background: #000; cursor: wait; outline: none; }
+.logonTransition { position: fixed; inset: 0; z-index: 9999; background: #000; cursor: url('/assets/win7/cursor/Busy.cur') 16 16, wait; outline: none; }
 .desktop {
   --taskbar-height: calc(40px + env(safe-area-inset-bottom));
   position: relative;
@@ -91,7 +91,7 @@
   border: 0;
   background: transparent;
 }
-.desktop .startOrb { transition: background-position .2s ease-in-out; }
+.desktop button.startOrb { transition: background-position .2s ease-in-out; }
 .orbSprite {
   position: absolute;
   pointer-events: none;

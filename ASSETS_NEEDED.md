@@ -58,3 +58,5 @@ sem criar imagens para substituir recursos ausentes.
 Fotografias são lidas do Google Drive público, configurado via ambiente;
 não preencher o acervo com imagens de demonstração. Chave e pasta são configuração,
 não assets gráficos. Fontes usam Tahoma/Segoe UI instaladas, sem redistribuição.
+
+- Cursor ocupado disponível: public/assets/win7/cursor/Busy.ani; Busy.cur contém o primeiro frame original, sem alteração, para uso compatível no navegador.

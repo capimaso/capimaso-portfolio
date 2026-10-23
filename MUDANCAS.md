@@ -1,3 +1,8 @@
+## Correção pontual — cursor da transição
+
+- Check, typecheck e build aprovados; Edge em produção confirmou opacidades intermediárias no Orb, taskbar, menu e controles, inclusive com movimento reduzido. Busy.cur retornou HTTP 200 com cabeçalho CUR válido.
+- Tela preta de 700 ms usa /assets/win7/cursor/Busy.cur, extraído sem alterar pixels do Busy.ani fornecido. Frame estático compatível com navegador, hotspot original 16,16; nenhum asset gerado por IA.
+
 ## Correção pontual — hover dos controles
 
 - Transições explícitas de 200 ms nos botões da taskbar, itens do Iniciar e controles das janelas, incluindo as camadas de brilho. O Orb declara background-position no botão e mantém o fade entre frames originais.

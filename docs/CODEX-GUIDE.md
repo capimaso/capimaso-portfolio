@@ -8,7 +8,7 @@ implementação ativa está em `src/os/xp/`. Ver plano completo em `PLANS.md`.
 O Windows 7 está em `/win7`, implementado em `src/os/win7/` com CSS Modules.
 `Logon.tsx` antecede o desktop em toda entrada na rota; é uma apresentação pública,
 sem autenticação, persistência ou transmissão do campo visual. A entrada mostra
-tela preta fixa com cursor wait por 700 ms, com cleanup do timer ao desmontar.
+tela preta fixa com cursor original Busy.cur (frame do Busy.ani) por 700 ms, com cleanup do timer ao desmontar.
 Harmony no logon, desktop-logo.jpg na área de trabalho. Eventos de áudio passam
 pelo SoundManager do contexto e só são habilitados na entrada. O servidor lista
 WAV existentes; incluir arquivos exige reiniciar dev/rebuild. Ver `test:sounds`.
