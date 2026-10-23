@@ -11,7 +11,9 @@ sem autenticação, persistência ou transmissão do campo visual. A entrada mos
 tela preta fixa com cursor original Busy.cur (frame do Busy.ani) por 700 ms, com cleanup do timer ao desmontar.
 Harmony no logon, desktop-logo.jpg na área de trabalho. Eventos de áudio passam
 pelo SoundManager do contexto e só são habilitados na entrada. O servidor lista
-WAV existentes; incluir arquivos exige reiniciar dev/rebuild. Ver `test:sounds`.
+WAV existentes pelos caminhos de `src/lib/sounds-map.ts`, compartilhado com o
+player. Os cinco eventos usam nomes Microsoft originais da raiz; incluir ou
+trocar arquivos exige reiniciar dev/rebuild. Ver `test:sounds` e `ASSETS.md`.
 Hover/pressed e brilhos usam fade de 200 ms; Orb cruza frames por opacidade,
 com background-position declarado no botão. Movimento reduzido remove apenas animações espaciais, preservando realces de cor/opacidade. Taskbar usa blur
 15 px e títulos 10 px. Scrollbars herdam setas do 7.css e thumb azul local.

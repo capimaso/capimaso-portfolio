@@ -19,14 +19,14 @@
   Select, Link Select, Move e os quatro de redimensionamento. Diretório singular.
 - Os ICO são servidos diretamente. Os assets incorporados aos commits são os
   arquivos originais recebidos, sem conversão; os demais permanecem preservados.
+- `public/assets/win7/sounds/`: 303 WAVs e 3 MIDIs recebidos na raiz e em 13
+  temas. Os cinco eventos usam os WAVs originais da raiz por mapeamento explícito
+  em `src/lib/sounds-map.ts`. Origem, metadados e hashes em `ASSETS.md`.
 
 Presença não comprova procedência. Capturas orientam comparação visual; não
 substituem wallpaper limpo ou recursos individuais.
 
 ## Pendentes
-
-- `sounds/logon.wav`, `startup.wav`, `navigation.wav`, `minimize.wav`, `error.wav`:
-  ainda ausentes. Eventos e fallback silencioso implementados; ver sounds/README.md.
 
 - Ícone original da Calculadora do Windows 7: não encontrado no catálogo recebido;
   o atalho usa temporariamente o ícone real de pasta já disponível.
@@ -36,10 +36,11 @@ substituem wallpaper limpo ou recursos individuais.
 | Recursos originais de moldura Aero | public/assets/win7/theme/ | Sprites originais ausentes; chrome atual usa os estilos oficiais de 7.css 0.21.1, sem gerar imagens |
 | Recursos de logon (fundo e moldura do avatar) | public/assets/win7/logon/ | Ainda não incorporados; AuthUX é referência para etapa futura |
 | Cursor de seleção de texto | public/assets/win7/cursor/ | Não encontrado; fallback default |
-| Sons XP/Win7 | public/assets/win7/sounds/ e equivalente XP | Não encontrados |
+| Sons Win7 | public/assets/win7/sounds/ | Recebidos e mapeados com nomes Microsoft; sem renomear arquivos |
+| Sons XP | Equivalente XP | Não incorporados nesta rodada |
 | Cartas, versos e tabuleiro Solitaire | public/assets/win7/games/solitaire/ | Ícone presente; artes internas ausentes |
 | Menu, cenários e peças Purble Place | public/assets/win7/games/purble-place/ | Ícone presente; artes internas ausentes |
-| Procedência dos recursos recebidos | Este inventário | Ainda não documentada por arquivo |
+| Procedência dos recursos recebidos | Este inventário e ASSETS.md | Cinco WAVs têm origem imediata e hashes registrados; fonte externa/licença não informadas |
 
 Busca: arquivos locais, recursos originais fornecidos pelo proprietário e
 https://win7icons.visnalize.com/ para lacunas de ícones. Referência visual:
@@ -51,8 +52,8 @@ PNG é permitida se preservar a arte original. Ausências usam rótulos, cursor
 nativo, fundo sólido ou silêncio e ficam registradas aqui.
 
 Ícones de rede e Central de Ações no tray são decorativos e não indicam o estado
-do computador do visitante. Nenhum som ou controle do sistema operacional real
-é simulado. As molduras, gradientes e controles geométricos são CSS de interface,
+do computador do visitante. Sons são reproduzidos apenas no site; ajustes não
+controlam o sistema operacional do visitante. Molduras e controles são CSS de interface,
 sem criar imagens para substituir recursos ausentes.
 
 Fotografias são lidas do Google Drive público, configurado via ambiente;

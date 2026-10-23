@@ -8,6 +8,9 @@
   volume 40% e fallback silencioso continuam funcionando.
 - Testes cobrem os nomes reais, disponibilidade no servidor, ausência de arquivos,
   variantes de tema, diretórios, replay, mute e falhas de reprodução.
+- Check, typecheck, build e sete testes de áudio aprovados. Edge de produção
+  confirmou os cinco eventos `playing`, URLs originais e decodificação estéreo
+  dos WAVs; falha de rede do Explorer foi simulada para validar o som de erro.
 
 ## Painel de Controle Win7
 

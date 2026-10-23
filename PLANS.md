@@ -189,4 +189,5 @@ limitação e manter indisponível. Sons opcionais após ativação explícita.
    navegador. Conferir hashes de dados/assets e ausência de chave no frontend;
    documentar ganhos observados e limitações. Não fazer deploy automaticamente.
 7. Jogos permanecem futuros. Logon, Control Panel (wallpaper e mute) e infraestrutura
-   de sons estão concluídos; WAV reais continuam pendentes.
+   de sons estão concluídos. Cinco WAVs reais da raiz estão mapeados em
+   src/lib/sounds-map.ts; nomes, variantes de temas e bytes originais preservados.

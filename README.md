@@ -80,7 +80,8 @@ do gerenciador de janelas sem navegador.
 Hover e pressed usam fade suave de 200 ms, respeitando movimento reduzido.
 O Explorer tem Refresh dentro do endereço,
 rodapé branco e scrollbars azuis com setas. Sons do sistema usam SoundManager
-global após a entrada; os WAV ainda estão ausentes e o fallback é silencioso.
+global após a entrada, com cinco WAVs originais mapeados em `src/lib/sounds-map.ts`.
+Arquivos ausentes ou reprodução bloqueada mantêm o fallback silencioso.
 Consulte `public/assets/win7/sounds/README.md`; `npm run test:sounds` verifica
 os eventos, a ausência dos arquivos e o tratamento de bloqueio de reprodução.
 
