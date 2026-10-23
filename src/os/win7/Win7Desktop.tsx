@@ -15,6 +15,7 @@ import Logon from './Logon';
 import SoundManagerProvider, { useSoundManager } from './SoundManager';
 import type { Win7Sound } from '@/src/lib/win7-sounds';
 import DesktopSettingsProvider, { useDesktopSettings } from './DesktopSettings';
+import { useDesktopSelection } from './useDesktopSelection';
 
 export default function Win7Desktop({ availableSounds = [] }: { availableSounds?: Win7Sound[] }) {
   const [language, setLanguage] = useState<Language>('en');
@@ -67,6 +68,7 @@ function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {
   const shortcuts = useRef<(HTMLButtonElement | null)[]>([]);
   const root = useRef<HTMLElement>(null);
   const workspace = useRef<HTMLDivElement>(null);
+  const selection = useDesktopSelection(root, workspace, shortcuts, setSelected);
   const manager = useWindowManager(workspace);
   const { state, dispatch, area, compact, activeId } = manager;
   const [startOpen, setStartOpen] = useState(false);
@@ -121,11 +123,13 @@ function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {
 
   return <main ref={root} className={`win7 ${styles.desktop}`} aria-label={t('Área de trabalho Windows 7')}
     style={{ backgroundImage: `url('/assets/win7/wallpapers/${wallpaper}')` }}
+    onPointerMove={selection.onPointerMove} onPointerUp={selection.onPointerUp}
+    onPointerCancel={selection.onPointerCancel} onLostPointerCapture={selection.onLostPointerCapture}
     onPointerDown={event => {
-      if (!(event.target as HTMLElement).closest('[data-shortcut]')) setSelected([]);
+      selection.onPointerDown(event);
       if (!(event.target as HTMLElement).closest('[data-start-menu], [data-start-button]')) setStartOpen(false);
     }}>
-    <div className={styles.shortcuts} aria-label={t('Área de trabalho')}>
+    <div className={styles.shortcuts} data-desktop-icons aria-label={t('Área de trabalho')}>
       {applications.map((app, index) => <button type="button" key={app.id} data-shortcut={app.id}
         ref={element => { shortcuts.current[index] = element; }}
         className={styles.shortcut} aria-pressed={selected.includes(app.id)}
@@ -140,6 +144,7 @@ function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {
         <Win7Icon name={app.id} size={48} /><span>{t(app.label)}</span>
       </button>)}
     </div>
+    {selection.box && <div className={styles.selectionBox} style={selection.box} data-desktop-selection aria-hidden="true" />}
     <div ref={workspace} className={styles.workspace}>
       <WindowManager windows={state.windows} activeId={activeId} compact={compact} area={area}
         dispatch={dispatch} onOpen={open} onClose={manager.close} onView={view} />

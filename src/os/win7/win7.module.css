@@ -61,6 +61,12 @@
 .shortcut span { max-width: 100%; overflow-wrap: anywhere; line-height: 16px; }
 .shortcut:hover { border-color: #d7efff80; background: #c0e6ff28; box-shadow: inset 0 0 0 1px #ffffff25; }
 .shortcut[aria-pressed='true'] { border-color: #b8e2ffb0; background: #c1e5ff55; box-shadow: inset 0 0 0 1px #ffffff55; }
+.selectionBox { position: absolute; z-index: 0; pointer-events: none; border: 1px solid #3399ff; background: rgba(51, 153, 255, .25); }
+/* Explorer file/folder tiles and desktop icons highlight immediately.
+   Keep shell buttons, menu entries and titlebar controls on their existing fades. */
+.desktop button.shortcut, .desktop button.photoEntry,
+.desktop button.shortcut::before, .desktop button.shortcut::after,
+.desktop button.photoEntry::before, .desktop button.photoEntry::after { transition: none; }
 
 /* Superbar: 40px plus device safe area. */
 .taskbar {

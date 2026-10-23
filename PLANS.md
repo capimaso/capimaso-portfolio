@@ -53,6 +53,8 @@ ou código venham a ser incorporados. Não executar instaladores nativos das fon
 - src/os/xp/: componentes ativos preservados; xp.css limitado a .xp-shell,
   também no Estúdio. Manter storage, IndexedDB, wallpapers e dados de vídeos.
 - src/os/win7/Win7Desktop.tsx: composição, atalhos e preferência de idioma.
+- useDesktopSelection.ts: seleção por caixa em área vazia, interseção inclusiva
+  dos ícones, pointer capture/rAF e cleanup; toque não inicia arraste.
 - StartOrb.tsx, StartMenu.tsx, Taskbar.tsx: responsabilidades separadas do shell.
 - WindowManager.tsx: composição React; WindowChrome.tsx: markup oficial 7.css.
 - useWindowMotion.ts: animações WAAPI de 300 ms para minimizar/restaurar e
@@ -95,8 +97,9 @@ Remover molduras, gradientes e glifos manuais equivalentes aos da dependência.
 Orb original 106×318: três frames nativos 106×106, posições Y 0/-106/-212,
 redução uniforme exata a 50%. Sem cover, stretch ou processamento do PNG.
 Menu mantém DOM e inert/aria-hidden/visibility quando fechado. Hover/pressed
-e brilhos usam fade de 200 ms; movimento reduzido remove animações espaciais,
-preservando feedback de cor/opacidade. Orb declara background-position no botão
+e brilhos usam fade de 200 ms. Ícones do desktop e tiles de arquivos/pastas têm
+hover imediato. Movimento reduzido remove animações espaciais, preservando
+feedback de cor/opacidade. Orb declara background-position no botão
 e cruza frames fixos por opacidade sem interpolar posições da sprite.
 Avatar do menu usa o ícone original de 64 px após 500 ms no mesmo item; saída
 antecipada cancela o timer. Ao sair, o avatar retorna em 200 ms. Fechar, trocar

@@ -16,7 +16,8 @@ essa interação. O servidor lista
 WAV existentes pelos caminhos de `src/lib/sounds-map.ts`, compartilhado com o
 player. Os seis eventos usam arquivos originais da raiz (startup MP3, demais WAVs); incluir ou
 trocar arquivos exige reiniciar dev/rebuild. Ver `test:sounds` e `ASSETS.md`.
-Hover/pressed e brilhos usam fade de 200 ms; Orb cruza frames por opacidade,
+Hover/pressed e brilhos usam fade de 200 ms, exceto ícones do desktop e tiles
+de arquivos/pastas, que realçam instantaneamente. Orb cruza frames por opacidade,
 com background-position declarado no botão. Movimento reduzido remove apenas animações espaciais, preservando realces de cor/opacidade. Taskbar usa blur
 15 px e títulos 10 px. Scrollbars herdam setas do 7.css e thumb azul local.
 O tema usa `7.css/dist/7.scoped.css` na camada `win7-base` via `seven.css` e
@@ -30,6 +31,10 @@ sem crawling recursivo; destinos de busca são enviados ao Explorer existente.
 `WindowChrome.tsx` trata gestos e teclado. `npm run test:win7` verifica as regras.
 O CSS aplica a sprite original do Orb em três posições, sem recortar ou alterar
 o PNG. Cursores usam o caminho singular `public/assets/win7/cursor/`.
+`useDesktopSelection.ts` trata o retângulo por arraste: somente área vazia,
+botão esquerdo/mouse, interseção inclusiva dos ícones, pointer capture e rAF.
+Não limpar seleção ao interagir com janelas/controles; Ctrl+clique e teclado
+continuam nos atalhos. Cancelamento, saída da rota e resize liberam captura/frame.
 Fotografias usa Explorer/PhotoViewer e `/api/photos`, com dados reais do Drive.
 Jogos ainda estão em preparação; não apresentar Solitaire ou Purble Place como
 jogáveis até essa etapa ser implementada. Não fabricar acervo.

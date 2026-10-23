@@ -1,3 +1,17 @@
+## Seleção e hover de ícones Win7
+
+- Arrastar com botão esquerdo em área vazia desenha seleção azul translúcida
+  com borda de 1 px. Interseção parcial seleciona; mover a caixa atualiza os
+  ícones em tempo real. Soltar remove a caixa; clique vazio limpa a seleção.
+- Hook com pointer capture, atualizações por frame, leitura inicial dos limites
+  e cleanup em Escape/cancelamento/perda de captura/blur/resize/desmontagem.
+  Janelas e taskbar não iniciam seleção; toque continua abrindo apps no mobile.
+- Desktop e tiles de arquivos/pastas do Explorer têm transition:none, inclusive
+  pseudo-elementos. Fades de taskbar, Orb, Iniciar e controles preservados.
+- Check, typecheck e build aprovados. Edge em 1440/360 px confirmou interseção
+  pelas bordas, dois sentidos, desseleção ao reduzir a caixa, clique vazio,
+  Escape, Ctrl+clique, teclado, exclusão de janelas e abertura por toque.
+
 ## Animações Aero de janelas
 
 - Minimizar por controle, taskbar ou Mostrar Área de Trabalho mantém a janela

@@ -50,7 +50,9 @@ o desktop. Harmony é usado no logon, e desktop-logo.jpg no desktop.
 
 O desktop tem ícones e cursores reais, taskbar Aero, menu
 Iniciar com busca e janelas independentes. No desktop, clique seleciona;
-duplo clique ou Enter abre. No celular, um toque abre em tela cheia. Arraste a
+arrastar em uma área vazia seleciona vários ícones com uma caixa azul; clique
+vazio limpa a seleção. Ícones e pastas realçam instantaneamente no hover.
+Duplo clique ou Enter abre. No celular, um toque abre em tela cheia. Arraste a
 barra de título ou redimensione pelas bordas no desktop. Focada a barra de
 título, setas movem a janela e Shift+setas redimensionam.
 
