@@ -57,10 +57,12 @@ export default function Taskbar({ startOpen, onStart, windows, activeId, onOpen,
       </button>)}
     </div>
     <div className={styles.tray}>
-      <div className={styles.languageSwitch} role="group" aria-label={t('Escolha um idioma')}>
+      <div className={`${styles.languageSwitch} ${styles.desktopLanguages}`} role="group" aria-label={t('Escolha um idioma')}>
         {(['en', 'pt'] as const).map(lang => <button type="button" key={lang}
           aria-pressed={lang === language} onClick={() => onLanguage(lang)}>{lang.toUpperCase()}</button>)}
       </div>
+      <button type="button" className={styles.mobileLanguage} aria-label={t('Escolha um idioma')}
+        onClick={() => onLanguage(language === 'en' ? 'pt' : 'en')}>{language.toUpperCase()}</button>
       <span className={styles.systemIcon} role="img" aria-label={t('Rede')} title={t('Rede')}><Win7Icon name="network" size={16} /></span>
       <span className={styles.systemIcon} role="img" aria-label={t('Central de Ações')} title={t('Central de Ações')}><Win7Icon name="notifications" size={16} /></span>
       <VolumeControl />

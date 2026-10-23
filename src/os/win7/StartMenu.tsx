@@ -13,7 +13,7 @@ import Win7Icon from './Win7Icon';
 import type { Win7IconName } from './assets';
 import styles from './win7.module.css';
 
-export default function StartMenu({ open, onOpen, onBrowse }: { open: boolean; onOpen: (id: AppId) => void; onBrowse: (trail: PhotoFolder[]) => void }) {
+export default function StartMenu({ open, onOpen, onBrowse, onClose }: { open: boolean; onOpen: (id: AppId) => void; onBrowse: (trail: PhotoFolder[]) => void; onClose: () => void }) {
   const t = useT();
   const [search, setSearch] = useState('');
   const [allPrograms, setAllPrograms] = useState(false);
@@ -21,6 +21,7 @@ export default function StartMenu({ open, onOpen, onBrowse }: { open: boolean; o
   const [showPreview, setShowPreview] = useState(false);
   const previewTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const input = useRef<HTMLInputElement>(null);
+  const close = useRef<HTMLButtonElement>(null);
   const results = useRef<HTMLDivElement>(null);
   const matching = searchPrograms(search, t, allPrograms);
   const remote = useStartSearch(open, search);
@@ -58,7 +59,11 @@ export default function StartMenu({ open, onOpen, onBrowse }: { open: boolean; o
   }
 
   useEffect(() => {
-    if (open) { setSearch(''); setAllPrograms(false); input.current?.focus(); }
+    if (open) {
+      setSearch(''); setAllPrograms(false);
+      if (window.matchMedia('(max-width: 719px)').matches) close.current?.focus({ preventScroll: true });
+      else input.current?.focus();
+    }
   }, [open]);
 
   function navigate(event: KeyboardEvent) {
@@ -79,6 +84,10 @@ export default function StartMenu({ open, onOpen, onBrowse }: { open: boolean; o
 
   return <section id="win7-start-menu" className={`window glass active ${styles.startMenu}`} data-start-menu data-open={open} inert={!open}
     aria-hidden={!open} aria-label={t('Menu Iniciar')} onKeyDown={navigate} onMouseLeave={clearPreview}>
+    <header className={styles.mobileMenuHeader}>
+      <strong>{t('Menu Iniciar')}</strong>
+      <button type="button" ref={close} aria-label={t('Fechar menu')} onClick={onClose}>×</button>
+    </header>
     <div className={styles.startLeft}>
       <div className={`has-scrollbar ${styles.programs}`} ref={results} aria-label={t('Programas')}>
         {search.trim() && matching.length > 0 && <p className={styles.searchHeading}>{t('Programas')}</p>}

@@ -146,6 +146,7 @@
 .tray { height: 100%; display: flex; align-items: center; gap: 8px; padding-left: 7px; color: #fff; }
 .systemIcon { display: flex; }
 .languageSwitch { display: flex; }
+.mobileLanguage, .mobileMenuHeader { display: none; }
 .languageSwitch button { color: #fff; background: none; border: 1px solid transparent; padding: 5px 3px; font-size: 10px; }
 .languageSwitch button[aria-pressed='true'] { border-color: #ffffff80; border-radius: 2px; background: #ffffff20; }
 .clock { min-width: 76px; display: grid; text-align: center; padding: 0 7px; font-size: 11px; line-height: 16px; }
@@ -388,18 +389,42 @@
 }
 
 @media (max-width: 719px) {
+  .desktop { position: fixed; inset: 0; max-width: 100%; --taskbar-height: calc(56px + env(safe-area-inset-bottom)); overscroll-behavior: none; }
+  .taskbar { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
   .pinned { display: none; }
-  .task { width: 43px; }
-  .tasks { gap: 2px; }
+  .task { width: 44px; height: 44px; }
+  .tasks { gap: 2px; overscroll-behavior-x: contain; touch-action: pan-x; }
   .systemIcon { display: none; }
-  .tray { gap: 2px; padding-left: 0; }
-  .clock { min-width: 64px; padding: 0 3px; font-size: 10px; }
-  .showDesktop { width: 16px; }
-  .startMenu { grid-template-columns: minmax(0, 1fr) 132px; }
+  .tray { gap: 0; padding-left: 0; flex-shrink: 0; }
+  .desktopLanguages { display: none; }
+  .desktop .mobileLanguage { display: block; width: 44px; height: 44px; padding: 0; border: 1px solid transparent; border-radius: 2px; background: transparent; box-shadow: none; color: #fff; }
+  .mobileLanguage::before, .mobileLanguage::after { content: none; }
+  .desktop .mobileLanguage:hover { background-color: #ffffff30; border-color: #ffffff65; }
+  .clock { min-width: 56px; padding: 0 2px; font-size: 10px; }
+  .showDesktop { width: 44px; }
+  .startMenu { top: 0; bottom: var(--taskbar-height); width: 100%; height: calc(100dvh - var(--taskbar-height)); max-height: 100%; grid-template-columns: minmax(0, 1fr) 132px; grid-template-rows: 44px minmax(0, 1fr); border-radius: 0; --w7-w-bdr: 0px; overflow: hidden; }
+  .mobileMenuHeader { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; color: #fff; padding-left: 8px; }
+  .desktop .mobileMenuHeader button { width: 44px; height: 44px; padding: 0; border: 1px solid transparent; background: transparent; color: #fff; box-shadow: none; font-size: 26px; }
+  .mobileMenuHeader button::before, .mobileMenuHeader button::after { content: none; }
+  .desktop .mobileMenuHeader button:hover { border-color: #ffffff70; background-color: #ffffff30; }
+  .startLeft, .startRight { min-width: 0; }
+  .startRight { padding-top: 8px; overflow-y: auto; overscroll-behavior: contain; }
+  .menuPortrait { display: none; }
+  .startRight > button, .otherSystem, .restart, .allPrograms { min-height: 44px; }
+  .restart { display: flex; align-items: center; }
+  .searchBox { order: -1; padding: 5px; }
+  .desktop .searchBox input { height: 44px; font-size: 16px; }
+  .programs { overscroll-behavior: contain; }
   .window { border-radius: 0; }
-  .titlebar { flex-basis: 34px; height: 34px; padding-left: 5px; cursor: default; }
-  .windowButtons button { height: 29px; width: 34px; }
+  .titlebar { flex-basis: 48px; height: 48px; padding-left: 5px; cursor: default; }
+  .windowButtons button { height: 44px; width: 44px; }
   .windowButtons :global(.is-close) { width: 48px; }
+  .windowContent { min-width: 0; overflow-x: hidden; overscroll-behavior: contain; overflow-wrap: anywhere; }
+  .windowContent button, .windowContent a { min-height: 44px; }
+  .windowContent input { min-height: 44px; }
+  .desktop input { font-size: 16px; }
+  .desktop .notepad { font-size: 16px !important; }
+  .about header > div { min-width: 0; }
   .explorerSidebar { width: 115px; }
   .explorerSidebar button { padding-left: 8px; font-size: 11px; }
   .explorerToolbar > span:last-child { display: none; }
@@ -411,12 +436,19 @@
   .photoAddressBar { gap: 4px; padding: 5px 3px; }
   .selectedPhotoName { display: none; }
   .viewerControls { padding: 5px; gap: 6px 12px; }
-  .viewerControls button { min-height: 34px; padding: 5px 8px; }
+  .viewerControls button { min-height: 44px; padding: 5px 8px; }
   .viewerZoom { gap: 4px; }
+  .historyButtons button, .refreshPhotos { width: 44px; height: 44px; }
+  .historyButtons button { font-size: 24px; }
+  .breadcrumbs { min-height: 44px; }
+  .contactRow a { display: inline-flex; align-items: center; }
 }
 @media (max-height: 430px) {
   .startRight { padding-top: 5px; overflow-y: auto; }
   .menuPortrait { display: none; }
   .startRight > button, .otherSystem { min-height: 30px; padding: 5px; }
   .userName { padding-bottom: 5px; }
+}
+@media (max-width: 719px) and (max-height: 430px) {
+  .startRight > button, .otherSystem { min-height: 44px; }
 }

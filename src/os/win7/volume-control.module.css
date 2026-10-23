@@ -12,4 +12,9 @@
 .volume input[type='range']::-moz-range-thumb { width: 18px; height: 10px; border: 1px solid #8b949b; border-radius: 2px; background: linear-gradient(#fff, #d5dce1); }
 .volume .muteButton { display: grid; place-items: center; width: 26px; min-width: 26px; height: 25px; padding: 0; border: 1px solid transparent; border-radius: 2px; box-shadow: none; background: transparent; color: #138ede; }
 .volume .muteButton:hover { background-color: #e4f2fd; border-color: #b3d3ec; }
-@media (max-width: 719px) { .volume .trayButton { width: 28px; min-width: 28px; } }
+@media (max-width: 719px) {
+  .volume .trayButton { width: 44px; min-width: 44px; min-height: 44px; }
+  .volume .flyout { right: -20px; height: 250px; }
+  .volume .muteButton { width: 44px; min-width: 44px; height: 44px; }
+  .volume input[type='range'] { width: 44px; }
+}

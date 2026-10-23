@@ -1,3 +1,14 @@
+## Auditoria mobile — 375 px
+
+- Taskbar de 56 px com alvos de toque de 44 px, tarefas com rolagem interna,
+  idioma em botão compacto alternável, volume e Mostrar Desktop acessíveis.
+- Iniciar ocupa a área acima da barra, com fechar explícito de 44 px, pesquisa
+  no topo e sem autofocus no input ao abrir. Colunas rolam internamente em
+  alturas curtas. Desktop fixo e conteúdo das janelas contido, sem scroll lateral
+  da página; janelas móveis preenchem a área útil, preservando a barra.
+- Controles de janela e de conteúdo com toque ampliado; inputs de 16 px para
+  evitar zoom de foco, mantendo desktop XP e o layout Win7 amplo isolados.
+
 ## Polimento Aero — 250 ms
 
 - Minimização/restauração e maximização usam 250 ms ease-in-out para transform

@@ -149,7 +149,8 @@ function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {
       <WindowManager windows={state.windows} activeId={activeId} compact={compact} area={area}
         dispatch={dispatch} onOpen={open} onClose={manager.close} onView={view} />
     </div>
-    <StartMenu open={startOpen} onOpen={open} onBrowse={folder => { setStartOpen(false); manager.browse(folder); }} />
+    <StartMenu open={startOpen} onOpen={open} onBrowse={folder => { setStartOpen(false); manager.browse(folder); }}
+      onClose={() => { setStartOpen(false); root.current?.querySelector<HTMLButtonElement>('[data-start-button]')?.focus({ preventScroll: true }); }} />
     <Taskbar startOpen={startOpen} onStart={() => setStartOpen(value => !value)} windows={state.windows}
       activeId={activeId} onOpen={open} onTask={manager.task}
       onShowDesktop={manager.showDesktop} onLanguage={onLanguage} />
