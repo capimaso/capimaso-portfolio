@@ -57,7 +57,7 @@ ou código venham a ser incorporados. Não executar instaladores nativos das fon
   dos ícones, pointer capture/rAF e cleanup; toque não inicia arraste.
 - StartOrb.tsx, StartMenu.tsx, Taskbar.tsx: responsabilidades separadas do shell.
 - WindowManager.tsx: composição React; WindowChrome.tsx: markup oficial 7.css.
-- useWindowMotion.ts: animações WAAPI de 300 ms para minimizar/restaurar e
+- useWindowMotion.ts: animações WAAPI de 250 ms para minimizar/restaurar e
   maximizar (FLIP), separadas do reducer e dos gestos; hidden só após a saída.
 - VolumeControl.tsx: bandeja e slider vertical conforme volume.png, com volume
   global inicial 80%, mute e feedback Ding. Startup MP3 pertence ao logon.
@@ -118,8 +118,8 @@ alternar tarefa, mostrar desktop e ajustar área útil.
   acima das janelas. Foco nunca seleciona janela minimizada.
 - Minimizar preserva componentes montados; fechar desmonta/cancela recursos.
   Maximizar preserva o retângulo normal para restaurar exatamente.
-- Minimizar anima até o botão real da tarefa; Mostrar Desktop usa o canto
-  inferior direito. Guardar minimizeTarget para o percurso inverso, bloquear
+- Minimizar anima até o botão real da tarefa, inclusive por Mostrar Desktop.
+  Guardar minimizeTarget para o percurso inverso, bloquear
   interação durante a saída e permitir reversão do frame atual. Movimento
   reduzido oculta/restaura imediatamente. Drag/resize não recebem transições.
 - Pointer capture; ignorar botões secundários/ponteiros extras; atualização
@@ -131,6 +131,10 @@ alternar tarefa, mostrar desktop e ajustar área útil.
   visível ou devolve foco ao shell. Mostrar desktop restaura só as que minimizou.
 - Abaixo de 720 px: tela cheia acima da taskbar, sem drag/resize; preservar
   retângulo desktop. Usar 100dvh, safe areas, controles acessíveis e rolagem interna.
+- Em 375 px, desktop fixo sem overflow horizontal da página; taskbar 56 px mais
+  safe area, tarefas roláveis e controles principais de 44 px. Iniciar preenche
+  a área acima da barra, com fechar explícito e busca no topo sem autofocus em
+  campo no mobile. Cabeçalho e busca continuam acessíveis em alturas curtas.
 
 ## 5. Drive, Explorer, Photo Viewer e busca
 

@@ -8,6 +8,10 @@
   da página; janelas móveis preenchem a área útil, preservando a barra.
 - Controles de janela e de conteúdo com toque ampliado; inputs de 16 px para
   evitar zoom de foco, mantendo desktop XP e o layout Win7 amplo isolados.
+- Check, typecheck e build aprovados. Emulação Edge com toque em 375×812 e
+  375×430, EN/PT: apps/Viewer sem overflow horizontal da página, fechar Iniciar,
+  slider, idioma e swipe real na lista de tarefas aprovados. Auditoria em
+  docs/WIN7-MOBILE-VERIFICATION.md; não substitui teste em aparelho físico.
 
 ## Polimento Aero — 250 ms
 

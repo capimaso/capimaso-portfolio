@@ -90,10 +90,16 @@ Arquivos ausentes ou reprodução bloqueada mantêm o fallback silencioso.
 Consulte `public/assets/win7/sounds/README.md`; `npm run test:sounds` verifica
 os eventos, a ausência dos arquivos e o tratamento de bloqueio de reprodução.
 
-Minimizar e restaurar animam a janela por 300 ms até/de seu botão na taskbar;
-Mostrar Área de Trabalho usa o canto inferior direito. Maximizar/restaurar tamanho
+Minimizar e restaurar animam a janela por 250 ms até/de seu botão na taskbar;
+Mostrar Área de Trabalho envia cada janela ao respectivo botão. Maximizar/restaurar tamanho
 também anima, preservando a geometria e o conteúdo. Movimento reduzido dispensa
 essas animações.
+
+Em 375 px, janelas ocupam a área acima da taskbar de 56 px. A barra permite
+rolar tarefas por gesto horizontal, alternar idioma e ajustar volume. O Iniciar
+ocupa essa mesma área, com pesquisa no topo e botão explícito de fechar, sem
+abrir o teclado automaticamente. Controles principais têm alvos de 44 px.
+Veja a [auditoria mobile](docs/WIN7-MOBILE-VERIFICATION.md).
 
 ### Configuração de fotografias no Google Drive
 

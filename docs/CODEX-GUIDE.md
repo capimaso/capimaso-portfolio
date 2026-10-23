@@ -45,10 +45,14 @@ ou o logon) e mute global do SoundManager. `useSystemMuted` assina o estado;
 silenciar pausa áudios ativos e bloqueia novos eventos até reativar.
 `VolumeControl.tsx` controla o mesmo manager na bandeja: volume inicial 80%,
 slider vertical 0–100%, Ding após 150 ms sem mudanças, mute e Escape.
-`useWindowMotion.ts` anima transform/opacity por WAAPI durante 300 ms, adia
+`useWindowMotion.ts` anima transform/opacity por WAAPI durante 250 ms, adia
 hidden e mantém janelas inert ao minimizar. `minimizeTarget` guarda o destino
-taskbar/Mostrar Desktop para a restauração; maximizar usa FLIP. Cancelar e
+da taskbar para a restauração, inclusive por Mostrar Desktop; maximizar usa FLIP. Cancelar e
 reverter a partir do frame atual; movimento reduzido ignora animações.
+Em 375 px, taskbar 56 px com controles principais de 44 px e rolagem de tarefas
+isolada da página. Iniciar preenche a área útil, sem abrir teclado automaticamente;
+fechar explícito, busca no topo e colunas com rolagem. Janelas usam toda a área
+acima da barra; desktop fixo e inputs de 16 px. Ver WIN7-MOBILE-VERIFICATION.md.
 Menu Iniciar troca o avatar pelo ícone original após 500 ms de hover/foco,
 com crossfade de 200 ms. Cancelar ao sair/trocar item, mudar busca/lista, fechar
 ou desmontar; manter a última imagem montada durante o fade de retorno.
