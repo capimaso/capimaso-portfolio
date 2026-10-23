@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useT } from '@/src/shared/LanguageContext';
 import { profile } from '@/data/profile';
-import { socials } from '@/data/socials';
+import { win7Socials as socials } from '@/data/win7-socials';
 import { applications, type AppId } from '../types';
 import Win7Icon from '../Win7Icon';
 import styles from '../win7.module.css';

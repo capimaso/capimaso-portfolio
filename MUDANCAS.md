@@ -1,3 +1,7 @@
+## Contato de fotografia
+
+- Instagram do Contato Win7 atualizado para @capimaso.jpg, incluindo link e cópia. Contatos XP preservados; dados específicos em data/win7-socials.ts.
+
 ## Correção pontual — cursor da transição
 
 - Check, typecheck e build aprovados; Edge em produção confirmou opacidades intermediárias no Orb, taskbar, menu e controles, inclusive com movimento reduzido. Busy.cur retornou HTTP 200 com cabeçalho CUR válido.
