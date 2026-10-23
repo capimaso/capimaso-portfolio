@@ -1,5 +1,16 @@
 # Windows 7 — Google Drive — 22/10/2026
 
+## Transição de entrada — 700 ms
+
+- Entrar por seta/Enter mostra uma cobertura preta fixa, z-index 9999 e cursor
+  wait por 700 ms antes de montar o desktop. Timer é limpo ao sair da rota;
+  wallpaper do desktop é pré-carregado durante a espera.
+- Logon mantém harmony.jpg e desktop mantém desktop-logo.jpg fornecido pelo
+  proprietário. Os binários existentes não foram sobrescritos nesta correção.
+- Check, typecheck e build aprovados. Navegador de produção confirmou entrada por
+  clique/Enter em 1440/360 px, overlay preto com cursor wait por cerca de 700 ms,
+  fades de 200 ms, troca correta dos wallpapers e preferência por movimento reduzido.
+
 ## Ajuste de hover suave
 
 - Removido o bloqueio global de transições. Controles e brilhos voltam a usar

@@ -6,7 +6,7 @@ Rodada concluída: base scoped 7.css, hook central de janelas, gestos separados
 e busca integrada a apps/pastas implementados. Validação em
 [docs/WIN7-REFACTOR-VERIFICATION.md](docs/WIN7-REFACTOR-VERIFICATION.md).
 
-Auditoria posterior: logon público, hover instantâneo, refinamentos Aero/Explorer
+Auditoria posterior: logon público, hover suave de 200 ms, refinamentos Aero/Explorer
 e SoundManager implementados. A configuração visual consolidada pelo proprietário
 usa blur de 15 px na taskbar e 10 px nos títulos; substitui os valores anteriores.
 
@@ -83,8 +83,9 @@ Remover molduras, gradientes e glifos manuais equivalentes aos da dependência.
 
 Orb original 106×318: três frames nativos 106×106, posições Y 0/-106/-212,
 redução uniforme exata a 50%. Sem cover, stretch ou processamento do PNG.
-Menu abre e fecha imediatamente, mantendo DOM, inert/aria-hidden/visibility
-quando fechado. Hover/pressed não usam transição, incluindo pseudo-elementos.
+Menu mantém DOM e inert/aria-hidden/visibility quando fechado. Hover/pressed
+e brilhos usam fade de 200 ms, respeitando movimento reduzido. Orb cruza frames
+fixos por opacidade sem interpolar posições da sprite.
 
 ## 4. Gerenciador de janelas
 
@@ -145,7 +146,9 @@ e [nandomp4](https://www.nandomp4.com/). Não inventar recursos ou personagens.
 
 Logon implementado: avatar real, CAPIMASO, Harmony e entrada por Enter/seta;
 campo de senha somente visual, nunca lido/enviado/armazenado, sem autenticação.
-Desktop usa desktop-logo.jpg (cópia exata do wallpaper disponível; ver inventário).
+Após entrar, uma cobertura preta fixa com cursor wait aparece por 700 ms antes
+de montar o desktop. O timer é cancelado ao sair da rota. Logon usa harmony.jpg;
+desktop usa desktop-logo.jpg fornecido pelo proprietário, sem sobrescrever assets.
 Control Panel permanece futuro. Games permanece identificado como pendente.
 
 Solitaire futuro: Klondike 52 cartas, sete colunas, uma carta por compra,

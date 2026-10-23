@@ -35,10 +35,24 @@ export default function Win7Desktop({ availableSounds = [] }: { availableSounds?
 }
 
 function Session({ onLanguage }: { onLanguage: (language: Language) => void }) {
-  const [entered, setEntered] = useState(false);
+  const [phase, setPhase] = useState<'logon' | 'loading' | 'desktop'>('logon');
   const sounds = useSoundManager();
-  return entered ? <Desktop onLanguage={onLanguage} /> : <Logon onLanguage={onLanguage} onEnter={() => {
-    sounds.enable(); sounds.play('logon'); setEntered(true);
+  const t = useT();
+  const loading = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (phase !== 'loading') return;
+    loading.current?.focus({ preventScroll: true });
+    const wallpaper = new Image();
+    wallpaper.src = '/assets/win7/wallpapers/desktop-logo.jpg';
+    const timer = window.setTimeout(() => setPhase('desktop'), 700);
+    return () => window.clearTimeout(timer);
+  }, [phase]);
+
+  if (phase === 'loading') return <div ref={loading} className={styles.logonTransition} data-win7-loading
+    role="status" aria-label={t('Carregando...')} aria-busy="true" tabIndex={-1} />;
+  return phase === 'desktop' ? <Desktop onLanguage={onLanguage} /> : <Logon onLanguage={onLanguage} onEnter={() => {
+    if (phase !== 'logon') return;
+    sounds.enable(); sounds.play('logon'); setPhase('loading');
   }} />;
 }
 

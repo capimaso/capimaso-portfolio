@@ -7,12 +7,13 @@ implementação ativa está em `src/os/xp/`. Ver plano completo em `PLANS.md`.
 
 O Windows 7 está em `/win7`, implementado em `src/os/win7/` com CSS Modules.
 `Logon.tsx` antecede o desktop em toda entrada na rota; é uma apresentação pública,
-sem autenticação, persistência ou transmissão do campo visual. Harmony no logon,
-desktop-logo.jpg na área de trabalho; este último é cópia exata do Harmony
-recebido, pois o asset separado não estava disponível. Eventos de áudio passam
+sem autenticação, persistência ou transmissão do campo visual. A entrada mostra
+tela preta fixa com cursor wait por 700 ms, com cleanup do timer ao desmontar.
+Harmony no logon, desktop-logo.jpg na área de trabalho. Eventos de áudio passam
 pelo SoundManager do contexto e só são habilitados na entrada. O servidor lista
 WAV existentes; incluir arquivos exige reiniciar dev/rebuild. Ver `test:sounds`.
-Hover/pressed (inclusive pseudo-elementos) não usam transição; taskbar usa blur
+Hover/pressed e brilhos usam fade de 200 ms; Orb cruza frames por opacidade,
+sem interpolar background-position. Movimento reduzido remove o fade. Taskbar usa blur
 15 px e títulos 10 px. Scrollbars herdam setas do 7.css e thumb azul local.
 O tema usa `7.css/dist/7.scoped.css` na camada `win7-base` via `seven.css` e
 contêiner `.win7`; não importar sua versão global. Molduras usam classes oficiais
