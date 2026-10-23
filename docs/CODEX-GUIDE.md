@@ -13,7 +13,7 @@ Harmony no logon, desktop-logo.jpg na área de trabalho. Eventos de áudio passa
 pelo SoundManager do contexto e só são habilitados na entrada. O servidor lista
 WAV existentes; incluir arquivos exige reiniciar dev/rebuild. Ver `test:sounds`.
 Hover/pressed e brilhos usam fade de 200 ms; Orb cruza frames por opacidade,
-sem interpolar background-position. Movimento reduzido remove o fade. Taskbar usa blur
+com background-position declarado no botão. Movimento reduzido remove apenas animações espaciais, preservando realces de cor/opacidade. Taskbar usa blur
 15 px e títulos 10 px. Scrollbars herdam setas do 7.css e thumb azul local.
 O tema usa `7.css/dist/7.scoped.css` na camada `win7-base` via `seven.css` e
 contêiner `.win7`; não importar sua versão global. Molduras usam classes oficiais

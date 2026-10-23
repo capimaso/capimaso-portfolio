@@ -1,3 +1,8 @@
+## Correção pontual — hover dos controles
+
+- Transições explícitas de 200 ms nos botões da taskbar, itens do Iniciar e controles das janelas, incluindo as camadas de brilho. O Orb declara background-position no botão e mantém o fade entre frames originais.
+- Movimento reduzido continua removendo animações espaciais, sem anular o feedback de cor/opacidade dos controles.
+
 # Windows 7 — Google Drive — 22/10/2026
 
 ## Transição de entrada — 700 ms

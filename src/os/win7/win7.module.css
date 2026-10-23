@@ -16,7 +16,7 @@
 .desktop button, .desktop input, .desktop textarea { font: inherit; }
 .desktop button, .desktop a { cursor: url('/assets/win7/cursor/Link%20Select.cur'), pointer; }
 .desktop input, .desktop textarea { cursor: default; }
-/* Fade painted states, never window geometry or sprite-sheet coordinates. */
+/* Fade painted states without animating window geometry. */
 .desktop :is(button:not([data-shortcut]), a, input, select, textarea, [role='button']),
 .desktop :is(button:not([data-shortcut]), a, input, select, textarea, [role='button'])::before,
 .desktop :is(button:not([data-shortcut]), a, input, select, textarea, [role='button'])::after {
@@ -91,6 +91,7 @@
   border: 0;
   background: transparent;
 }
+.desktop .startOrb { transition: background-position .2s ease-in-out; }
 .orbSprite {
   position: absolute;
   pointer-events: none;
@@ -235,6 +236,19 @@
 }
 .windowButtons button { width: 29px; height: 20px; }
 .windowButtons :global(.is-close) { width: 48px; }
+/* Declare transitions on the controls AND the layers that paint their glow.
+   Gradients switch discretely; opacity makes their hover genuinely fade. */
+.desktop :is(.pinned button, .task, .languageSwitch button, .showDesktop,
+  .programs button, .allPrograms, .startRight > button, .otherSystem, .restart,
+  .windowButtons button),
+.desktop :is(.pinned button, .task, .languageSwitch button, .showDesktop,
+  .programs button, .allPrograms, .startRight > button, .otherSystem, .restart,
+  .windowButtons button)::before,
+.desktop :is(.pinned button, .task, .languageSwitch button, .showDesktop,
+  .programs button, .allPrograms, .startRight > button, .otherSystem, .restart,
+  .windowButtons button)::after {
+  transition: background-color .2s ease, background-image .2s ease, opacity .2s ease;
+}
 .windowContent { min-height: 0; flex: 1; overflow: auto; background: #fff; user-select: text; }
 .maximized .windowContent { margin: 0; }
 /* Nested app footers are content, not 7.css window action footers. */
@@ -356,7 +370,7 @@
 @media (prefers-reduced-motion: reduce) {
   .photoSkeleton { animation: none; }
   .startMenu { transition: none; transform: none; }
-  .desktop *, .desktop *::before, .desktop *::after { transition: none !important; }
+  /* Color/opacity feedback stays available; only spatial motion is reduced. */
 }
 
 @media (max-width: 719px) {
