@@ -1,3 +1,14 @@
+## Sons reais — mapeamento dos arquivos recebidos
+
+- Varredura recursiva identificou 303 WAVs e 3 MIDIs, na raiz e em 13 temas.
+  Os cinco eventos usam os WAVs originais da raiz, PCM estéreo 44,1 kHz/16 bits.
+  Nenhum arquivo foi renomeado, convertido ou removido.
+- `src/lib/sounds-map.ts` centraliza URLs com nomes Microsoft; SoundManager e
+  detecção server-only compartilham a configuração. Mute, ativação por entrada,
+  volume 40% e fallback silencioso continuam funcionando.
+- Testes cobrem os nomes reais, disponibilidade no servidor, ausência de arquivos,
+  variantes de tema, diretórios, replay, mute e falhas de reprodução.
+
 ## Painel de Controle Win7
 
 - Nova janela acessível pelo Iniciar e pela busca, em ícones grandes conforme config.png. Personalizar troca entre os dois wallpapers reais, com preferência local exclusiva do Win7; logon e XP preservados.

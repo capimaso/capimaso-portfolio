@@ -1,4 +1,5 @@
-import { win7SoundFiles, type Win7Sound } from '@/src/lib/win7-sounds';
+import type { Win7Sound } from '@/src/lib/win7-sounds';
+import { soundsMap } from '@/src/lib/sounds-map';
 
 export interface SystemSounds {
   enable(): void; play(name: Win7Sound): void; dispose(): void;
@@ -38,7 +39,7 @@ export class SoundManager implements SystemSounds {
     try {
       let audio = this.audio.get(name);
       if (!audio) {
-        audio = this.createAudio(`/assets/win7/sounds/${win7SoundFiles[name]}`);
+        audio = this.createAudio(soundsMap[name]);
         audio.volume = .4;
         audio.onerror = () => { this.missing.add(name); };
         this.audio.set(name, audio);
