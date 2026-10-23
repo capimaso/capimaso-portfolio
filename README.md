@@ -63,6 +63,12 @@ apps locais continuam pesquisáveis quando o Drive está indisponível.
 Sobre e Contato mostram os dados reais. Fotografias abre o Explorer com o acervo
 público do Drive: breadcrumbs, voltar/avançar, miniaturas e carregamento por
 páginas. Duplo clique/Enter abre uma pasta ou imagem; no mobile, use um toque.
+
+O Painel de Controle está no Menu Iniciar e na busca. Personalizar alterna entre
+os wallpapers Harmony e Desktop Logo, salvando a escolha neste navegador; Som
+silencia ou reativa os eventos do sistema. No Iniciar, manter o ponteiro ou foco
+em um item por 500 ms substitui o avatar pelo ícone com fade; sair restaura a foto.
+O Instagram do portfólio de fotografia é `@capimaso.jpg`.
 O Photo Viewer tem fundo escuro, anterior/próximo na mesma pasta, zoom e **Baixar**
 para obter o original. Setas esquerda/direita navegam; +/- ajusta zoom e 0 encaixa
 à janela. Games continua em preparação.

@@ -6,6 +6,9 @@
 
 ## Ícone dinâmico do Menu Iniciar
 
+- Validação final: check, typecheck, build, 12 testes de janelas e 5 de áudio
+  aprovados. Navegador confirmou também prévia por teclado/pastas, reinício do
+  prazo ao trocar item, persistência de Harmony após reload e rotas XP/Estúdio.
 - Referência `menu iniciar 2.png`: após 500 ms no mesmo item, o avatar cruza
   por opacidade com o ícone original de 64 px. Sair antes do prazo cancela;
   sair depois restaura o avatar em 200 ms, mantendo o ícone durante o fade.
