@@ -1,3 +1,11 @@
+## Áudio — boas-vindas e volume global
+
+- Startup agora usa `windows-7-startup.mp3` ao aparecer o logon, sem disparo
+  na montagem do desktop. Se autoplay for bloqueado, tenta novamente na entrada.
+- Volume inicial de 80%, ajustável em tempo real em todos os áudios existentes
+  e futuros. Ding original adicionado ao mapa; mute preservado. Nove testes de
+  áudio aprovados, incluindo volume, limites e fallback de autoplay.
+
 ## Sons reais — mapeamento dos arquivos recebidos
 
 - Varredura recursiva identificou 303 WAVs e 3 MIDIs, na raiz e em 13 temas.

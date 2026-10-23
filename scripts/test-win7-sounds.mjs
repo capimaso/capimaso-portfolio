@@ -36,12 +36,12 @@ test('every event maps to the real local filename and replay starts at zero', ()
   for (const name of names) manager.play(name);
   assert.deepEqual(tracks.map(track => track.src), [
     '/assets/win7/sounds/Windows Logon Sound.wav',
-    '/assets/win7/sounds/Windows Startup.wav',
+    '/assets/win7/sounds/windows-7-startup.mp3',
     '/assets/win7/sounds/Windows Navigation Start.wav',
     '/assets/win7/sounds/Windows Minimize.wav',
     '/assets/win7/sounds/Windows Error.wav',
   ]);
-  assert(tracks.every(track => track.currentTime === 0 && track.volume === .4));
+  assert(tracks.every(track => track.currentTime === 0 && track.volume === .8));
   manager.play('navigation'); assert.equal(tracks[2].plays, 2); assert.equal(tracks.length, 5);
 });
 test('autoplay rejection and unavailable media stay silent; disposal stops playback', async () => {
@@ -77,14 +77,37 @@ test('global mute stops existing audio and blocks all events until unmuted', () 
 });
 
 test('server and player agree on shipped original files', async () => {
-  assert.deepEqual(availableWin7Sounds().sort(), ['error', 'logon', 'minimize', 'navigation', 'startup']);
+  assert.deepEqual(availableWin7Sounds().sort(), ['ding', 'error', 'logon', 'minimize', 'navigation', 'startup']);
   const { manager, tracks } = fixture(availableWin7Sounds()); manager.enable();
   for (const event of availableWin7Sounds()) manager.play(event);
   for (const track of tracks) {
     const bytes = await readFile(path.join(process.cwd(), 'public', track.src));
-    assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
-    assert.equal(bytes.toString('ascii', 8, 12), 'WAVE');
+    if (track.src.endsWith('.wav')) {
+      assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
+      assert.equal(bytes.toString('ascii', 8, 12), 'WAVE');
+    } else assert(bytes.length > 0);
   }
+});
+
+test('volume changes reach cached and new sounds, clamp range, and respect mute', () => {
+  const { manager, tracks } = fixture(['logon', 'ding']); manager.enable(); manager.play('logon');
+  assert.equal(manager.getVolume(), .8);
+  manager.setVolume(.35); assert.equal(tracks[0].volume, .35);
+  manager.play('ding'); assert.equal(tracks[1].volume, .35);
+  manager.setMuted(true); manager.setVolume(.6); manager.play('ding');
+  assert.equal(tracks[1].plays, 1); assert.equal(tracks[1].volume, .6);
+  manager.setVolume(2); assert.equal(manager.getVolume(), 1);
+  manager.setVolume(-1); assert.equal(manager.getVolume(), 0);
+  manager.setVolume(NaN); assert.equal(manager.getVolume(), 0);
+});
+
+test('welcome startup attempts autoplay and retries a rejected attempt on entry only', async () => {
+  const { manager, tracks } = fixture(['startup', 'logon'], true);
+  manager.play('startup'); manager.play('logon'); assert.equal(tracks.length, 1);
+  await new Promise(resolve => setImmediate(resolve));
+  manager.enable(); assert.equal(tracks[0].plays, 2);
+  manager.enable(); assert.equal(tracks[0].plays, 2);
+  manager.dispose();
 });
 
 test('absent root files stay silent; themes and directories are not mistaken for mapped audio', async () => {

@@ -41,6 +41,9 @@ function Session({ onLanguage }: { onLanguage: (language: Language) => void }) {
   const t = useT();
   const loading = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    if (phase === 'logon') sounds.play('startup');
+  }, [phase, sounds]);
+  useEffect(() => {
     if (phase !== 'loading') return;
     loading.current?.focus({ preventScroll: true });
     const wallpaper = new Image();
@@ -60,9 +63,6 @@ function Session({ onLanguage }: { onLanguage: (language: Language) => void }) {
 function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {
   const t = useT();
   const { wallpaper } = useDesktopSettings();
-  const sounds = useSoundManager();
-  const started = useRef(false);
-  useEffect(() => { if (!started.current) { started.current = true; sounds.play('startup'); } }, [sounds]);
   const [selected, setSelected] = useState<AppId[]>([]);
   const shortcuts = useRef<(HTMLButtonElement | null)[]>([]);
   const root = useRef<HTMLElement>(null);

@@ -3,7 +3,8 @@
  */
 export const soundsMap = {
   logon: '/assets/win7/sounds/Windows Logon Sound.wav',
-  startup: '/assets/win7/sounds/Windows Startup.wav',
+  startup: '/assets/win7/sounds/windows-7-startup.mp3',
+  ding: '/assets/win7/sounds/Windows Ding.wav',
   navigation: '/assets/win7/sounds/Windows Navigation Start.wav',
   minimize: '/assets/win7/sounds/Windows Minimize.wav',
   error: '/assets/win7/sounds/Windows Error.wav',
