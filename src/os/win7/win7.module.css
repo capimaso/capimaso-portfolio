@@ -15,13 +15,13 @@
 .desktop button, .desktop input, .desktop textarea { font: inherit; }
 .desktop button, .desktop a { cursor: url('/assets/win7/cursor/Link%20Select.cur'), pointer; }
 .desktop input, .desktop textarea { cursor: default; }
-/* Native state changes are immediate, including 7.css pseudo-element highlights. */
+/* Fade painted states, never window geometry or sprite-sheet coordinates. */
 .desktop :is(button:not([data-shortcut]), a, input, select, textarea, [role='button']),
-.desktop :is(button:not([data-shortcut]), a, input, select, textarea, [role='button']) *,
 .desktop :is(button:not([data-shortcut]), a, input, select, textarea, [role='button'])::before,
 .desktop :is(button:not([data-shortcut]), a, input, select, textarea, [role='button'])::after {
-  transition: none !important;
-  animation: none !important;
+  transition: color .2s ease-in-out, background-color .2s ease-in-out,
+    border-color .2s ease-in-out, box-shadow .2s ease-in-out,
+    filter .2s ease-in-out, opacity .2s ease-in-out;
 }
 .desktop button:focus-visible, .desktop a:focus-visible, .desktop input:focus-visible {
   outline: 1px dotted currentColor;
@@ -102,9 +102,12 @@
   transform: scale(.5);
   background: transparent url('/assets/win7/theme/start-orb.png') 0 0 / 106px 318px no-repeat;
   image-rendering: -webkit-optimize-contrast;
+  transition: opacity .2s ease-in-out;
 }
-.startOrb:hover .orbSprite { background-position-y: -106px; }
-.startOrb:active .orbSprite, .startOrb[aria-expanded='true'] .orbSprite { background-position-y: -212px; }
+.orbHover { background-position-y: -106px; opacity: 0; }
+.orbPressed { background-position-y: -212px; opacity: 0; }
+.startOrb:hover .orbHover, .startOrb:focus-visible .orbHover { opacity: 1; }
+.startOrb:active .orbPressed, .startOrb[aria-expanded='true'] .orbPressed { opacity: 1; }
 .pinned, .tasks { height: 100%; display: flex; align-items: center; gap: 3px; }
 .pinned:empty { display: none; }
 .pinned button, .task {
@@ -118,7 +121,7 @@
   border: 1px solid transparent;
   background: transparent;
 }
-.pinned button:hover { background: radial-gradient(ellipse at bottom, #b6e7ffb3, #ffffff15 75%); border-color: #ffffff80; }
+.pinned button:hover { border-color: #ffffff80; }
 .tasks { flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; padding: 0 4px; }
 .tasks::-webkit-scrollbar { display: none; }
 .task {
@@ -126,7 +129,11 @@
   box-shadow: inset 0 0 0 1px #ffffff8c;
   background: var(--w7-wct-bg);
 }
-.task:hover, .currentTask { background: radial-gradient(ellipse at bottom, #c3edffd9, #ffffff65 70%); }
+.desktop :is(.pinned button, .task)::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  background: radial-gradient(ellipse at bottom, #c3edffd9, #ffffff45 70%); opacity: 0;
+}
+.desktop :is(.pinned button, .task):hover::before, .desktop .task.currentTask::before { opacity: 1; }
 .currentTask { box-shadow: inset 0 0 0 1px #ffffffbf, inset 0 -2px 5px #c3f3ff; }
 .tray { height: 100%; display: flex; align-items: center; gap: 8px; padding-left: 7px; color: #fff; }
 .systemIcon { display: flex; }
@@ -169,7 +176,9 @@
 .startLeft { min-height: 0; display: flex; flex-direction: column; border: 1px solid #e1e5ec; border-radius: 4px; overflow: hidden; background: #fff; }
 .programs { flex: 1; min-height: 0; overflow: auto; padding: 4px; }
 .programs button { width: 100%; min-height: 48px; display: flex; align-items: center; gap: 8px; padding: 5px 7px; text-align: left; border: 1px solid transparent; border-radius: 3px; background: transparent; color: #111; }
-.programs button:hover, .programs button:focus-visible { background: linear-gradient(#eaf6ff, #cce9ff); border-color: #8fb4d1; box-shadow: inset 0 0 0 1px #fff; }
+.programs button::before { content: ''; background: linear-gradient(#eaf6ff, #cce9ff); opacity: 0; }
+.programs button:hover, .programs button:focus-visible { border-color: #8fb4d1; box-shadow: inset 0 0 0 1px #fff; }
+.programs button:hover::before, .programs button:focus-visible::before { opacity: 1; }
 .programs img { flex: 0 0 32px; }
 .allPrograms { margin: 0 5px; padding: 8px; border: 0; border-top: 1px solid #ddd; background: #fff; color: #111; text-align: left; }
 .allPrograms:hover { background: #e6f1fa; }
@@ -179,7 +188,10 @@
 .userPicture { position: absolute; top: -23px; left: calc(50% - 25px); width: 50px; height: 50px; object-fit: cover; border-radius: 7px; border: 2px solid #e0ecf8; box-shadow: 0 0 0 1px #233a4b, 0 2px 4px #0008; }
 .userName { padding: 4px 8px 12px; font-weight: 600; text-shadow: 0 1px 2px #000; }
 .startRight > button, .otherSystem { display: block; border: 1px solid transparent; border-radius: 3px; min-height: 39px; padding: 9px 7px; background: none; color: #fff; text-align: left; text-decoration: none; }
-.startRight > button:hover, .otherSystem:hover { border-color: #ffffff70; background: linear-gradient(#ffffff30, #ffffff08 50%, #071f3333 51%); box-shadow: inset 0 0 0 1px #0003; }
+.startRight > button, .otherSystem { position: relative; z-index: 0; }
+.startRight > button::before, .desktop .otherSystem::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: linear-gradient(#ffffff30, #ffffff08 50%, #071f3333 51%); opacity: 0; pointer-events: none; }
+.startRight > button:hover, .otherSystem:hover { border-color: #ffffff70; box-shadow: inset 0 0 0 1px #0003; }
+.startRight > button:hover::before, .desktop .otherSystem:hover::before { opacity: 1; }
 .startSeparator { height: 1px; background: #ffffff30; margin: 7px 3px; box-shadow: 0 1px #0003; }
 .restart { margin-top: auto; align-self: flex-start; border: 1px solid #173044; border-radius: 3px; padding: 4px 16px; background: linear-gradient(#cadbe780, #9cb1c030 50%, #24435d80 51%); box-shadow: inset 0 0 0 1px #ffffff70; color: white; text-decoration: none; }
 .restart:hover { background-color: #ffffff50; }
@@ -343,6 +355,7 @@
 @media (prefers-reduced-motion: reduce) {
   .photoSkeleton { animation: none; }
   .startMenu { transition: none; transform: none; }
+  .desktop *, .desktop *::before, .desktop *::after { transition: none !important; }
 }
 
 @media (max-width: 719px) {

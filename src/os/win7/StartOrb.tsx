@@ -8,5 +8,7 @@ export default function StartOrb({ open, onToggle }: { open: boolean; onToggle: 
   return <button type="button" className={styles.startOrb} data-start-button aria-label={t('Iniciar')}
     aria-expanded={open} aria-controls="win7-start-menu" onClick={onToggle}>
     <span className={styles.orbSprite} aria-hidden="true" />
+    <span className={`${styles.orbSprite} ${styles.orbHover}`} aria-hidden="true" />
+    <span className={`${styles.orbSprite} ${styles.orbPressed}`} aria-hidden="true" />
   </button>;
 }

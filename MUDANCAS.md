@@ -1,5 +1,12 @@
 # Windows 7 — Google Drive — 22/10/2026
 
+## Ajuste de hover suave
+
+- Removido o bloqueio global de transições. Controles e brilhos voltam a usar
+  fade de 200 ms; taskbar e itens do Iniciar usam camadas de brilho com opacidade.
+- Orb cruza os três frames fixos por opacidade, sem animar a posição da sprite
+  (evita mostrar recortes entre estados). Movimento reduzido desativa os fades.
+
 ## Auditoria final — validação
 
 - Check, typecheck, build e 26 testes aprovados. Auditoria Edge em dev/produção
