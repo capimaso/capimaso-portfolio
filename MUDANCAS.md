@@ -4,6 +4,17 @@
 - Som controla o SoundManager global: mute pausa áudio corrente e bloqueia todos os eventos até reativar. Cinco testes de áudio aprovados, incluindo assinatura de estado e mute/desmute.
 - Só são apresentados os dois ajustes funcionais desta rodada. Personalização usa o monitor/pincel original imageres_151.ico, identificado no acervo local; grade mantém a largura das colunas da referência.
 
+## Ícone dinâmico do Menu Iniciar
+
+- Referência `menu iniciar 2.png`: após 500 ms no mesmo item, o avatar cruza
+  por opacidade com o ícone original de 64 px. Sair antes do prazo cancela;
+  sair depois restaura o avatar em 200 ms, mantendo o ícone durante o fade.
+- Funciona nos programas, atalhos da direita e pastas reais da busca. Trocar
+  item, pesquisa, lista de programas, fechar menu ou desmontar cancela o timer;
+  foco por teclado oferece a mesma prévia.
+- Edge de produção em 1440 px/EN e 360 px/PT confirmou atraso de 507–510 ms,
+  cancelamento, opacidades intermediárias e restauração após fechar/reabrir.
+
 ## Contato de fotografia
 
 - Instagram do Contato Win7 atualizado para @capimaso.jpg, incluindo link e cópia. Contatos XP preservados; dados específicos em data/win7-socials.ts.

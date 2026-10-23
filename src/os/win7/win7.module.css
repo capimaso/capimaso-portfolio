@@ -188,6 +188,12 @@
 .searchBox input { width: 100%; height: 25px; border: 1px solid #8a9ba8; background: #fff; padding: 3px 6px; font-size: 11px; box-shadow: inset 0 1px 2px #0002; }
 .startRight { min-height: 0; position: relative; display: flex; flex-direction: column; padding: 42px 6px 9px; color: #fff; }
 .userPicture { position: absolute; top: -23px; left: calc(50% - 25px); width: 50px; height: 50px; object-fit: cover; border-radius: 7px; border: 2px solid #e0ecf8; box-shadow: 0 0 0 1px #233a4b, 0 2px 4px #0008; }
+.menuPortrait { position: absolute; top: -30px; left: calc(50% - 32px); width: 64px; height: 64px; pointer-events: none; }
+.menuPortrait .userPicture { top: 7px; left: 7px; opacity: 1; transition: opacity .2s ease; }
+.previewIcon { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; transition: opacity .2s ease; }
+.previewIcon img { object-fit: contain; filter: drop-shadow(0 2px 2px #0005); }
+.menuPortrait:not([data-start-preview='profile']) .userPicture { opacity: 0; }
+.menuPortrait:not([data-start-preview='profile']) .previewIcon { opacity: 1; }
 .userName { padding: 4px 8px 12px; font-weight: 600; text-shadow: 0 1px 2px #000; }
 .startRight > button, .otherSystem { display: block; border: 1px solid transparent; border-radius: 3px; min-height: 39px; padding: 9px 7px; background: none; color: #fff; text-align: left; text-decoration: none; }
 .startRight > button, .otherSystem { position: relative; z-index: 0; }
@@ -402,7 +408,7 @@
 }
 @media (max-height: 430px) {
   .startRight { padding-top: 5px; overflow-y: auto; }
-  .userPicture { display: none; }
+  .menuPortrait { display: none; }
   .startRight > button, .otherSystem { min-height: 30px; padding: 5px; }
   .userName { padding-bottom: 5px; }
 }

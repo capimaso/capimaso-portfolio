@@ -30,6 +30,15 @@ Fotografias usa Explorer/PhotoViewer e `/api/photos`, com dados reais do Drive.
 Jogos ainda estão em preparação; não apresentar Solitaire ou Purble Place como
 jogáveis até essa etapa ser implementada. Não fabricar acervo.
 
+`apps/ControlPanel.tsx` oferece ícones grandes e dois ajustes reais: wallpapers
+do `DesktopSettings.tsx` (chave própria `capimaso-win7-wallpaper`, sem afetar o XP
+ou o logon) e mute global do SoundManager. `useSystemMuted` assina o estado;
+silenciar pausa áudios ativos e bloqueia novos eventos até reativar.
+Menu Iniciar troca o avatar pelo ícone original após 500 ms de hover/foco,
+com crossfade de 200 ms. Cancelar ao sair/trocar item, mudar busca/lista, fechar
+ou desmontar; manter a última imagem montada durante o fade de retorno.
+Contato Win7 usa `data/win7-socials.ts`, com Instagram de fotografia separado.
+
 O backend está em `src/server/drive/`, marcado server-only. Credenciais apenas
 em ambiente, nunca no código ou logs. `DRIVE_FOLDER_ID` aceita ID ou link de pasta.
 Client paths são dicas, verificadas por listagens pai/filho; não confie em

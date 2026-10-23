@@ -10,6 +10,10 @@ Auditoria posterior: logon público, hover suave de 200 ms, refinamentos Aero/Ex
 e SoundManager implementados. A configuração visual consolidada pelo proprietário
 usa blur de 15 px na taskbar e 10 px nos títulos; substitui os valores anteriores.
 
+Rodada posterior: Painel de Controle em ícones grandes com Personalização e Som
+funcionais; avatar dinâmico do Iniciar após 500 ms de hover/foco com fade de
+200 ms. Contato de fotografia atualizado para @capimaso.jpg, preservando o XP.
+
 Preservar Tiago / CAPIMASO, o XP e todo o conteúdo existente. Consolidar o Windows 7
 com 7.css e separação entre estado, gestos, apresentação e aplicativos. Stack:
 Next.js App Router, React e TypeScript. Sem Vue, styled-components, Tailwind ou
@@ -57,6 +61,9 @@ ou código venham a ser incorporados. Não executar instaladores nativos das fon
 - program-catalog.ts: catálogo local, aliases e filtro EN/PT.
 - seven.css: import oficial scoped em camada; win7.module.css: layout/adaptações.
 - apps/: Explorer, PhotoViewer e acessórios existentes; apps/games/: futuro.
+- apps/ControlPanel.tsx: visão de ícones grandes conforme config.png, com
+  Personalização e Som. DesktopSettings.tsx: wallpapers restritos aos dois assets
+  recebidos, preferência local exclusiva do Win7; logon permanece Harmony.
 - Logon.tsx e logon.module.css: boas-vindas públicas antes do desktop.
 - src/shared/LanguageContext.tsx e lib/locale-dictionary.ts: useT, inglês inicial,
   português e preferência compartilhada preservados.
@@ -84,8 +91,12 @@ Remover molduras, gradientes e glifos manuais equivalentes aos da dependência.
 Orb original 106×318: três frames nativos 106×106, posições Y 0/-106/-212,
 redução uniforme exata a 50%. Sem cover, stretch ou processamento do PNG.
 Menu mantém DOM e inert/aria-hidden/visibility quando fechado. Hover/pressed
-e brilhos usam fade de 200 ms, respeitando movimento reduzido. Orb cruza frames
-fixos por opacidade sem interpolar posições da sprite.
+e brilhos usam fade de 200 ms; movimento reduzido remove animações espaciais,
+preservando feedback de cor/opacidade. Orb declara background-position no botão
+e cruza frames fixos por opacidade sem interpolar posições da sprite.
+Avatar do menu usa o ícone original de 64 px após 500 ms no mesmo item; saída
+antecipada cancela o timer. Ao sair, o avatar retorna em 200 ms. Fechar, trocar
+busca/lista ou desmontar cancela a prévia; foco por teclado segue a mesma regra.
 
 ## 4. Gerenciador de janelas
 
@@ -140,16 +151,20 @@ existente, incluindo ancestrais para validação; teclado e mouse funcionam igua
 ## 6. Assets e futuro
 
 Preservar Harmony, Orb e cursores recebidos, sem editar binários para acertar CSS.
-Ausentes em ASSETS_NEEDED.md, incluindo ícone da Calculadora, logon e jogos.
+Ausentes em ASSETS_NEEDED.md, incluindo ícone da Calculadora e jogos.
 Buscar primeiro no acervo local, depois [Win7 Icons](https://win7icons.visnalize.com/)
 e [nandomp4](https://www.nandomp4.com/). Não inventar recursos ou personagens.
 
 Logon implementado: avatar real, CAPIMASO, Harmony e entrada por Enter/seta;
 campo de senha somente visual, nunca lido/enviado/armazenado, sem autenticação.
-Após entrar, uma cobertura preta fixa com cursor wait aparece por 700 ms antes
+Após entrar, uma cobertura preta fixa com cursor Busy.cur original aparece por 700 ms antes
 de montar o desktop. O timer é cancelado ao sair da rota. Logon usa harmony.jpg;
 desktop usa desktop-logo.jpg fornecido pelo proprietário, sem sobrescrever assets.
-Control Panel permanece futuro. Games permanece identificado como pendente.
+Control Panel implementado com dois ajustes: Personalização aplica Harmony ou
+Desktop Logo e persiste a escolha em chave local do Win7; Som assina o estado
+global de mute do SoundManager, pausa áudio corrente e bloqueia todos os eventos
+até desmutar. Só esses ajustes funcionais aparecem na grade; demais itens do
+Windows nativo não são simulados. Games permanece identificado como pendente.
 
 Solitaire futuro: Klondike 52 cartas, sete colunas, uma carta por compra,
 alternância de cores/fundações, reciclar, revelar, desfazer, reiniciar e vitória;
@@ -173,5 +188,5 @@ limitação e manter indisponível. Sons opcionais após ativação explícita.
 6. npm run check, npm run typecheck, npm run build, testes de fotos/janelas e
    navegador. Conferir hashes de dados/assets e ausência de chave no frontend;
    documentar ganhos observados e limitações. Não fazer deploy automaticamente.
-7. Jogos e Control Panel somente em rodadas posteriores. Logon e infraestrutura
-   de sons foram concluídos na auditoria posterior; WAV reais continuam pendentes.
+7. Jogos permanecem futuros. Logon, Control Panel (wallpaper e mute) e infraestrutura
+   de sons estão concluídos; WAV reais continuam pendentes.
