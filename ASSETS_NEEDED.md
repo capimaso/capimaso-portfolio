@@ -9,7 +9,7 @@
 - `public/assets/win7/icons/`: 561 ICO recebidos; preservar nomes e estrutura.
 - `Games/Solitaire_108.ico` e `Games/PurblePlace_102.ico`: presentes.
 - Categorias de pastas, bibliotecas e sistema: presentes; mapear após inspeção.
-- `docs/references/`: 12 capturas de boot, desktop e aplicativos.
+- `docs/references/`: quatro capturas atuais do Win7 Simu (boot, logon, desktop e Explorer).
 - XP Bliss, capas, avatares, thumbnails e cursores: preservar caminhos atuais.
 - `public/assets/win7/wallpapers/harmony.jpg`: wallpaper original recebido e usado.
 - `public/assets/win7/theme/start-orb.png`: sprite 106x318 com três estados;

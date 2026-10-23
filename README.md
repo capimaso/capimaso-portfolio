@@ -43,7 +43,12 @@ e pode ser pulada; movimento reduzido remove a espera. Os links do seletor
 também funcionam sem JavaScript. No XP, **Escolher sistema** no menu Iniciar
 retorna ao boot, preservando idioma e preferências de wallpaper.
 
-O Windows 7 tem wallpaper Harmony, ícones e cursores reais, taskbar Aero, menu
+O Windows 7 abre em uma tela de boas-vindas com avatar e nome CAPIMASO. Enter ou
+a seta entra sem exigir senha; o campo é apenas visual e nunca é enviado ou
+armazenado. Harmony é usado no logon, e desktop-logo.jpg no desktop (cópia exata
+do Harmony disponível, que já contém o logo gigante).
+
+O desktop tem ícones e cursores reais, taskbar Aero, menu
 Iniciar com busca e janelas independentes. No desktop, clique seleciona;
 duplo clique ou Enter abre. No celular, um toque abre em tela cheia. Arraste a
 barra de título ou redimensione pelas bordas no desktop. Focada a barra de
@@ -65,6 +70,12 @@ Reiniciar volta ao boot; o menu também permite abrir o XP. **Mostrar área de
 trabalho** minimiza/restaura as janelas visíveis sem reabrir as já minimizadas.
 EN/PT mantém a preferência compartilhada. `npm run test:win7` verifica as regras
 do gerenciador de janelas sem navegador.
+
+Hover e pressed são instantâneos. O Explorer tem Refresh dentro do endereço,
+rodapé branco e scrollbars azuis com setas. Sons do sistema usam SoundManager
+global após a entrada; os WAV ainda estão ausentes e o fallback é silencioso.
+Consulte `public/assets/win7/sounds/README.md`; `npm run test:sounds` verifica
+os eventos, a ausência dos arquivos e o tratamento de bloqueio de reprodução.
 
 ### Configuração de fotografias no Google Drive
 

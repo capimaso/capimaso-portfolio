@@ -1,5 +1,13 @@
 # Windows 7 — Google Drive — 22/10/2026
 
+## Auditoria final — validação
+
+- Check, typecheck, build e 26 testes aprovados. Auditoria Edge em dev/produção
+  em 360/768/1440 confirmou Logon, Aero, hover instantâneo, Explorer e silêncio
+  para WAV ausentes. Drive real e regressão do XP/Estúdio aprovados.
+- Relatório, referências e limites em docs/WIN7-FINAL-AUDIT.md; nenhum segredo
+  encontrado nos bundles públicos. Wallpaper reutilizado tem hash idêntico à fonte.
+
 ## Auditoria final — Áudio
 
 - SoundManager global habilitado pela entrada: logon, startup do desktop,

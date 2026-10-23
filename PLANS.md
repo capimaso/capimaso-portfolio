@@ -6,6 +6,10 @@ Rodada concluída: base scoped 7.css, hook central de janelas, gestos separados
 e busca integrada a apps/pastas implementados. Validação em
 [docs/WIN7-REFACTOR-VERIFICATION.md](docs/WIN7-REFACTOR-VERIFICATION.md).
 
+Auditoria posterior: logon público, hover instantâneo, refinamentos Aero/Explorer
+e SoundManager implementados. A configuração visual consolidada pelo proprietário
+usa blur de 15 px na taskbar e 10 px nos títulos; substitui os valores anteriores.
+
 Preservar Tiago / CAPIMASO, o XP e todo o conteúdo existente. Consolidar o Windows 7
 com 7.css e separação entre estado, gestos, apresentação e aplicativos. Stack:
 Next.js App Router, React e TypeScript. Sem Vue, styled-components, Tailwind ou
@@ -53,7 +57,7 @@ ou código venham a ser incorporados. Não executar instaladores nativos das fon
 - program-catalog.ts: catálogo local, aliases e filtro EN/PT.
 - seven.css: import oficial scoped em camada; win7.module.css: layout/adaptações.
 - apps/: Explorer, PhotoViewer e acessórios existentes; apps/games/: futuro.
-- logon/: etapa futura, referência AuthUX; não bloquear entrada direta agora.
+- Logon.tsx e logon.module.css: boas-vindas públicas antes do desktop.
 - src/shared/LanguageContext.tsx e lib/locale-dictionary.ts: useT, inglês inicial,
   português e preferência compartilhada preservados.
 - src/lib/photos.ts: contratos compartilhados sem credenciais.
@@ -79,8 +83,8 @@ Remover molduras, gradientes e glifos manuais equivalentes aos da dependência.
 
 Orb original 106×318: três frames nativos 106×106, posições Y 0/-106/-212,
 redução uniforme exata a 50%. Sem cover, stretch ou processamento do PNG.
-Menu usa fade/scale na abertura E fechamento, mantém DOM para transição,
-inert/aria-hidden/visibility fechado e respeita movimento reduzido.
+Menu abre e fecha imediatamente, mantendo DOM, inert/aria-hidden/visibility
+quando fechado. Hover/pressed não usam transição, incluindo pseudo-elementos.
 
 ## 4. Gerenciador de janelas
 
@@ -139,8 +143,9 @@ Ausentes em ASSETS_NEEDED.md, incluindo ícone da Calculadora, logon e jogos.
 Buscar primeiro no acervo local, depois [Win7 Icons](https://win7icons.visnalize.com/)
 e [nandomp4](https://www.nandomp4.com/). Não inventar recursos ou personagens.
 
-Logon AuthUX: próxima rodada, avatar real/nome Tiago/fundo oficial disponível;
-sem senha fictícia nem autenticação. Manter /win7 direto nesta refatoração.
+Logon implementado: avatar real, CAPIMASO, Harmony e entrada por Enter/seta;
+campo de senha somente visual, nunca lido/enviado/armazenado, sem autenticação.
+Desktop usa desktop-logo.jpg (cópia exata do wallpaper disponível; ver inventário).
 Control Panel permanece futuro. Games permanece identificado como pendente.
 
 Solitaire futuro: Klondike 52 cartas, sete colunas, uma carta por compra,
@@ -165,4 +170,5 @@ limitação e manter indisponível. Sons opcionais após ativação explícita.
 6. npm run check, npm run typecheck, npm run build, testes de fotos/janelas e
    navegador. Conferir hashes de dados/assets e ausência de chave no frontend;
    documentar ganhos observados e limitações. Não fazer deploy automaticamente.
-7. Logon, jogos e Control Panel somente em rodadas posteriores.
+7. Jogos e Control Panel somente em rodadas posteriores. Logon e infraestrutura
+   de sons foram concluídos na auditoria posterior; WAV reais continuam pendentes.
