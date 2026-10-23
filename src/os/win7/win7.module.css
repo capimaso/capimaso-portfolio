@@ -54,7 +54,7 @@
   align-items: center;
   flex-direction: column;
   gap: 3px;
-  text-shadow: 1px 1px 2px #000, 0 0 3px #000;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, .8);
 }
 .shortcut img { flex-shrink: 0; object-fit: contain; }
 .shortcut span { max-width: 100%; overflow-wrap: anywhere; line-height: 16px; }
@@ -70,11 +70,17 @@
   padding-bottom: env(safe-area-inset-bottom);
   display: flex;
   align-items: center;
-  border-top: 1px solid #ffffffa0;
-  box-shadow: 0 -1px 0 #14283c99, inset 0 1px 0 #ffffff20;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, .5);
+  border-bottom: 1px solid #000;
+  background: linear-gradient(to bottom, rgba(24, 46, 66, .48), rgba(7, 23, 39, .65));
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  box-shadow: inset 0 1px 0 #ffffff30;
   border-radius: 0;
   --w7-w-bdr: 0px;
 }
+.taskbar::before, .taskbar::after { content: none; }
 .startOrb {
   flex: 0 0 54px;
   height: 54px;
@@ -191,7 +197,10 @@
   min-width: 0;
   min-height: 0;
   pointer-events: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .5), inset 0 0 0 1px #ffffffaa;
 }
+.window::before { opacity: .4; }
+.window::after { -webkit-backdrop-filter: none; backdrop-filter: none; }
 /* 7.css dialogs use :target; these dialogs are positioned by the React manager. */
 .window[role='dialog'] {
   position: absolute;
@@ -202,11 +211,15 @@
 }
 .window[hidden] { display: none; }
 .maximized { --w7-w-bdr: 0px; border-radius: 0; border: 0; }
-.titlebar { height: 29px; flex: 0 0 29px; min-width: 0; touch-action: none; cursor: url('/assets/win7/cursor/Move.cur'), move; }
+.titlebar { height: 29px; flex: 0 0 29px; min-width: 0; touch-action: none; cursor: url('/assets/win7/cursor/Move.cur'), move; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
 .windowTitle { display: flex; align-items: center; gap: 5px; flex: 1; min-width: 0; padding-top: 0; }
 .windowTitle > span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .windowTitle img { flex-shrink: 0; }
-.windowButtons { align-self: flex-start; }
+.windowButtons {
+  align-self: flex-start;
+  --w7-wct-bg: linear-gradient(to bottom, #ffffff99, #ffffff40 45%, #4e789630 50%, #ffffff38);
+  --w7-wct-sd: inset 0 1px 0 #ffffffd0, inset 0 0 0 1px #ffffff66;
+}
 .windowButtons button { width: 29px; height: 20px; }
 .windowButtons :global(.is-close) { width: 48px; }
 .windowContent { min-height: 0; flex: 1; overflow: auto; background: #fff; user-select: text; }

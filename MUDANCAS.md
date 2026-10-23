@@ -1,5 +1,13 @@
 # Windows 7 — Google Drive — 22/10/2026
 
+## Auditoria final — Aero
+
+- Taskbar com gradiente escuro translúcido, blur de 15 px, borda branca superior
+  e preta inferior; camadas opacas herdadas desativadas somente nela.
+- Títulos com vidro/reflexos 7.css e blur de 10 px; sombra difusa 0 10px 30px nas
+  janelas. Controles preservam glifos oficiais com gradiente vertical e brilho.
+- Ícones mantêm fundo transparente e seleção azul; texto usa sombra 1px 1px 3px.
+
 ## Auditoria final — Hover
 
 - Estados hover/pressed/focus são instantâneos em botões, links e campos do Win7,
