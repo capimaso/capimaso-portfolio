@@ -1,5 +1,9 @@
 ## Áudio — boas-vindas e volume global
 
+- Bandeja recebe alto-falante SVG e popup vertical conforme volume.png, com
+  slider 0–100%, mute sincronizado com Painel de Controle, teclado/Escape e
+  fechamento externo. Ajuste atualiza áudio imediatamente e toca Ding após
+  150 ms sem novos movimentos, respeitando mute/volume zero.
 - Startup agora usa `windows-7-startup.mp3` ao aparecer o logon, sem disparo
   na montagem do desktop. Se autoplay for bloqueado, tenta novamente na entrada.
 - Volume inicial de 80%, ajustável em tempo real em todos os áudios existentes

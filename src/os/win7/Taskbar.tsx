@@ -6,6 +6,7 @@ import type { Language } from '@/lib/locale-dictionary';
 import { windowApplications as applications, type AppId, type AppWindow } from './types';
 import Win7Icon from './Win7Icon';
 import StartOrb from './StartOrb';
+import VolumeControl from './VolumeControl';
 import styles from './win7.module.css';
 
 type Props = {
@@ -62,8 +63,9 @@ export default function Taskbar({ startOpen, onStart, windows, activeId, onOpen,
       </div>
       <span className={styles.systemIcon} role="img" aria-label={t('Rede')} title={t('Rede')}><Win7Icon name="network" size={16} /></span>
       <span className={styles.systemIcon} role="img" aria-label={t('Central de Ações')} title={t('Central de Ações')}><Win7Icon name="notifications" size={16} /></span>
+      <VolumeControl />
       <div className={styles.clock} title={clock.full}><time>{clock.time}</time><span>{clock.date}</span></div>
     </div>
-    <button type="button" className={styles.showDesktop} aria-label={t('Mostrar área de trabalho')} title={t('Mostrar área de trabalho')} onClick={onShowDesktop} />
+    <button type="button" className={styles.showDesktop} data-show-desktop aria-label={t('Mostrar área de trabalho')} title={t('Mostrar área de trabalho')} onClick={onShowDesktop} />
   </footer>;
 }

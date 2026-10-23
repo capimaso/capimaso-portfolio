@@ -1,6 +1,8 @@
 /** Single source of truth for interface translations; English is the initial language. */
 export type Language = 'en' | 'pt';
 export const translations: Record<string,string> = {
+ 'Volume':'Volume',
+ 'Volume do sistema':'System volume',
  'Personalizar':'Personalization',
  'Som':'Sound',
  'Pesquisar Painel de Controle':'Search Control Panel',

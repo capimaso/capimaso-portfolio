@@ -1,0 +1,15 @@
+.volume { position: relative; align-self: stretch; display: flex; align-items: center; }
+.volume .trayButton { display: grid; place-items: center; width: 26px; height: 100%; min-width: 26px; padding: 0; color: #fff; border: 1px solid transparent; border-radius: 2px; background: transparent; box-shadow: none; }
+.volume .trayButton::before, .volume .trayButton::after, .volume .muteButton::before, .volume .muteButton::after { content: none; }
+.volume .trayButton:hover, .volume .trayButton[aria-expanded='true'] { background-color: #ffffff30; border-color: #ffffff65; }
+.volume .flyout { position: absolute; inset: auto -27px calc(100% + 5px) auto; z-index: 1002; width: 84px; height: 228px; padding: 6px; border-radius: 7px; opacity: 1; visibility: visible; transform: none; box-shadow: 0 5px 16px #0009; }
+.interior { height: 100%; display: flex; flex-direction: column; align-items: center; gap: 9px; padding: 10px 5px; border: 1px solid #7b8793; background: #fff; color: #222; }
+.interior output { font-size: 11px; line-height: 12px; }
+.volume input[type='range'] { writing-mode: vertical-lr; direction: rtl; appearance: none; -webkit-appearance: none; width: 20px; height: 138px; min-height: 0; margin: 0; padding: 0; border: 0; box-shadow: none; background: transparent; cursor: pointer; }
+.volume input[type='range']::-webkit-slider-runnable-track { width: 5px; height: 100%; background: linear-gradient(90deg, #aab0b5, #fff); border: 1px solid #c9cdd0; }
+.volume input[type='range']::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 11px; margin-left: -7px; border: 1px solid #8b949b; border-radius: 2px; background: linear-gradient(#fff, #e7e9eb 48%, #ced5da 50%, #f3f5f7); box-shadow: inset 0 0 0 1px #fff; }
+.volume input[type='range']::-moz-range-track { width: 5px; height: 100%; background: linear-gradient(90deg, #aab0b5, #fff); border: 1px solid #c9cdd0; }
+.volume input[type='range']::-moz-range-thumb { width: 18px; height: 10px; border: 1px solid #8b949b; border-radius: 2px; background: linear-gradient(#fff, #d5dce1); }
+.volume .muteButton { display: grid; place-items: center; width: 26px; min-width: 26px; height: 25px; padding: 0; border: 1px solid transparent; border-radius: 2px; box-shadow: none; background: transparent; color: #138ede; }
+.volume .muteButton:hover { background-color: #e4f2fd; border-color: #b3d3ec; }
+@media (max-width: 719px) { .volume .trayButton { width: 28px; min-width: 28px; } }
