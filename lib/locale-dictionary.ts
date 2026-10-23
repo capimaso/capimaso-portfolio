@@ -1,6 +1,10 @@
 /** Single source of truth for interface translations; English is the initial language. */
 export type Language = 'en' | 'pt';
 export const translations: Record<string,string> = {
+ 'Tela de boas-vindas do Windows 7':'Windows 7 welcome screen',
+ 'Senha':'Password',
+ 'Entrar':'Sign in',
+ 'Portfólio público. Nenhuma senha é necessária.':'Public portfolio. No password is required.',
  'Pastas do Drive':'Drive folders',
  'Carregando pastas...':'Loading folders...',
  'Calculadora':'Calculator',

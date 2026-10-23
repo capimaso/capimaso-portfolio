@@ -11,9 +11,11 @@ import WindowManager from './WindowManager';
 import { useWindowManager } from './useWindowManager';
 import styles from './win7.module.css';
 import type { PhotoSelection } from '@/src/lib/photos';
+import Logon from './Logon';
 
 export default function Win7Desktop() {
   const [language, setLanguage] = useState<Language>('en');
+  const [entered, setEntered] = useState(false);
   useEffect(() => {
     try {
       const saved = localStorage.getItem('capimaso-xp-language');
@@ -26,7 +28,8 @@ export default function Win7Desktop() {
     setLanguage(next);
     try { localStorage.setItem('capimaso-xp-language', next); } catch {}
   }
-  return <LanguageProvider language={language}><Desktop onLanguage={changeLanguage} /></LanguageProvider>;
+  return <LanguageProvider language={language}>{entered ? <Desktop onLanguage={changeLanguage} />
+    : <Logon onEnter={() => setEntered(true)} onLanguage={changeLanguage} />}</LanguageProvider>;
 }
 
 function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {

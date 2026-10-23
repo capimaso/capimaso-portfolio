@@ -2,6 +2,10 @@
 
 ## Disponíveis
 
+- `wallpapers/desktop-logo.jpg`: cópia binária exata do `harmony.jpg` recebido
+  (que já contém o logo gigante). O arquivo solicitado não estava no checkout;
+  nenhum wallpaper diferente foi fabricado. Logon usa Harmony, desktop usa a cópia.
+
 - `public/assets/win7/icons/`: 561 ICO recebidos; preservar nomes e estrutura.
 - `Games/Solitaire_108.ico` e `Games/PurblePlace_102.ico`: presentes.
 - Categorias de pastas, bibliotecas e sistema: presentes; mapear após inspeção.

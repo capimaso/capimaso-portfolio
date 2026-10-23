@@ -1,5 +1,13 @@
 # Windows 7 — Google Drive — 22/10/2026
 
+## Auditoria final — Logon
+
+- `/win7` apresenta boas-vindas com Harmony, avatar real, CAPIMASO e entrada por
+  Enter/seta. Campo visual opcional: não é lido, armazenado ou enviado; formulário
+  é limpo na entrada. Idiomas EN/PT e mobile mantidos.
+- Desktop usa desktop-logo.jpg: cópia exata do wallpaper oficial Harmony já
+  disponível, pois o caminho solicitado estava ausente. Origem em ASSETS_NEEDED.md.
+
 ## Base visual 7.css — refatoração incremental
 
 - Validação final em docs/WIN7-REFACTOR-VERIFICATION.md: 22 testes automatizados,
