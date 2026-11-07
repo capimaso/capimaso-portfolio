@@ -5,6 +5,7 @@ export interface SystemSounds {
   enable(): void; play(name: Win7Sound): void; dispose(): void;
   getMuted(): boolean; setMuted(muted: boolean): void; subscribe(listener: () => void): () => void;
   getVolume(): number; setVolume(volume: number): void;
+  getStartupBlocked(): boolean;
 }
 
 export class SoundManager implements SystemSounds {
@@ -20,8 +21,13 @@ export class SoundManager implements SystemSounds {
 
   enable() {
     this.enabled = true;
-    if (this.pendingStartup) { this.pendingStartup = false; this.play('startup'); }
+    if (this.pendingStartup) {
+      this.pendingStartup = false;
+      for (const listener of this.listeners) listener();
+      this.play('startup');
+    }
   }
+  getStartupBlocked = () => this.pendingStartup;
   getMuted = () => this.muted;
   getVolume = () => this.volume;
   setVolume(volume: number) {
@@ -62,8 +68,16 @@ export class SoundManager implements SystemSounds {
       }
       audio.pause(); audio.currentTime = 0;
       // Missing files, decode failures and autoplay denial never interrupt the UI.
-      void audio.play().catch(() => {
-        if (name === 'startup' && !this.enabled && this.audio.get(name) === audio) this.pendingStartup = true;
+      void audio.play().then(() => {
+        if (name === 'startup' && this.pendingStartup && this.audio.get(name) === audio) {
+          this.pendingStartup = false;
+          for (const listener of this.listeners) listener();
+        }
+      }, () => {
+        if (name === 'startup' && this.audio.get(name) === audio) {
+          this.pendingStartup = true;
+          for (const listener of this.listeners) listener();
+        }
       });
     } catch { /* Silent fallback, including browsers without media support. */ }
   }

@@ -13,17 +13,29 @@ npm install
 npm run dev
 ```
 
-- [Portfólio](http://localhost:3000/): logon público e desktop Win7.
+- [Portfólio](http://localhost:3000/): inicialização Win7, logon público e desktop.
 - [Estúdio local](http://localhost:3000/studio): disponível somente em desenvolvimento.
 - `/xp` e `/win7`: redirecionamentos permanentes para `/`, preservando consultas.
 
-A BIOS e o seletor de sistemas foram retirados da experiência pública. O logon
+A BIOS e o seletor de sistemas foram retirados da experiência pública. A tela
+Win7 tenta tocar o startup ao abrir a página, antes do logon. Se o navegador
+bloquear áudio automático, “Iniciar com som” ou a primeira interação libera a
+tentativa; não há garantia de som sem clique em todos os navegadores.
+Veja a [política de autoplay do Chrome](https://developer.chrome.com/blog/autoplay/).
+O vídeo real de boot aguarda o proprietário: configure uma URL HTTPS direta em
+[data/win7-startup.ts](data/win7-startup.ts), sem binários no Git. Até lá, há
+uma tela preta com Orb original, duração limitada e opção de pular. O vídeo
+inicia mudo e usa o som original separado; erro/fim/timeout liberam o logon.
+
+O logon
 não exige senha; seu campo visual não é enviado ou armazenado. Enter ou a seta
 abre o desktop após a transição de 700 ms. Reiniciar no Iniciar recarrega a
-entrada e volta ao logon, preservando preferências do navegador.
+entrada e repete a inicialização, preservando preferências do navegador.
 
 ## Conteúdo e navegação
 
+- **Imagens:** pasta do desktop com o ícone de biblioteca de imagens. Dentro
+  ficam **Fotografias** e **Thumbnails**, com breadcrumbs para voltar à raiz.
 - **Fotografias:** Explorer com pastas reais do Drive, histórico, breadcrumbs,
   miniaturas e paginação. Photo Viewer tem anterior/próximo, zoom e download.
 - **Vídeos:** pastas de curtos (9:16) e longos (16:9). WMP12 Em reprodução usa
@@ -153,6 +165,10 @@ o portfólio e exclui Estúdio/APIs do rastreamento; `/sitemap.xml` lista só `/
 As rotas antigas continuam redirecionando e o Estúdio permanece local.
 
 Configure as variáveis do Drive no servidor de destino quando usar fotografias.
+Se a produção retornar `not_configured` em `/api/photos`, defina
+`GOOGLE_DRIVE_API_KEY` e `DRIVE_FOLDER_ID` no projeto Vercel em Settings →
+Environment Variables → Production e faça Redeploy. O arquivo local não é
+enviado à Vercel nem deve ser incluído no Git. Nunca envie a chave no chat.
 Nenhum deploy é executado automaticamente.
 
 `predev` e `prebuild` recuperam imagens originais ausentes, sem sobrescrever as

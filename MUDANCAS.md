@@ -1,3 +1,32 @@
+## Ajustes de Imagens, títulos e inicialização — 07/11/2026
+
+- Desktop e Iniciar reorganizados com Imagens, usando o ícone original da
+  biblioteca antes usado por Thumbnails. Dentro ficam Fotografias e Thumbnails;
+  breadcrumbs e Voltar retornam ao pai, mantendo janelas, IDs e dados existentes.
+  Thumbnails passa a usar um ícone original de pasta para distinguir a filha
+  da biblioteca Imagens.
+- Removido o text-shadow branco repetido do 7.css nos nomes das janelas, que
+  aparecia como uma faixa clara recortada atrás do texto. Vidro e controles mantidos.
+- Nova fase de inicialização Win7 antes do logon, com fallback preto/Orb original,
+  botão de pular e duração limitada. `data/win7-startup.ts` está preparado para
+  o vídeo HTTPS real, ainda não recebido. Nenhum vídeo local inventado/adicionado.
+- Startup tenta tocar ao abrir a fase de boot; rejeição do navegador é observável
+  e oferece Iniciar com som antes do login. A primeira interação repete a tentativa;
+  login não repete startup já liberado. Não se promete áudio sem gesto em todos
+  os navegadores: https://developer.chrome.com/blog/autoplay/.
+- Diagnóstico de fotos: API local responde 200 com três pastas, mas produção
+  responde 503 `not_configured`. É necessário configurar variáveis Drive na
+  Vercel e refazer deploy. Página de configuração aberta, mas exige login do
+  proprietário; nenhuma chave foi exibida ou enviada ao Git.
+- Curtos: nova prova pública obteve HTML em três links e resposta 206/MP4 em
+  dois, porém ambos falharam no teste de reprodução nativa no navegador.
+  Drive `/preview` foi preservado; controles externos continuam dependendo de
+  uma fonte real controlável. Não foram criados botões falsos nem extraídos streams.
+- Check, build, typecheck e 32 testes de janelas/sons/player aprovados. Edge em
+  EN/PT e 1440/375 px conferiu hierarquia, retorno ao pai, fotos locais e títulos.
+  Startup tocou antes do logon no cenário com autoplay permitido; bloqueio
+  simulado mostrou Iniciar com som e liberou o áudio sem precisar entrar no desktop.
+
 ## Nome, Orb e edição simples das capas — 07/11/2026
 
 - Título público da aba e compartilhamento alterado para `capimaso`.

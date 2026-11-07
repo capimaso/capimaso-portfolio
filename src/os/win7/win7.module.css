@@ -240,7 +240,7 @@
 .window[hidden] { display: none; }
 .maximized { --w7-w-bdr: 0px; border-radius: 0; border: 0; }
 .titlebar { height: 29px; flex: 0 0 29px; min-width: 0; touch-action: none; cursor: url('/assets/win7/cursor/Move.cur'), move; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
-.windowTitle { display: flex; align-items: center; gap: 5px; flex: 1; min-width: 0; padding-top: 0; }
+.windowTitle { display: flex; align-items: center; gap: 5px; flex: 1; min-width: 0; padding-top: 0; text-shadow: none; background: transparent; }
 .windowTitle > span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .windowTitle img { flex-shrink: 0; }
 .windowButtons {

@@ -17,6 +17,7 @@ import type { Win7Sound } from '@/src/lib/win7-sounds';
 import DesktopSettingsProvider, { useDesktopSettings } from './DesktopSettings';
 import { useDesktopSelection } from './useDesktopSelection';
 import MediaCatalogProvider, { type MediaCatalog, type MediaSelection } from './MediaCatalog';
+import Startup from './Startup';
 
 export default function Win7Desktop({ availableSounds = [], catalog }: { availableSounds?: Win7Sound[]; catalog: MediaCatalog }) {
   const [language, setLanguage] = useState<Language>('en');
@@ -38,13 +39,23 @@ export default function Win7Desktop({ availableSounds = [], catalog }: { availab
 }
 
 function Session({ onLanguage }: { onLanguage: (language: Language) => void }) {
-  const [phase, setPhase] = useState<'logon' | 'loading' | 'desktop'>('logon');
+  const [phase, setPhase] = useState<'boot' | 'logon' | 'loading' | 'desktop'>('boot');
   const sounds = useSoundManager();
   const t = useT();
   const loading = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (phase === 'logon') sounds.play('startup');
+    if (phase === 'boot') sounds.play('startup');
   }, [phase, sounds]);
+  const finishBoot = useCallback(() => setPhase('logon'), []);
+  useEffect(() => {
+    const unlock = () => sounds.enable();
+    document.addEventListener('pointerdown', unlock, { capture: true });
+    document.addEventListener('keydown', unlock, { capture: true });
+    return () => {
+      document.removeEventListener('pointerdown', unlock, { capture: true });
+      document.removeEventListener('keydown', unlock, { capture: true });
+    };
+  }, [sounds]);
   useEffect(() => {
     if (phase !== 'loading') return;
     loading.current?.focus({ preventScroll: true });
@@ -54,6 +65,7 @@ function Session({ onLanguage }: { onLanguage: (language: Language) => void }) {
     return () => window.clearTimeout(timer);
   }, [phase]);
 
+  if (phase === 'boot') return <Startup onComplete={finishBoot} />;
   if (phase === 'loading') return <div ref={loading} className={styles.logonTransition} data-win7-loading
     role="status" aria-label={t('Carregando...')} aria-busy="true" tabIndex={-1} />;
   return phase === 'desktop' ? <DesktopSettingsProvider><Desktop onLanguage={onLanguage} /></DesktopSettingsProvider> : <Logon onLanguage={onLanguage} onEnter={() => {

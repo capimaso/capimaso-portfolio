@@ -2,7 +2,7 @@
 
 ## Entradas atuais
 
-- `/`: logon público e desktop Win7, composto por [app/page.tsx](../app/page.tsx).
+- `/`: inicialização, logon público e desktop Win7, composto por [app/page.tsx](../app/page.tsx).
 - `/xp` e `/win7`: redirecionamentos permanentes para `/` em
   [next.config.ts](../next.config.ts). Não recriar páginas concorrentes.
 - `/studio`: formulário local Win7, só em desenvolvimento. Página 404 em produção;
@@ -66,7 +66,11 @@ preservados. Não inventar câmera/lente: a aba Equipamento fica oculta sem dado
 `MediaCatalog.introduction` mantém a introdução separada dos trabalhos e abre
 `intro` no WMP12 com uma lista própria. Contato preserva ambos os Instagrams.
 
-`MediaExplorer.tsx` oferece Vídeos/curtos/longos e Thumbnails, com superfícies do
+Desktop oferece Imagens (ícone antes usado por Thumbnails) e Vídeos; Fotografias
+e Thumbnails são janelas filhas acessíveis pela pasta Imagens e pela busca.
+Preservar IDs `photos`/`thumbnails` e o estado existente ao navegar pelo pai.
+Títulos das janelas removem o text-shadow branco repetido da base 7.css.
+`MediaExplorer.tsx` oferece Imagens, Vídeos/curtos/longos e Thumbnails, com superfícies do
 Explorer. Catálogo e galeria são lidos no servidor e passados por `MediaCatalog`;
 não importar filesystem no cliente. Thumbnails lê `public/images/thumbs/`.
 Capas novas ficam em `public/images/posters/`; não mover arquivos anteriores.
@@ -95,8 +99,13 @@ renomeá-la sem migração perde a preferência dos visitantes. Esse nome não
 significa dependência da interface antiga.
 
 SoundManager é global no desktop. Sons originais mapeados em `src/lib/sounds-map.ts`;
-servidor anuncia só os existentes. Startup tenta tocar no logon e repete na
-interação se bloqueado; não tocar startup novamente ao montar desktop.
+servidor anuncia só os existentes. Startup tenta tocar na fase `boot` antes do
+logon, com sinal observável de bloqueio e botão Iniciar com som na tela de boot.
+A primeira interação também repete a tentativa bloqueada; não tocar startup
+novamente ao montar desktop. Não prometer contornar a política de autoplay.
+`Startup.tsx` aceita o vídeo HTTPS de `data/win7-startup.ts` (ainda vazio até
+receber o recurso real), com fallback visual, pular, erro/fim/timeout e movimento
+reduzido. Sem BIOS ou seletor de sistemas, e sem binários de vídeo no Git.
 Volume inicial 80%, mute compartilhado com Painel de Controle e Ding após ajuste
 da bandeja. Ausência/falha/autoplay bloqueado permanecem silenciosos. Novos sons
 exigem reiniciar dev/rebuild. O volume/mute da bandeja é o master: no YouTube,

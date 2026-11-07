@@ -118,7 +118,7 @@ export default function StartMenu({ open, onOpen, onBrowse, onClose }: { open: b
         <span className={styles.previewIcon} aria-hidden="true"><Win7Icon name={previewIcon} size={64} /></span>
       </div>
       <strong className={styles.userName}>{profile.name}</strong>
-      {(['photos', 'videos', 'thumbnails', 'about', 'contact', 'controlPanel'] as const).map(id => <button type="button" key={id} {...previewEvents(id)} onClick={() => onOpen(id)}>
+      {(['images', 'videos', 'about', 'contact', 'controlPanel'] as const).map(id => <button type="button" key={id} {...previewEvents(id)} onClick={() => onOpen(id)}>
         {t(applications.find(app => app.id === id)!.label)}
       </button>)}
       <div className={styles.startSeparator} />

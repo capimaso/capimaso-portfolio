@@ -1,5 +1,16 @@
 # WMP12 — prova de fonte de reprodução — 06/11/2026
 
+## Nova prova dos curtos — 07/11/2026
+
+Novo pedido Range encontrou 206/video-mp4 em Dono da Bublitz e Investiu MKT,
+enquanto Scarface, Stefany e Corte PIB retornaram HTML. Em contexto novo do
+Edge, os dois candidatos não carregaram metadados em 30 segundos e não
+passaram na prova de reprodução/seek. Portanto nenhum foi promovido a fonte
+`<video>`. As fontes e os embeds originais foram preservados; WMP nativo nos
+curtos aguarda URLs controláveis reais (ou links equivalentes no YouTube).
+Esse resultado substitui qualquer interpretação de que 206, sozinho, comprova
+reprodução no navegador. Nenhum binário foi salvo, e nenhuma credencial foi usada.
+
 ## Volume geral e individual — 06/11/2026
 
 O WMP12 aplica volume geral da bandeja × volume individual via `setVolume`

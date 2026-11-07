@@ -101,13 +101,27 @@ test('volume changes reach cached and new sounds, clamp range, and respect mute'
   manager.setVolume(NaN); assert.equal(manager.getVolume(), 0);
 });
 
-test('welcome startup attempts autoplay and retries a rejected attempt on entry only', async () => {
+test('startup attempts autoplay and exposes a blocked attempt for the first interaction', async () => {
   const { manager, tracks } = fixture(['startup', 'logon'], true);
   manager.play('startup'); manager.play('logon'); assert.equal(tracks.length, 1);
   await new Promise(resolve => setImmediate(resolve));
+  assert.equal(manager.getStartupBlocked(), true);
   manager.enable(); assert.equal(tracks[0].plays, 2);
+  assert.equal(manager.getStartupBlocked(), false);
   manager.enable(); assert.equal(tracks[0].plays, 2);
   manager.dispose();
+});
+
+test('a browser rejection after interaction remains retryable and disposal ignores late failures', async () => {
+  const { manager, tracks } = fixture(['startup'], true);
+  let changes = 0; manager.subscribe(() => { changes++; });
+  manager.enable(); manager.play('startup');
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(manager.getStartupBlocked(), true); assert.equal(changes, 1);
+  manager.enable(); assert.equal(tracks[0].plays, 2);
+  manager.dispose();
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(manager.getStartupBlocked(), false);
 });
 
 test('absent root files stay silent; themes and directories are not mistaken for mapped audio', async () => {

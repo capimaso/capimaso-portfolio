@@ -83,12 +83,13 @@ export default function Explorer({ onOpen, onView, initialTrail }: Props) {
   return <div className={styles.explorer} data-photo-explorer>
     <div className={styles.photoAddressBar}>
       <div className={styles.historyButtons}>
-        <button type="button" disabled={position === 0} onClick={() => step(-1)} aria-label={t('Voltar')} title={t('Voltar')}>←</button>
+        <button type="button" onClick={() => position === 0 ? onOpen('images') : step(-1)} aria-label={t('Voltar')} title={t('Voltar')}>←</button>
         <button type="button" disabled={position === history.length - 1} onClick={() => step(1)} aria-label={t('Avançar')} title={t('Avançar')}>→</button>
       </div>
       <div className={styles.addressField}>
       <nav className={styles.breadcrumbs} aria-label={t('Endereço')}>
         <Win7Icon name="photos" size={16} />
+        <button type="button" onClick={() => onOpen('images')}>{t('Imagens')}</button><span aria-hidden="true">›</span>
         {!trail.length && <span>{t('Fotografias')}</span>}
         {trail.map((folder, index) => <span key={folder.id}>
           {index > 0 && <span aria-hidden="true">›</span>}
@@ -107,6 +108,7 @@ export default function Explorer({ onOpen, onView, initialTrail }: Props) {
     <div className={styles.explorerColumns}>
       <nav className={`has-scrollbar ${styles.explorerSidebar}`} aria-label={t('Outros lugares')}>
         <strong>{t('Favoritos')}</strong>
+        <button type="button" onClick={() => onOpen('images')}><Win7Icon name="images" size={16} />{t('Imagens')}</button>
         <button type="button" onClick={() => navigate({ trail: [] })}><Win7Icon name="photos" size={16} />{t('Fotografias')}</button>
         <button type="button" onClick={() => onOpen('about')}><Win7Icon name="about" size={16} />{t('Meu perfil')}</button>
         <button type="button" onClick={() => onOpen('contact')}><Win7Icon name="contact" size={16} />{t('Contato')}</button>

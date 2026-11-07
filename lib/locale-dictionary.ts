@@ -1,6 +1,10 @@
 /** Single source of truth for interface translations; English is the initial language. */
 export type Language = 'en' | 'pt';
 export const translations: Record<string,string> = {
+ 'Imagens':'Pictures',
+ 'Iniciando o Windows':'Starting Windows',
+ 'Pular inicialização':'Skip startup',
+ 'Iniciar com som':'Start with sound',
  'Fotografia, edição de vídeo e thumbnails em uma área de trabalho Windows 7.':'Photography, video editing and thumbnails on a Windows 7 desktop.',
  'Vídeo curto':'Short video',
  'Meu perfil':'My profile',

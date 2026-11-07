@@ -12,10 +12,10 @@ import styles from '../win7.module.css';
 import mediaStyles from './media.module.css';
 
 type Folder = 'videos' | 'short' | 'long';
-type Entry = { id: string; label: string; folder?: Folder; selection?: MediaSelection; poster?: string; portrait?: boolean };
+type Entry = { id: string; label: string; app?: 'photos' | 'thumbnails'; folder?: Folder; selection?: MediaSelection; poster?: string; portrait?: boolean };
 
 export default function MediaExplorer({ id, onOpen, onMedia }: {
-  id: 'videos' | 'thumbnails'; onOpen: (id: AppId) => void; onMedia: (selection: MediaSelection) => void;
+  id: 'images' | 'videos' | 'thumbnails'; onOpen: (id: AppId) => void; onMedia: (selection: MediaSelection) => void;
 }) {
   const t = useT();
   const sounds = useSoundManager();
@@ -24,8 +24,11 @@ export default function MediaExplorer({ id, onOpen, onMedia }: {
   const [position, setPosition] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const folder = history[position];
-  const title = id === 'thumbnails' ? 'Thumbnails' : folder === 'short' ? 'Vídeos curtos' : folder === 'long' ? 'Vídeos longos' : 'Vídeos';
-  const entries: Entry[] = id === 'thumbnails'
+  const title = id === 'images' ? 'Imagens' : id === 'thumbnails' ? 'Thumbnails' : folder === 'short' ? 'Vídeos curtos' : folder === 'long' ? 'Vídeos longos' : 'Vídeos';
+  const entries: Entry[] = id === 'images' ? [
+    { id: 'photos', label: 'Fotografias', app: 'photos' },
+    { id: 'thumbnails', label: 'Thumbnails', app: 'thumbnails' },
+  ] : id === 'thumbnails'
     ? thumbnails.map(image => ({ id: image.src, label: image.name, poster: image.src, selection: { kind: 'thumbnail', src: image.src } }))
     : folder === 'videos' ? [
       { id: 'short', label: 'Vídeos curtos', folder: 'short' },
@@ -39,18 +42,20 @@ export default function MediaExplorer({ id, onOpen, onMedia }: {
   }
   function step(delta: number) { setPosition(current => current + delta); setSelected(null); sounds.play('navigation'); }
   function activate(entry: Entry) {
-    if (entry.folder) navigate(entry.folder);
+    if (entry.app) onOpen(entry.app);
+    else if (entry.folder) navigate(entry.folder);
     else if (entry.selection) onMedia(entry.selection);
   }
 
   return <div className={styles.explorer} data-media-explorer={id}>
     <div className={styles.photoAddressBar}>
       <div className={styles.historyButtons}>
-        <button type="button" disabled={id === 'thumbnails' || position === 0} onClick={() => step(-1)} aria-label={t('Voltar')}>←</button>
-        <button type="button" disabled={id === 'thumbnails' || position === history.length - 1} onClick={() => step(1)} aria-label={t('Avançar')}>→</button>
+        <button type="button" disabled={id !== 'thumbnails' && (id !== 'videos' || position === 0)} onClick={() => id === 'thumbnails' ? onOpen('images') : step(-1)} aria-label={t('Voltar')}>←</button>
+        <button type="button" disabled={id !== 'videos' || position === history.length - 1} onClick={() => step(1)} aria-label={t('Avançar')}>→</button>
       </div>
       <div className={styles.addressField}><nav className={styles.breadcrumbs} aria-label={t('Endereço')}>
         <Win7Icon name={id} size={16} /><span>CAPIMASO</span><span aria-hidden="true">›</span>
+        {id === 'thumbnails' && <><button type="button" onClick={() => onOpen('images')}>{t('Imagens')}</button><span aria-hidden="true">›</span></>}
         {id === 'videos' && folder !== 'videos' ? <>
           <button type="button" onClick={() => navigate('videos')}>{t('Vídeos')}</button><span aria-hidden="true">›</span>
         </> : null}
@@ -64,15 +69,15 @@ export default function MediaExplorer({ id, onOpen, onMedia }: {
         <h1>{t(title)}</h1>
         <div className={`${styles.photosGrid} ${mediaStyles.grid}`}>
           {entries.map(entry => <button type="button" key={entry.id} data-media-item={entry.id}
-            className={styles.photoEntry} aria-pressed={selected === entry.id} title={entry.label}
+            className={styles.photoEntry} aria-pressed={selected === entry.id} title={entry.app ? t(entry.label) : entry.label}
             onClick={event => {
               setSelected(entry.id);
               if (event.detail > 0 && (window.innerWidth < 720 || window.matchMedia('(pointer: coarse)').matches)) activate(entry);
             }} onDoubleClick={() => activate(entry)}
             onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); activate(entry); } }}>
-            {entry.folder ? <span className={styles.folderThumbnail}><Win7Icon name="folder" size={64} /></span>
+            {entry.folder || entry.app ? <span className={styles.folderThumbnail}><Win7Icon name={entry.app || 'folder'} size={64} /></span>
               : <MediaPoster src={entry.poster} portrait={entry.portrait} />}
-            <span>{entry.label}</span>
+            <span>{entry.app ? t(entry.label) : entry.label}</span>
           </button>)}
         </div>
         {!entries.length && <p className={styles.emptyLibrary}>{t('Esta pasta está vazia.')}</p>}

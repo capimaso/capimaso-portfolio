@@ -19,7 +19,14 @@ Read this file FIRST when editing this repository, even without prior chat conte
 5. Video short = Google Drive file link with embedded `/preview` player; long = YouTube URL; intro = `data/media.ts`. Do not add local video binaries.
 
 ## Architecture
-- `/` opens the Win7 public logon and desktop in `src/os/win7/`, isolated with CSS Modules.
+- `/` opens Win7 startup, public logon and desktop in `src/os/win7/`, isolated with CSS Modules.
+  `Startup.tsx` uses the optional real HTTPS video in `data/win7-startup.ts`;
+  no boot video has been provided yet. Keep skip, timeout and visual fallback.
+  Attempt the original startup sound before login; blocked autoplay requires a
+  user gesture and must never be claimed to work without interaction everywhere.
+- Desktop Pictures (`images`) contains Photography (`photos`) and Thumbnails
+  (`thumbnails`). Preserve their IDs, assets and state; do not put both children
+  back on the desktop. The Pictures icon reuses the original thumbnails library icon.
 - `/xp` and `/win7` are permanent server redirects to `/` in `next.config.ts`.
 - Public origin uses server-side `SITE_URL` before build. `data/site.ts` and
   `lib/site-metadata.ts` define home sharing metadata; canonical/social image
@@ -81,7 +88,7 @@ Read this file FIRST when editing this repository, even without prior chat conte
 - Wallpapers Win7: `src/os/win7/DesktopSettings.tsx`, chave `capimaso-win7-wallpaper`; imagens do navegador não são conteúdo público.
 - Player deve preservar proporção 16:9 / 9:16. YouTube mantém autoplay mudo; Google Drive inicia pelo controle do próprio player, sem autoplay forçado.
 - Ícones e cursores Win7 são originais de `public/assets/win7/`. Manter CSS scoped e CSS Modules; não importar o reset global do 7.css.
-- Reiniciar usa navegação de documento para `/`, voltando ao logon mesmo quando já estiver na raiz.
+- Reiniciar usa navegação de documento para `/`, repetindo a inicialização e voltando ao logon mesmo quando já estiver na raiz.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

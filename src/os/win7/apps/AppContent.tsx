@@ -21,7 +21,7 @@ export default function AppContent({ id, onOpen, onView, selection, folder, medi
   const t = useT();
   const sounds = useSoundManager();
   const [notice, setNotice] = useState('');
-  if (id === 'videos' || id === 'thumbnails') return <MediaExplorer id={id} onOpen={onOpen} onMedia={onMedia} />;
+  if (id === 'images' || id === 'videos' || id === 'thumbnails') return <MediaExplorer id={id} onOpen={onOpen} onMedia={onMedia} />;
   if (id === 'videoPlayer') return <VideoPlayer id={media?.kind === 'video' ? media.id : undefined} onMedia={onMedia} />;
   if (id === 'thumbnailViewer') return <ThumbnailViewer key={media?.kind === 'thumbnail' ? media.src : ''} src={media?.kind === 'thumbnail' ? media.src : undefined} onMedia={onMedia} />;
   if (id === 'controlPanel') return <ControlPanel />;

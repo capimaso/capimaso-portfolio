@@ -1,12 +1,13 @@
 const icon = (group: string, file: string) => `/assets/win7/icons/${encodeURIComponent(group)}/${encodeURIComponent(file)}.ico`;
 
 export const win7Assets = {
+  images: icon('Libraries', 'imageres_1003'),
   controlPanel: icon('Control Panel', 'imageres_27'),
   personalization: icon('Filetypes, Devices, Miscellaneous', 'imageres_151'),
   sound: icon('Filetypes, Devices, Miscellaneous', 'audiosrv_203'),
   photos: icon('Special Folders', 'imageres_113'),
   videos: icon('Libraries', 'imageres_1005'),
-  thumbnails: icon('Libraries', 'imageres_1003'),
+  thumbnails: icon('Standard Folders', 'imageres_3'),
   videoPlayer: icon('Windows Media Player', 'player'),
   thumbnailViewer: icon('Libraries', 'imageres_1003'),
   folder: icon('Standard Folders', 'imageres_3'),

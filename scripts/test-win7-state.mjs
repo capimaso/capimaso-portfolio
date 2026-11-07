@@ -144,7 +144,8 @@ test('program search matches bilingual names, accents and aliases without adding
   const t = label => ({ Calculadora: 'Calculator', 'Bloco de notas': 'Notepad', Fotografias: 'Photographs' })[label] || label;
   for (const query of ['calc', 'Calculadora', 'calculator']) assert.equal(searchPrograms(query, t)[0].id, 'calculator');
   for (const query of ['NOTEPAD', 'bloco de notas', 'texto']) assert.equal(searchPrograms(query, t)[0].id, 'notepad');
-  for (const query of ['fotógrafias', 'bibliotecas', 'photos']) assert.equal(searchPrograms(query, t)[0].id, 'photos');
+  for (const query of ['fotógrafias', 'photos']) assert.equal(searchPrograms(query, t)[0].id, 'photos');
+  for (const query of ['imagens', 'pictures', 'bibliotecas']) assert.equal(searchPrograms(query, t)[0].id, 'images');
   assert.equal(searchPrograms('', t).some(app => app.id === 'calculator'), false);
   assert.equal(searchPrograms('', t, true).some(app => app.id === 'calculator'), true);
   assert.deepEqual(searchPrograms('nonexistent program', t, true), []);

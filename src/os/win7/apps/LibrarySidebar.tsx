@@ -6,6 +6,7 @@ import Win7Icon from '../Win7Icon';
 import styles from '../win7.module.css';
 
 const places = [
+  { id: 'images', label: 'Imagens' },
   { id: 'photos', label: 'Fotografias' },
   { id: 'videos', label: 'Vídeos' },
   { id: 'thumbnails', label: 'Thumbnails' },

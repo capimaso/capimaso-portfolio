@@ -4,9 +4,13 @@ import { createContext, useContext, useEffect, useRef, useSyncExternalStore, typ
 import type { Win7Sound } from '@/src/lib/win7-sounds';
 import { SoundManager, type SystemSounds } from './sound-manager';
 
-const silent: SystemSounds = { enable() {}, play() {}, dispose() {}, getMuted: () => false, setMuted() {}, getVolume: () => .8, setVolume() {}, subscribe: () => () => {} };
+const silent: SystemSounds = { enable() {}, play() {}, dispose() {}, getMuted: () => false, setMuted() {}, getVolume: () => .8, setVolume() {}, getStartupBlocked: () => false, subscribe: () => () => {} };
 const SoundContext = createContext<SystemSounds>(silent);
 export const useSoundManager = () => useContext(SoundContext);
+export function useStartupBlocked() {
+  const sounds = useSoundManager();
+  return useSyncExternalStore(sounds.subscribe, sounds.getStartupBlocked, () => false);
+}
 export function useSystemMuted() {
   const sounds = useSoundManager();
   return useSyncExternalStore(sounds.subscribe, sounds.getMuted, () => false);
