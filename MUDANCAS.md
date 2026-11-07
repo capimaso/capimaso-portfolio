@@ -1,3 +1,347 @@
+## Preparação do deploy na main — 07/11/2026
+
+- Publicação autorizada pelo proprietário pelo fluxo Git/Vercel já existente.
+  Migração Win7, biblioteca de mídia, WMP12, volume geral/individual, perfil,
+  Estúdio local e metadados reunidos para integração à main, preservando dados.
+- Next.js atualizado de 16.3.6 para 16.4.5 após a auditoria indicar correções
+  necessárias. Instalação final com zero vulnerabilidades reportadas pelo npm.
+  Referência: https://github.com/advisories/GHSA-673q-mjm6-r5xr.
+- Endereço público confirmado no repositório GitHub:
+  https://capimaso-portfolio.vercel.app. Segredos permanecem fora do Git;
+  recursos binários locais sem uso não são incluídos nem apagados.
+- Rastreamento do servidor limitado aos sons originais da raiz usados pela
+  home; eliminada a inclusão indiscriminada do projeto na análise Turbopack.
+- Check, 46 testes, build e typecheck aprovados com Next.js 16.4.5, sem os
+  avisos de rastreamento abrangente. Somente os assets usados foram preparados
+  para versionamento; referências e recursos locais restantes preservados.
+
+## Preparação para publicação — metadados e domínio — 06/11/2026
+
+- Origem pública configurável por `SITE_URL` antes do build, sem domínio
+  inventado ou fallback localhost. Sem configuração, a home funciona e omite
+  canonical, imagens de compartilhamento e URLs do sitemap. URL inválida dá
+  erro claro sem imprimir seu valor. Nenhuma alteração em `.env.local`.
+- Identidade de compartilhamento centralizada em `data/site.ts`. Título e
+  descrição alinhados na home, Open Graph e Twitter, com idioma inicial EN e
+  texto no dicionário. Compartilhamento reutiliza o wallpaper Win7 original.
+- `/robots.txt` permite a home e exclui Estúdio/APIs. `/sitemap.xml` inclui
+  somente a raiz quando o domínio estiver configurado; rotas antigas mantêm
+  redirects, e o Estúdio conserva sua guarda de desenvolvimento.
+- Novo `test:metadata` verifica origem, configuração ausente/inválida, canonical,
+  imagem existente, compartilhamento e indexação. Domínio real ainda aguarda
+  informação do proprietário. Capas seguem adiadas. Nenhum deploy realizado.
+- Check, typecheck, quatro testes de metadados e builds com/sem origem
+  aprovados, sem o aviso anterior de metadataBase. Edge/HTTP de produção
+  validou canonical e imagens absolutos com origem de teste, sitemap com
+  somente a raiz, ausência de URLs inventadas sem origem, redirects 308,
+  Estúdio 404/API 403 e perfil mobile. Estúdio dev segue noindex e sem canonical
+  da home. Origem de teste não salva em configuração; build normal restaurado.
+
+## Equipamento do perfil — 06/11/2026
+
+- Câmera Fujifilm FinePix S2800HD confirmada pelo proprietário e adicionada
+  aos dados do perfil Win7. A aba Equipamento passa a aparecer com esse modelo,
+  com rótulo Câmera/Camera em PT/EN, sem acrescentar especificações ou acessórios.
+- Troca das capas de Corte PIB e Investiu MKT adiada pelo proprietário;
+  mantidos os arquivos e caminhos existentes.
+- Check, build e typecheck aprovados. Perfil conferido no Edge em EN/PT,
+  1440 e 375 px: cinco abas, modelo correto, navegação por teclado e sem
+  overflow. Build mantém o aviso anterior de metadataBase.
+
+## Volume geral e volume individual dos vídeos — 06/11/2026
+
+- A bandeja passa a controlar também os vídeos YouTube (inclusive a introdução)
+  pela API: saída = geral × individual. Ajustar o geral não sobrescreve a barra
+  do WMP12. Mute geral e volume zero prevalecem mesmo ao ajustar o vídeo.
+- Mute local permanece independente; voltar o geral restaura a preferência
+  individual. Autoplay segue mudo. Minimizar conserva a assinatura do volume;
+  fechar/trocar/falhar remove a assinatura antes de destruir o player.
+- Drive `/preview` e fallback sem API continuam dependendo do volume interno
+  do provedor; o volume geral externo não controla esses iframes. Fontes,
+  catálogo e assets preservados, sem downloads ou proxy de vídeos.
+- Check, build, typecheck e 16 testes de player/sons aprovados. Edge de produção
+  em 1440 e 375 px confirmou a saída real pela API, independência dos sliders,
+  prioridade dos mutes, volume zero, minimizar/restaurar e fechar/reabrir.
+  Sem erros de página ou overflow. Build mantém o aviso de metadataBase.
+
+## WMP12 — alinhamento da barra de volume — 06/11/2026
+
+- Removido dos sliders do WMP12 o deslocamento vertical herdado do 7.css;
+  o botão circular fica centralizado no trilho, inclusive no progresso do vídeo.
+  Dimensões do botão normalizadas entre Chromium e Firefox, mantendo foco e
+  interação nativos e a área de toque no celular.
+- O preenchimento azul da barra de volume acompanha o valor ajustado.
+- Check, build, typecheck e três testes do player aprovados. Edge em 1440 e
+  375 px: volume real do YouTube em 0/35/100, teclado, clique e ausência de
+  overflow conferidos, com inspeção visual do alinhamento. Build mantém o
+  aviso anterior de metadataBase.
+
+## Consolidação — somente Windows 7 — 06/11/2026
+
+- A raiz `/` abre diretamente o logon/desktop Win7. BIOS e seleção de sistema
+  retirados da experiência pública. `/xp` e `/win7` passam a redirecionar por
+  HTTP 308 para `/`, preservando consultas e funcionando sem JavaScript.
+  Removidas as páginas/layout XP e a entrada duplicada Win7; fontes e assets
+  antigos continuam preservados como legado sem imports/CSS na aplicação ativa.
+- Iniciar não oferece mais Windows XP. Reiniciar usa navegação de documento
+  para a raiz, voltando ao logon também quando já estiver em `/`, com idioma e
+  wallpaper mantidos. Acrescentado aviso visível para navegador sem JavaScript.
+- Metadados passam a apresentar o portfólio de fotografia/vídeo no Win7;
+  compartilhamento usa o wallpaper Win7 existente, sem modificar o asset antigo.
+- Estúdio adaptado para Aero/7.css e CSS Modules em `src/os/win7/studio/`, com
+  useT, EN/PT, prévia Drive manual e retorno a `/`. Em produção, a página agora
+  responde 404; a API continua bloqueada com 403. Nenhum atalho de admin público.
+- Novos cadastros do Estúdio salvam capas em `public/images/posters/`, separadas
+  da galeria Thumbnails. Caminhos antigos, dados e todos os assets existentes
+  foram preservados. A guarda de origem e validação de link/imagem permanecem.
+- `npm run check` verifica a aplicação Win7 ativa e ausência de dependências
+  XP/boot, mantendo validações do acervo. Novo `npm run test:studio` testa gravação
+  isolada de poster/link, preservação dos projetos e bloqueios de produção,
+  origem externa, link inválido e imagem falsa, sem alterar o repositório.
+- README, AGENTS, plano e guia de manutenção atualizados para a arquitetura
+  atual. A chave histórica de idioma `capimaso-xp-language` permanece para não
+  perder as preferências dos visitantes.
+- Check, typecheck, build e 38 testes aprovados. Edge de produção em EN/PT e
+  375/768/1440 px confirmou entrada direta, perfil/vídeos/fotos, reinício na raiz,
+  preferências e ausência de XP/overflow. HTTP validou 308 com query preservada,
+  Estúdio 404/API 403 em produção e aviso sem JavaScript. Formulário Aero em dev
+  conferido em EN/PT e 375/1440 px com prévias, envio simulado sem gravação real
+  e retorno ao logon. O teste da API grava somente em diretório temporário.
+  Build conserva o aviso anterior de metadataBase.
+
+## Acervo novo e Meu perfil no Win7 — 06/11/2026
+
+- Adicionados Dono da Bublitz, 1 Corte PIB e Investiu MKT 1 como novos curtos,
+  com os três links reais do Drive fornecidos pelo proprietário. Títulos lidos
+  dos arquivos públicos; descrições e softwares não informados ficam vazios.
+  Scarface, Stefany, MegLuuh e Tranzit permanecem intactos.
+- Posters 9:16 obtidos das prévias públicas do próprio Drive, em
+  `public/images/posters/`, separados da galeria Thumbnails. Os posters de
+  Corte PIB e Investiu MKT vieram pretos; foram preservados como fornecidos
+  pelo Drive, sem fabricar imagens. Tentativa de obter outro quadro pelo player
+  não conseguiu carregar esses vídeos neste ambiente. Capas melhores continuam
+  dependendo de imagens do proprietário. Nenhum vídeo foi salvo no repositório.
+- Sobre passa a se chamar Meu perfil, em layout de propriedades Win7, com abas
+  Sobre mim, Programas, Serviços e Recados. Teclado por setas/Home/End,
+  painéis associados aos tabs e preservação da aba ao minimizar/restaurar.
+- Perfil reutiliza bio, identidade e disponibilidade existentes e exibe edição
+  de vídeo e fotografia. Atalhos abrem Vídeos, Fotografias, Thumbnails e Contato.
+  Vídeo de apresentação do XP abre no WMP12, separado da pasta de trabalhos.
+- Programas mostra Premiere Pro, After Effects e Photoshop; Serviços mantém
+  todos os preços e dez pacotes originais; Recados mantém texto, data, link e
+  avatar reais. EN/PT usa o dicionário existente, sem duplicar os dados do XP.
+- Contato reúne os perfis reais @capimaso e @capimaso.jpg, além dos contatos
+  existentes. Dados específicos e equipamento ficam em `data/win7-profile.ts`.
+  Modelo da câmera ainda não informado: a aba Equipamento só aparece quando
+  houver dados reais, sem modelo inventado ou aviso provisório público.
+- A retirada do XP/BIOS fica para a próxima etapa de consolidação, após confirmar
+  os dados restantes. XP, boot e Estúdio continuam acessíveis nesta rodada.
+- Check, typecheck, build e 37 testes aprovados. Edge de produção em
+  375/768/1440 px, EN/PT: abas, teclado, painéis acessíveis, estado ao minimizar,
+  três softwares, 15 linhas de serviços/pacotes, recado/avatar/data, intro no
+  WMP12, dois Instagrams e os três novos links em `/preview` aprovados.
+  Posters decodificados e iframes 9:16 sem autoplay; zero erros de página e
+  sem overflow horizontal. Descrições de serviços quebram linha no mobile.
+  A abertura do embed não comprova reprodução dos novos arquivos de ponta a
+  ponta; o Drive não carregou os quadros alternativos durante a tentativa.
+  Build conserva o aviso anterior de metadataBase.
+
+## WMP12 — modo Em reprodução com as referências do proprietário — 06/11/2026
+
+- Janela Windows Media Player adaptada às três capturas recebidas: fundo preto
+  com iluminação azul discreta, título no alto, botão Mostrar lista, progresso
+  fino e barra metálica central com botão circular azul. CSS Modules e SVGs de
+  controles, sem alterar ou gerar imagens do acervo e sem dependências novas.
+- YouTube continua sendo a fonte dos longos, agora comandado pela IFrame API
+  oficial: play/pausa, parar/voltar ao início, seek, tempo, volume e mute reais.
+  Autoplay permanece mudo. A integração não remove marcas, anúncios ou avisos
+  do provedor e não extrai streams. Até estar pronta, os controles ficam inativos.
+- Próximo/anterior respeitam a pasta de curtos ou longos; Mostrar lista abre a
+  seleção dos projetos dessa pasta, com descrição e software. Tela cheia inclui
+  vídeo e controles. Minimizar/restaurar preserva o player; trocar vídeo ou fechar
+  destrói a instância antiga e cancela polling/timers.
+- Curtos mantêm `/preview` do Drive e reprodução manual. A moldura usa o novo
+  visual, mas play/seek/volume continuam dentro do vídeo; a barra externa oferece
+  somente ações que funcionam (lista, anterior/próximo, tela cheia e original).
+- Se a API YouTube falhar, o vídeo volta aos controles nativos e mantém o acesso
+  ao original. Sem botões fictícios ou promessa de reprodução independente.
+- Teclado: Espaço/K reproduz/pausa, setas buscam 5 s, M alterna mute e F alterna
+  tela cheia quando o foco está no player; inputs e botões mantêm suas teclas
+  nativas. Lista fecha com Escape. Interface e rótulos continuam EN/PT.
+- Adicionado `npm run test:player` para carregamento compartilhado da API,
+  falha/timeout com nova tentativa e valores de tempo ausentes/longos.
+- Check, typecheck, build e 37 testes aprovados. Edge de produção, EN/PT em
+  375/768/1440 px, validou vídeo YouTube real, play/pausa, seek confirmado após
+  5 s, stop, volume/mute, atalhos, fullscreen, lista e preservação do iframe ao
+  minimizar. Drive manteve `/preview`, proporção 9:16 e ausência de autoplay.
+  Sem overflow horizontal ou erros de página; falha da API simulada confirmou
+  fallback/reabertura, Escape/foco e viewport 375×430. MetadataBase mantém o
+  aviso preexistente. A barra preserva o destino de seek enquanto aguarda a API,
+  evitando que eventos de buffering revertam a posição escolhida.
+
+## WMP12 — prova das fontes e inventário visual — 06/11/2026
+
+- Adicionado `npm run probe:videos`: diagnóstico público dos links atuais,
+  separado dos testes offline, sem ler credenciais nem salvar vídeos. O pedido
+  Range é cancelado após receber os cabeçalhos; erros de rede são classificados.
+- Nos dois curtos, o download público consultado retornou HTTP 200 `text/html`,
+  sem resposta parcial de mídia validada. Os longos permanecem como links YouTube.
+  Isso não indica falha dos embeds e não descarta investigação futura via API.
+- Inspecionados visualmente os 38 ICO da pasta WMP12 Icons. Há ícones de mídia
+  e ações, mas não foram encontrados sprites da barra de reprodução, `wmploc.dll`
+  ou captura de referência do WMP12 no acervo local.
+- O player completo depende de confirmar a origem real dos vídeos e a referência
+  visual. Os links originais e os embeds existentes continuam funcionando;
+  nenhum controle fictício, proxy de vídeo ou extração de streams foi adicionado.
+- Evidências, limites e critérios da próxima prova em
+  [docs/WMP12-PLAYBACK-VERIFICATION.md](docs/WMP12-PLAYBACK-VERIFICATION.md).
+- Check, typecheck, build e sintaxe do diagnóstico aprovados; prova pública
+  executada duas vezes com o mesmo resultado. Build mantém o aviso anterior
+  de metadataBase. Nenhuma mudança na interface ou nos dados do acervo nesta rodada.
+
+## Entrega — pastas de vídeos e thumbnails no Win7 — 06/11/2026
+
+- Fotografias, Vídeos e Thumbnails aparecem como bibliotecas irmãs no desktop,
+  Iniciar e busca EN/PT. Vídeos abre duas pastas: Vídeos curtos e Vídeos longos,
+  com histórico voltar/avançar, breadcrumb, seleção e abertura por teclado,
+  duplo clique no desktop ou toque no mobile.
+- Catálogo compartilhado com o XP: os quatro projetos de `data/showcase.json`
+  mantêm dados, links e capas. Thumbnails lista automaticamente as imagens de
+  `public/images/thumbs/`, sem mover arquivos nem confundir a galeria com posters.
+- Vídeos abrem em janela Win7 própria, usando nesta etapa os embeds atuais:
+  Drive manual e YouTube com autoplay mudo; proporções 9:16 e 16:9 preservadas.
+  Minimizar/restaurar mantém a instância do iframe; escolher outro vídeo atualiza
+  a mesma janela sem perder a geometria. O WMP12 personalizado continua pendente.
+- Thumbnails abre um visualizador local separado do acervo Drive, com imagem
+  ajustada à janela, anterior/próxima por botão ou setas e download do arquivo.
+- Games e promessas de jogos removidos do desktop, Iniciar, busca, taskbar e
+  Explorer. Nenhum asset recebido foi apagado. XP, BIOS e Estúdio continuam
+  disponíveis durante a migração; a retirada ocorrerá após migrar o perfil.
+- Próximo trabalho: prova de reprodução para o player WMP12, inspeção dos ícones
+  existentes e definição da fonte de mídia antes de fechar o visual/controles.
+- Validação: check, typecheck, build e 34 testes aprovados. Edge de produção em
+  375/768/1440 px, EN/PT, confirmou pastas, seleção/abertura, histórico, busca,
+  proporções dos iframes, preservação ao minimizar e visualizador de thumbnails,
+  sem overflow horizontal da página. A conferência dos embeds não comprova
+  reprodução externa ponta a ponta nem o futuro player WMP12. O build mantém
+  o aviso preexistente de metadataBase.
+
+## Próxima fase — portfólio unificado no Windows 7 — 06/11/2026
+
+Plano solicitado pelo proprietário; a entrega acima registra os itens concluídos.
+Esta seção substitui o planejamento anterior de manter dois desktops e de adicionar
+jogos. As entradas anteriores registram o histórico das entregas.
+
+### Direção e escopo
+
+- Windows 7 será a única experiência pública, reunindo fotografia, edição de vídeo
+  e thumbnails. Remover a BIOS e o seletor de sistemas; a raiz abrirá o logon Win7.
+- Após migrar e conferir o conteúdo importante, retirar a experiência XP pública
+  e os atalhos de troca de sistema. Planejar redirecionamentos de `/xp` e `/win7`
+  para a entrada definitiva, preservando links existentes.
+- Jogos cancelados: não implementar Solitaire, Purble Place ou outros jogos.
+  Remover a janela Games, atalhos, busca e avisos de futura disponibilidade.
+  Preservar os assets recebidos; cancelar o recurso não autoriza apagar binários.
+- Manter identidade Tiago / CAPIMASO, EN/PT, acessibilidade, funcionamento mobile
+  e os recursos atuais de fotografias, janelas, personalização e áudio.
+
+### Pastas de vídeos e thumbnails no Explorer
+
+Organização desejada, com Fotografias, Vídeos e Thumbnails no mesmo nível:
+
+```text
+CAPIMASO
+├── Fotografias
+├── Vídeos
+│   ├── Vídeos curtos
+│   └── Vídeos longos
+└── Thumbnails
+```
+
+- Adaptar a navegação ao Explorer Win7 existente: pastas, breadcrumbs,
+  voltar/avançar, miniaturas, seleção e abertura por mouse, teclado e toque.
+- Migrar o catálogo de [data/showcase.json](data/showcase.json), incluindo Scarface,
+  Stefany, MegLuuh e Tranzit, preservando títulos, descrições, links, capas e formatos.
+  Curtos e posters verticais em 9:16; longos em 16:9.
+- A pasta Thumbnails será irmã de Vídeos, sem confundir a galeria de trabalhos
+  gráficos com as capas dos vídeos. Reaproveitar a leitura automática de
+  [public/images/thumbs/](public/images/thumbs/) por [lib/thumbnails.ts](lib/thumbnails.ts).
+- Essas são pastas da interface: não mover os vídeos para o repositório nem
+  exigir uma reorganização do Drive nesta etapa. Fotos continuam no Drive;
+  vídeos mantêm inicialmente os links reais do catálogo, e thumbs os arquivos atuais.
+- Preservar o cadastro local do Estúdio e adaptar seus caminhos/estilos para não
+  depender do desktop XP removido. Continuar bloqueando gravação em produção.
+
+### Player de vídeo — Windows Media Player 12
+
+- Objetivo: janela e controles fiéis ao Windows Media Player do Windows 7,
+  com reprodução/pausa, progresso, tempo, volume e tela cheia funcionais.
+  Preservar a proporção e permitir minimizar/restaurar sem perder o estado.
+- Há ícones locais em [WMP12 Icons](public/assets/win7/icons/WMP12%20Icons/)
+  e [Windows Media Player](public/assets/win7/icons/Windows%20Media%20Player/).
+  Inspecioná-los antes de solicitar recursos adicionais; ícones não comprovam
+  que existam todas as artes dos controles ou da interface.
+- Antes do acabamento, validar a fonte de reprodução. O player atual do XP usa
+  iframes do YouTube e `/preview` do Google Drive. Uma moldura WMP ao redor deles
+  não satisfaz, por si só, o objetivo de abandonar a aparência desses players.
+- YouTube permite controle por API e ocultar seus controles, mas não oferece
+  garantia de eliminar sua identidade visual; `modestbranding` não tem efeito.
+  Não prometer um player totalmente sem marca mantendo apenas o embed atual.
+- Investigar uma fonte de mídia compatível com `<video>` e controles próprios,
+  sem adicionar vídeos locais ao Git. Para arquivos no Drive, validar acesso,
+  busca por tempo, carregamento parcial, formatos, quota e limites de hospedagem
+  antes de adotar uma solução. Não reaproveitar o proxy de fotos sem adaptar e
+  verificar seu contrato de segurança; não expor credenciais no navegador.
+- Preservar os links atuais enquanto a alternativa é validada. Caso sejam
+  necessários os arquivos originais dos vídeos longos ou outra hospedagem,
+  registrar a dependência e combinar a origem real com o proprietário.
+- Se faltarem referências visuais ou assets após a inspeção local, solicitar
+  captura do WMP12 e os recursos específicos ao proprietário, que se ofereceu
+  para encontrá-los. Não fabricar assets ou controles meramente decorativos.
+
+Referências técnicas consultadas para o planejamento:
+[parâmetros do YouTube](https://developers.google.com/youtube/player_parameters),
+[IFrame Player API](https://developers.google.com/youtube/iframe_api_reference) e
+[download de arquivos no Drive](https://developers.google.com/workspace/drive/api/guides/manage-downloads).
+
+### Meu perfil — conteúdo do XP adaptado ao Win7
+
+- O Sobre atual do Win7 apresenta foto, nome, atividade, bio e disponibilidade.
+  Ampliá-lo com a apresentação e os acessos importantes do XP, usando composição
+  visual do Windows 7, sem copiar o tema Luna.
+- Migrar os recursos úteis identificados em [XPApps.tsx](src/os/xp/XPApps.tsx):
+  apresentação/boas-vindas, vídeo de introdução, trabalhos, softwares, serviços,
+  pacotes/preços, recados reais de clientes e contatos. Distribuir em seções e
+  janelas apropriadas, evitando concentrar todo o portfólio em uma única tela.
+- Reaproveitar [perfil](data/profile.ts), [vídeo de apresentação](data/media.ts),
+  [softwares](data/skills.ts), [serviços](data/services.ts) e [recados](data/comments.ts),
+  preservando conteúdo, preços, avatares e links reais.
+- Exibir Premiere Pro, After Effects e Photoshop: os três já estão cadastrados
+  em [data/skills.ts](data/skills.ts); Photoshop precisa ganhar visibilidade no Win7.
+- Incluir fotografia na apresentação e uma seção de equipamento com o modelo real
+  da câmera. Modelo ainda não localizado nos dados: pedir ao proprietário antes
+  de preencher, sem inventar câmera, lente ou outros equipamentos.
+- Conciliar os contatos de vídeo e fotografia, preservando os perfis distintos
+  `@capimaso` e `@capimaso.jpg`, além de e-mail, Discord e YouTube existentes.
+
+### Ordem da próxima implementação
+
+1. Concluído: pastas Vídeos/curtos/longos e Thumbnails no Win7 com o acervo
+   atual, reaproveitando os dados do XP e preservando Fotografias.
+2. Fazer a prova de reprodução e definir a fonte de mídia; então construir o WMP12
+   com as referências/assets necessários e controles reais.
+3. Ampliar Meu perfil, softwares, equipamento, serviços e recados; confirmar o
+   modelo da câmera com o proprietário.
+4. Conferir a migração e retirar XP/BIOS/seletor da experiência
+   pública. Revisar Estúdio, rotas, redirecionamentos e atalhos remanescentes.
+5. Atualizar [AGENTS.md](AGENTS.md), [PLANS.md](PLANS.md), [README.md](README.md)
+   e [guia de manutenção](docs/CODEX-GUIDE.md) para a arquitetura apenas Win7;
+   executar check, typecheck, build e testes relevantes, além da regressão visual
+   desktop/mobile e da preservação dos dados/assets.
+
+Na rodada inicial houve somente análise e atualização deste planejamento; nenhuma
+rota, aplicativo, configuração de mídia ou arquivo do acervo foi removido.
+
 ## Auditoria mobile — 375 px
 
 - Taskbar de 56 px com alvos de toque de 44 px, tarefas com rolagem interna,
@@ -196,7 +540,7 @@
   restauração exata, taskbar, mostrar desktop, idiomas e transição XP/Win7.
 
 - Plano reescrito com fontes e código consultados, limites dos projetos e etapas
-  futuras de logon/jogos. 7.css 0.21.1 fixado no manifesto e lockfile.
+  futuras de logon. 7.css 0.21.1 fixado no manifesto e lockfile.
 - Distribuição oficial scoped na camada win7-base: molduras, estados de título,
   glifos e controles vêm da biblioteca. Taskbar e StartMenu reutilizam seu vidro
   sem filtros duplicados; adaptações locais tratam layout e dialogs do React.
@@ -265,7 +609,7 @@
   preservando a geometria desktop. Barra de título oferece movimento por setas
   e redimensionamento por Shift+setas; controles mantêm rótulos EN/PT.
 - Sobre/Contato usam informações reais. Fotografias e Games abrem janelas de
-  preparação; esta rodada não implementa Drive nem jogos.
+  preparação; esta rodada não implementa Drive. Jogos foram posteriormente cancelados.
 
 - Componentes de taskbar e menu Iniciar em duas colunas usam Aero, busca
   bilíngue, relógio/data locais, atalhos e Reiniciar. O Start Orb usa o sprite

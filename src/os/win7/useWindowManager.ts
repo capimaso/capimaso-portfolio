@@ -4,6 +4,7 @@ import { useCallback, useEffect, useReducer, useRef, useState, type RefObject } 
 import { activeWindow, initialWindows, windowReducer, type WindowAction } from './window-state';
 import { useSoundManager } from './SoundManager';
 import type { AppId } from './types';
+import type { MediaSelection } from './MediaCatalog';
 import type { PhotoFolder, PhotoSelection } from '@/src/lib/photos';
 
 /** React owns state and DOM; the hook is the adapter between the engine and shell. */
@@ -37,8 +38,9 @@ export function useWindowManager(workspace: RefObject<HTMLDivElement | null>) {
 
   const open = useCallback((id: AppId, selection?: PhotoSelection) => dispatch({ type: 'open', id, area, selection }), [area, dispatch]);
   const browse = useCallback((folder: PhotoFolder[]) => dispatch({ type: 'open', id: 'photos', area, folder }), [area, dispatch]);
+  const openMedia = useCallback((media: MediaSelection) => dispatch({ type: 'open', id: media.kind === 'video' ? 'videoPlayer' : 'thumbnailViewer', area, media }), [area, dispatch]);
   const close = useCallback((id: AppId) => dispatch({ type: 'close', id }), [dispatch]);
   const task = useCallback((id: AppId) => dispatch({ type: 'task', id }), [dispatch]);
   const showDesktop = useCallback(() => dispatch({ type: 'desktop' }), [dispatch]);
-  return { state, dispatch, area, compact, activeId: activeWindow(state.windows), open, browse, close, task, showDesktop };
+  return { state, dispatch, area, compact, activeId: activeWindow(state.windows), open, openMedia, browse, close, task, showDesktop };
 }

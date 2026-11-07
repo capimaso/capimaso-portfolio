@@ -1,5 +1,5 @@
 /** Offline sanity checks for contributors and Codex. No npm dependencies required. */
-import { readFile, access } from 'node:fs/promises';
+import { readFile, access, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { googleDriveEmbed } from '../lib/google-drive.mjs';
 const root=process.cwd();let errors=0;
@@ -28,7 +28,7 @@ assert(work.every(x=>!x.thumbnail||x.thumbnail.startsWith('/images/')),'Capas us
 for(const item of work.filter(x=>x.thumbnail)){
  try{await access(join(root,'public',item.thumbnail));console.log(`✓ Capa preservada: ${item.id}`)}catch{assert(false,`Capa ausente: ${item.id}`)}
 }
-for(const p of ['src/os/xp/xp.css','app/page.tsx','app/xp/page.tsx','app/xp/layout.tsx','app/win7/page.tsx','app/studio/page.tsx','app/studio/layout.tsx','src/boot/BootScreen.tsx','src/boot/BiosScreen.tsx','src/boot/BootManager.tsx','src/boot/boot.module.css','src/os/xp/XpDesktop.tsx','src/os/xp/XPApps.tsx','public/images/xp-hills.svg','AGENTS.md','README.md','MUDANCAS.md','postcss.config.mjs','lib/locale-dictionary.ts','lib/wallpaper.ts','src/shared/LanguageContext.tsx','src/os/xp/WallpaperSettings.tsx']){
+for(const p of ['app/page.tsx','app/studio/page.tsx','app/studio/layout.tsx','src/os/win7/Win7Desktop.tsx','src/os/win7/apps/Profile.tsx','src/os/win7/apps/WmpPlayer.tsx','src/os/win7/apps/MediaExplorer.tsx','src/os/win7/studio/Studio.tsx','src/os/win7/studio/studio.module.css','AGENTS.md','README.md','MUDANCAS.md','postcss.config.mjs','lib/locale-dictionary.ts','src/shared/LanguageContext.tsx']){
  try{await access(join(root,p));console.log(`✓ ${p}`)}catch{console.error(`✖ faltando ${p}`);errors++}
 }
 // Verify the actual shell asset map, including filenames with spaces.
@@ -44,16 +44,35 @@ for (const asset of shellAssets) {
 }
 const orb = await readFile(join(root, 'public/assets/win7/theme/start-orb.png'));
 assert(orb.readUInt32BE(16) === 106 && orb.readUInt32BE(20) === 318, 'Start Orb: three original 106px frames');
-const desktop=await readFile(join(root,'src/os/xp/XpDesktop.tsx'),'utf8');
-const apps=await readFile(join(root,'src/os/xp/XPApps.tsx'),'utf8');
-const css=await readFile(join(root,'src/os/xp/xp.css'),'utf8');
-const icons=await readFile(join(root,'src/os/xp/XPIcon.tsx'),'utf8');
+const home=await readFile(join(root,'app/page.tsx'),'utf8');
+const desktop=await readFile(join(root,'src/os/win7/Win7Desktop.tsx'),'utf8');
+const player=await readFile(join(root,'src/os/win7/apps/WmpPlayer.tsx'),'utf8');
+const playerStyles=await readFile(join(root,'src/os/win7/apps/wmp.module.css'),'utf8');
+const youtube=await readFile(join(root,'src/os/win7/apps/useYouTubePlayer.ts'),'utf8');
+const studioPage=await readFile(join(root,'app/studio/page.tsx'),'utf8');
+const upload=await readFile(join(root,'app/api/studio/upload/route.ts'),'utf8');
 const context=await readFile(join(root,'src/shared/LanguageContext.tsx'),'utf8');
-assert(context.includes("@/lib/locale-dictionary")&&desktop.includes("@/lib/locale-dictionary"),'Traduções importadas sem conflito com i18n.tsx legado');
-assert(desktop.includes('xp-language-switch')&&desktop.includes("useState<Language>('en')"),'Alternador EN/PT e inglês inicial');
-assert(desktop.includes('WallpaperSettings')&&css.includes('.wallpaper-settings'),'Papel de parede configurável');
-assert(apps.includes('autoplay=1&mute=1')&&apps.includes('controls autoPlay muted'),'Autoplay mudo YouTube e MP4/WebM');
-assert(css.includes('container-type:size')&&css.includes('177.777cqh'),'Player com proporção responsiva');
-assert(icons.includes("kind==='logoff'")&&icons.includes("kind==='power'"),'Ícones SVG do menu Iniciar');
-assert(css.includes('/icons/cursor.svg')&&css.includes('/icons/cursor-pointer.svg'),'Cursores do portfólio original');
-if(errors)process.exitCode=1;else console.log(`\nCAPIMASO XP: ${work.length} projetos, verificações básicas concluídas. `);
+assert(home.includes('<Win7Desktop')&&!home.includes('BootScreen'),'Win7 é a entrada principal');
+assert(context.includes("@/lib/locale-dictionary")&&desktop.includes("useState<Language>('en')"),'Dicionário compartilhado e inglês inicial');
+assert(desktop.includes('capimaso-xp-language'),'Preferência de idioma existente preservada');
+assert(youtube.includes('player.mute()')&&youtube.includes('player.playVideo()'),'YouTube inicia mudo');
+assert(player.includes('googleDriveEmbed')&&!player.includes('drive}&autoplay'),'Drive mantém o preview sem autoplay forçado');
+assert(playerStyles.includes('container-type: size')&&playerStyles.includes('16 / 9')&&playerStyles.includes('9 / 16'),'Player com proporções responsivas');
+assert(studioPage.includes("process.env.NODE_ENV !== 'development'")&&studioPage.includes('notFound()'),'Estúdio restrito ao desenvolvimento');
+assert(upload.includes("process.env.NODE_ENV!=='development'")&&upload.includes("'posters'"),'API local preservada e capas separadas da galeria de thumbnails');
+async function sourceFiles(directory) {
+ const files=[];
+ for(const entry of await readdir(directory,{withFileTypes:true})) {
+  const file=join(directory,entry.name);
+  if(entry.isDirectory())files.push(...await sourceFiles(file));
+  else if(/\.(tsx?|css)$/.test(entry.name))files.push(file);
+ }
+ return files;
+}
+const activeLegacyDependencies=[];
+for(const file of [...await sourceFiles(join(root,'app')),...await sourceFiles(join(root,'src/os/win7'))]) {
+ const source=await readFile(file,'utf8');
+ if(/(?:from\s*|import\s*)['"][^'"]*(?:src\/os\/xp|src\/boot)/.test(source)||source.includes('href="/xp"')||source.includes('xp-shell'))activeLegacyDependencies.push(file.slice(root.length+1));
+}
+assert(activeLegacyDependencies.length===0,`Entradas e Win7 sem dependências XP/boot${activeLegacyDependencies.length ? ': '+activeLegacyDependencies.join(', ') : ''}`);
+if(errors)process.exitCode=1;else console.log(`\nCAPIMASO Win7: ${work.length} projetos, verificações básicas concluídas. `);

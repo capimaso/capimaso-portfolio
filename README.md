@@ -1,332 +1,148 @@
-<div align="center">
+# CAPIMASO — Windows 7 Portfolio
 
-<img src="public/images/og.svg" alt="Janela do portfólio CAPIMASO no estilo Windows XP" width="740" />
+Portfólio de **Tiago / CAPIMASO**: fotografia, edição de vídeo e thumbnails em
+uma área de trabalho Windows 7. Interface EN/PT, inglês na primeira visita,
+com preferência salva no navegador. Next.js, React, TypeScript e 7.css isolado.
 
-# 🖥️ CAPIMASO.exe
+## Rodar localmente
 
-**Portfólio de editor de vídeo · Windows XP Edition**
+Requisitos: Node.js 20.9+ e npm.
 
-`[ Meu computador ]` · `[ Meus trabalhos ]` · `[ Windows Media Player ]` · `[ Outlook Express ]`
-
-**Uma área de trabalho para explorar. Não uma landing page fingindo ser um sistema operacional.**
-
-</div>
-
----
-
-## 🟦 Bem-vindo ao Windows XP do CAPIMASO
-
-A identidade foi reconstruída tendo o **Windows XP com tema Luna** como referência: barra azul, botão Iniciar verde, janelas com controles clássicos, Explorador de Arquivos, menu de duas colunas e programas familiares. O conteúdo do CAPIMASO continua sendo a parte mais importante: vídeos, thumbnails, habilidades, valores, comentários e contato.
-
-Acesse o portfólio pela área de trabalho, pelo menu **iniciar** ou pelos botões da janela principal.
-
-> **Projeto Next.js + React + TypeScript.** Sem serviço de banco de dados para o portfólio e sem API key obrigatória.
-
-## ▶ Instalar e rodar
-
-Requisitos: **Node.js 20.9+**, npm e conexão com a internet na primeira instalação para dependências e recuperação de imagens originais.
-
-```bash
+```sh
 npm install
 npm run dev
 ```
 
-Abra `http://localhost:3000`.
+- [Portfólio](http://localhost:3000/): logon público e desktop Win7.
+- [Estúdio local](http://localhost:3000/studio): disponível somente em desenvolvimento.
+- `/xp` e `/win7`: redirecionamentos permanentes para `/`, preservando consultas.
 
-- BIOS e Boot Manager: `http://localhost:3000`
-- Portfólio de vídeos Windows XP: `http://localhost:3000/xp`
-- Desktop Windows 7: `http://localhost:3000/win7`
-- Estúdio de upload: **`http://localhost:3000/studio`**
+A BIOS e o seletor de sistemas foram retirados da experiência pública. O logon
+não exige senha; seu campo visual não é enviado ou armazenado. Enter ou a seta
+abre o desktop após a transição de 700 ms. Reiniciar no Iniciar recarrega a
+entrada e volta ao logon, preservando preferências do navegador.
 
-O boot aguarda sua escolha: setas e Enter, clique ou toque. A BIOS dura 1,5s
-e pode ser pulada; movimento reduzido remove a espera. Os links do seletor
-também funcionam sem JavaScript. No XP, **Escolher sistema** no menu Iniciar
-retorna ao boot, preservando idioma e preferências de wallpaper.
+## Conteúdo e navegação
 
-O Windows 7 abre em uma tela de boas-vindas com avatar e nome CAPIMASO. Enter ou
-a seta entra sem exigir senha; o campo é apenas visual e nunca é enviado ou
-armazenado. Uma tela preta com cursor de espera cobre os 700 ms antes de abrir
-o desktop. Harmony é usado no logon, e desktop-logo.jpg no desktop.
+- **Fotografias:** Explorer com pastas reais do Drive, histórico, breadcrumbs,
+  miniaturas e paginação. Photo Viewer tem anterior/próximo, zoom e download.
+- **Vídeos:** pastas de curtos (9:16) e longos (16:9). WMP12 Em reprodução usa
+  controles reais via API YouTube nos longos; os curtos mantêm `/preview` do
+  Drive e reprodução manual. Marcas/avisos dos provedores podem aparecer.
+- **Thumbnails:** lista automaticamente as imagens de `public/images/thumbs/`,
+  com visualizador e download. Capas novas de vídeos ficam em `public/images/posters/`.
+- **Meu perfil:** apresentação/intro, Premiere Pro, After Effects, Photoshop,
+  serviços/preços e recados reais. Equipamento mostra a câmera confirmada:
+  Fujifilm FinePix S2800HD.
+- **Contato:** canais reais de vídeo e fotografia, incluindo `@capimaso` e
+  `@capimaso.jpg`, e-mail, Discord e YouTube.
+- **Painel de Controle:** wallpapers Harmony/Desktop Logo e mute global.
+  Bandeja com volume, idioma, relógio e Mostrar área de trabalho.
 
-O desktop tem ícones e cursores reais, taskbar Aero, menu
-Iniciar com busca e janelas independentes. No desktop, clique seleciona;
-arrastar em uma área vazia seleciona vários ícones com uma caixa azul; clique
-vazio limpa a seleção. Ícones e pastas realçam instantaneamente no hover.
-Duplo clique ou Enter abre. No celular, um toque abre em tela cheia. Arraste a
-barra de título ou redimensione pelas bordas no desktop. Focada a barra de
-título, setas movem a janela e Shift+setas redimensionam.
+O volume da bandeja controla sons do sistema e vídeos YouTube via API:
+saída = volume geral × volume próprio do WMP12. Silenciar o geral mantém o
+vídeo silenciado mesmo ao mexer no volume local, sem apagar esse ajuste.
+O `/preview` do Drive e o fallback sem API usam os controles internos do
+provedor e não permitem esse controle geral externo.
 
-O visual do Win7 usa `7.css` 0.21.1, na distribuição oficial isolada `.win7`;
-o XP continua com seu tema próprio. A busca do Iniciar encontra aplicativos
-locais (incluindo Calculadora e Bloco de notas) e pastas da raiz pública do Drive,
-com paginação. Resultados de pasta abrem seu endereço no Explorer existente;
-apps locais continuam pesquisáveis quando o Drive está indisponível.
+Jogos foram cancelados. Calculadora e Bloco de notas continuam disponíveis pela
+busca/Iniciar. No desktop, um clique seleciona e duplo clique/Enter abre;
+no celular, um toque abre em tela cheia acima da taskbar. Janelas podem ser
+movidas/redimensionadas no desktop; setas na barra de título movem e
+Shift+setas redimensionam. Minimizar conserva estado e reprodução.
 
-Sobre e Contato mostram os dados reais. Fotografias abre o Explorer com o acervo
-público do Drive: breadcrumbs, voltar/avançar, miniaturas e carregamento por
-páginas. Duplo clique/Enter abre uma pasta ou imagem; no mobile, use um toque.
+## Adicionar um Reel/Short
 
-O Painel de Controle está no Menu Iniciar e na busca. Personalizar alterna entre
-os wallpapers Harmony e Desktop Logo, salvando a escolha neste navegador; Som
-silencia ou reativa os eventos do sistema. No Iniciar, manter o ponteiro ou foco
-em um item por 500 ms substitui o avatar pelo ícone com fade; sair restaura a foto.
-O Instagram do portfólio de fotografia é `@capimaso.jpg`.
-O Photo Viewer tem fundo escuro, anterior/próximo na mesma pasta, zoom e **Baixar**
-para obter o original. Setas esquerda/direita navegam; +/- ajusta zoom e 0 encaixa
-à janela. Games continua em preparação.
-Reiniciar volta ao boot; o menu também permite abrir o XP. **Mostrar área de
-trabalho** minimiza/restaura as janelas visíveis sem reabrir as já minimizadas.
-EN/PT mantém a preferência compartilhada. `npm run test:win7` verifica as regras
-do gerenciador de janelas sem navegador.
+1. Envie o vídeo ao Drive e compartilhe como **Qualquer pessoa com o link → Leitor**.
+2. Em `npm run dev`, abra `/studio`, preencha os dados e selecione uma capa.
+3. Confira as prévias e adicione ao showcase. Apenas link e imagem são gravados;
+   o vídeo continua no Drive. A galeria de thumbnails não recebe essa capa.
+4. Revise e versione `data/showcase.json` e o novo arquivo em `public/images/posters/`.
 
-Hover e pressed usam fade suave de 200 ms, respeitando movimento reduzido.
-O Explorer tem Refresh dentro do endereço,
-rodapé branco e scrollbars azuis com setas. Sons do sistema usam SoundManager
-global com arquivos originais mapeados em `src/lib/sounds-map.ts`. Startup MP3
-tenta tocar ao aparecer o logon (com nova tentativa na entrada se bloqueado);
-o desktop não dispara startup. Volume inicial 80%, ajustável pelo slider vertical
-da bandeja, com prévia Ding e mute compartilhado com o Painel de Controle.
-Arquivos ausentes ou reprodução bloqueada mantêm o fallback silencioso.
-Consulte `public/assets/win7/sounds/README.md`; `npm run test:sounds` verifica
-os eventos, a ausência dos arquivos e o tratamento de bloqueio de reprodução.
+O Estúdio usa o tema Win7 e retorna a `/`. Não aparece no menu público.
+Em produção, a página responde 404 e a API de upload responde 403. Não habilitar
+gravação em produção sem autenticação e armazenamento apropriados.
 
-Minimizar e restaurar animam a janela por 250 ms até/de seu botão na taskbar;
-Mostrar Área de Trabalho envia cada janela ao respectivo botão. Maximizar/restaurar tamanho
-também anima, preservando a geometria e o conteúdo. Movimento reduzido dispensa
-essas animações.
+Para cadastro manual, altere somente o manifesto: `id`, `title`, `description`,
+`category`, `format`, `video`, `thumbnail` e `software`. Curtos usam links reais de
+arquivo do Drive e poster vertical; longos usam YouTube e poster horizontal.
+Thumbnail vazia em um longo usa a capa YouTube. Instagram legado permanece externo.
+Nunca inventar IDs, converter links em MP4 falso ou adicionar vídeos binários ao Git.
 
-Em 375 px, janelas ocupam a área acima da taskbar de 56 px. A barra permite
-rolar tarefas por gesto horizontal, alternar idioma e ajustar volume. O Iniciar
-ocupa essa mesma área, com pesquisa no topo e botão explícito de fechar, sem
-abrir o teclado automaticamente. Controles principais têm alvos de 44 px.
-Veja a [auditoria mobile](docs/WIN7-MOBILE-VERIFICATION.md).
+## Fotografias no Drive
 
-### Configuração de fotografias no Google Drive
+Copie `.env.example` para `.env.local` e configure no servidor:
 
-Copie `.env.example` para `.env.local`. Preencha `DRIVE_FOLDER_ID` com o ID ou link
-completo da pasta pública e `GOOGLE_DRIVE_API_KEY` com a chave de um projeto Google Cloud
-com Drive API v3 habilitada. Compartilhe a pasta e o conteúdo como **Qualquer
-pessoa com o link → Leitor**. Se o link tiver `resourcekey`, copie esse valor
-para `DRIVE_FOLDER_RESOURCE_KEY`. Restrinja a chave à Drive API no Google Cloud.
+- `GOOGLE_DRIVE_API_KEY`: chave de projeto com Drive API v3 habilitada.
+- `DRIVE_FOLDER_ID`: ID ou link da raiz pública compartilhada como Leitor.
+- `DRIVE_FOLDER_RESOURCE_KEY`: opcional, caso a pasta utilize resourcekey.
 
-Essas variáveis são utilizadas somente no servidor. Não use prefixo `NEXT_PUBLIC_`
-e não versione `.env.local`.
-O boot, o XP e o Estúdio continuam funcionando sem configuração do Drive.
-A API lista pastas e JPG/PNG/WebP/GIF/AVIF/BMP, sem copiar o acervo para o
-repositório. Listagens e provas de pertencimento têm cache de 60s; Atualizar
-recarrega a pasta. Arquivos novos aparecem sem deploy após a atualização do cache.
-Erros de rede, permissão e quota aparecem dentro da janela com tentar novamente.
+Não usar prefixo `NEXT_PUBLIC_`, imprimir ou versionar as credenciais. Restrinja
+a chave à Drive API. Listagem, imagens e downloads são limitados à raiz
+configurada, com caminhos verificados por listagens de pai/filho. O proxy aceita
+somente imagens raster e hosts Google; não é um proxy arbitrário de vídeos.
+Atualizar recarrega a pasta; cache de listagem de 60 s. Sem configuração,
+o desktop e o conteúdo de vídeos/perfil continuam disponíveis.
 
-Miniaturas, originais e downloads passam pelo proxy local; a chave nunca vai
-para o navegador. O caminho de ancestrais enviado pelo cliente é verificado
-por listagens do Drive, incluindo em instâncias sem cache anterior. O visualizador
-carrega metadados de páginas seguintes quando necessário, sem pré-baixar originais.
-`npm run test:photos` cobre o backend com respostas simuladas e sem credenciais reais.
+## Onde editar
 
-`npm run dev` tenta recuperar automaticamente os arquivos da pasta `public` do repositório original **somente se não estiverem presentes**. Se quiser repetir manualmente:
-
-```bash
-npm run assets:sync
-```
-
-### 🚀 Publicar usando seu GitHub atual
-
-1. Descompacte o ZIP.
-2. **Copie o conteúdo da pasta descompactada para a raiz do repositório `capimaso-portfolio`**, substituindo os arquivos de mesmo nome. Não apague manualmente `public/images`, `public/videos` ou pastas antigas: seus arquivos continuam válidos.
-3. Rode `npm install` e `npm run dev` para conferir.
-4. Execute `npm run build`. Depois publique os arquivos via commit/push ou upload pelo GitHub; a Vercel poderá fazer o deploy.
-5. Na Vercel, o framework é Next.js e o build padrão é `npm run build`.
-
-**Nota sobre o pacote:** este ZIP contém todo o código novo, suas configurações, o fundo XP inspirado, os dados do portfólio, a documentação e os scripts de recuperação. **Fotos e thumbnails binários já existentes não foram baixados diretamente neste ambiente.** O script `scripts/sync-original-assets.mjs` os recupera do seu repositório público na primeira execução, sem sobrescrever arquivos existentes. Ao aplicar sobre o repositório atual, eles já estarão presentes. Isso exige que a branch `main` original continue disponível durante a migração ou que você mantenha a pasta `public` existente. O script recupera arquivos de um **commit original fixado** (não depende do conteúdo da `main` após a atualização). Nenhuma foto original foi substituída por uma foto inventada.
-
-## ✨ Atualização 2.1 — idioma, wallpaper, player, cursores e menu Iniciar
-
-Todos os recursos novos funcionam **em cima da edição XP**, sem trocar de framework nem perder o conteúdo anterior.
-
-### 🌐 Inglês e português
-
-- **EN** e **PT** aparecem sempre na barra de tarefas, ao lado do relógio. O site **abre em inglês na primeira visita**.
-- Ao trocar, são traduzidos área de trabalho, menu Iniciar, programas, textos principais, projetos originais, contato e Estúdio. A escolha é preservada no navegador.
-- As traduções moram em `lib/locale-dictionary.ts`. Para adicionar conteúdo novo traduzido, use `t('Texto em português')` com o hook `useT` nos componentes React, e inclua a frase no dicionário.
-- Conteúdo que você adicionar futuramente (novos títulos, comentários, serviços) não será traduzido automaticamente: adicione suas traduções manualmente ao dicionário para evitar alterar nomes próprios.
-
-### 🏞️ Papéis de parede: Bliss padrão + duas alternativas
-
-Coloque a sua cópia da fotografia **Bliss do Windows XP** em `public/images/xp-bliss.jpg`. Essa imagem **não está no ZIP** por questões de direitos autorais. O site já abre por padrão com `/images/xp-bliss.jpg` para visitantes novos, desde que o arquivo esteja presente.
-
-Clique com o botão direito na área de trabalho e abra **Display Properties / Propriedades de exibição**. Você verá quatro opções:
-
-1. **Windows XP Bliss (default)** — seu `public/images/xp-bliss.jpg`, já selecionado por padrão.
-2. **XP Hills (illustration)** — o fundo ilustrado que eu criei (`public/images/xp-hills.svg`).
-3. **Original Repo Wallpaper** — o wallpaper do repositório anterior (`public/images/wallpaper.svg`), recuperado pelo script de sincronização de assets.
-4. **Uploaded Image** — uma imagem selecionada por **Browse image…**, guardada localmente no navegador.
-
-A opção "Site Image File" e seu campo de caminho foram retirados. **Restore Default** agora volta ao Bliss. Se o navegador já salvou uma preferência antiga, clique em Restore Default uma vez; visitantes novos usam Bliss automaticamente. Para publicação, inclua sua imagem Bliss no GitHub junto com o código.
-
-### ▶ Windows Media Player
-
-- Vídeos longos do YouTube são encaixados no espaço disponível em **16:9**; curtos do Google Drive ficam em **9:16**. Os iframes não ultrapassam os limites da janela.
-- Ao abrir um vídeo incorporado do YouTube ou um MP4/WebM local, o site tenta iniciá-lo automaticamente **sem som**, como exigem as políticas de autoplay dos navegadores. Use o player para ligar o áudio. A reprodução pode depender de permissões e restrições do próprio YouTube.
-- Reels antigos que **ainda são somente links do Instagram** continuam abrindo externamente; para assistir dentro do player, adicione o link do arquivo no Google Drive.
-
-### 🖱️ Cursores e ícones do menu
-
-- Usamos os quatro cursores da pasta `public/icons`: `cursor.svg`, `cursor-pointer.svg`, `cursor-text.svg` e `cursor-drag.svg`. Eles foram criados no seu projeto original e **não são substituídos** por este ZIP. Caso estejam faltando, rode `npm run assets:sync` com acesso à internet. O navegador tem cursores padrão como fallback.
-- Os botões inferiores do menu Iniciar agora usam **ícones SVG desenhados na interface**, em vez de emoji ou glifo dependente da fonte do sistema.
-
-### 📦 Instalar a atualização por cima da anterior
-
-1. **Faça commit ou backup** do portfólio que já está funcionando.
-2. Extraia o ZIP e copie **os arquivos que estão dentro dele** para a raiz de `capimaso-portfolio`, confirmando substituir arquivos com o mesmo nome.
-3. **Não apague** pastas antigas de `public/images`, `public/videos` e nem o seu `data/showcase.json` se já adicionou vídeos pelo Estúdio. Nesse caso **mantenha seu `data/showcase.json` mais recente**, pois o ZIP contém apenas a lista original de exemplo.
-4. Com o Node.js e as dependências instaladas, rode `npm run check`, `npm run dev` e `npm run build` para verificar a atualização. Não é preciso apagar `node_modules` se a sua instalação já funciona.
-
-> Observação: o ZIP traz os dados do showcase anterior porque é um projeto completo; se você já editou esses dados, preserve suas mudanças ao copiar.
-
----
-
-## 🎬 Reels e Shorts com Google Drive
-
-Os vídeos curtos usam o player incorporado do Google Drive em **9:16**. Os arquivos de vídeo ficam no Drive; apenas as capas continuam no repositório. O player inicia pelo botão de reprodução, sem autoplay forçado.
-
-### Adicionar pelo Estúdio
-
-1. Envie o vídeo ao Google Drive e compartilhe como **Qualquer pessoa com o link → Leitor**.
-2. Rode `npm run dev` e abra **http://localhost:3000/studio**.
-3. Preencha título, descrição e categoria; cole o link do Drive e escolha a capa JPG/PNG/WebP.
-4. Confira a prévia e clique em **Adicionar ao showcase**.
-5. Faça commit/push de `data/showcase.json` e da nova imagem em `public/images/thumbs/`.
-
-O Estúdio continua disponível apenas em desenvolvimento. Ele salva **o link e a capa**, sem baixar ou gravar o vídeo. A capa deve ser escolhida manualmente; o player do Drive não permite capturar frames diretamente pelo site.
-
-### Configurar os vídeos existentes ou adicionar manualmente
-
-Em **`data/showcase.json`**, preencha o campo `video` de cada curto com seu link real:
-
-```json
-{
-  "id": "meu-short",
-  "title": "Meu novo Short",
-  "description": "O que editei e para quem",
-  "category": "Gaming • Short form",
-  "format": "short",
-  "video": "https://drive.google.com/file/d/SEU_ID_REAL/view?usp=sharing",
-  "thumbnail": "/images/thumbs/meu-short.jpg",
-  "software": "Premiere Pro"
-}
-```
-
-Links `/file/d/ID/view`, `/file/d/ID/preview`, `/open?id=ID` e `/uc?id=ID` são aceitos. Links com `resourcekey` preservam essa chave. Use o link de **um arquivo**, não de uma pasta. O botão **Abrir no Google Drive** permite abrir o vídeo fora do player.
-
-Scarface e Stefany já usam os links reais fornecidos pelo proprietário, mantendo seus dados e capas. Os MP4 locais foram removidos; `public/videos/` está no `.gitignore` e a sincronização não baixa mais vídeos.
-
-### 📼 E os vídeos longos?
-
-Use **somente links do YouTube**, como solicitado. O player aceita `youtube.com/watch?v=...` e `youtu.be/...`:
-
-```json
-{
-  "id": "meu-video-longo",
-  "title": "Vídeo para YouTube",
-  "description": "Um trabalho de edição horizontal",
-  "category": "Gaming • Vídeo longo",
-  "format": "long",
-  "video": "https://www.youtube.com/watch?v=SEU_ID",
-  "thumbnail": "",
-  "software": "Premiere Pro"
-}
-```
-
-A thumbnail é extraída do YouTube quando `thumbnail` está vazia. Links antigos de Instagram continuam registrados, mas dependem de acesso externo: **para assistir diretamente no site, configure o link do arquivo no Google Drive.** O site não baixa vídeos do Instagram.
-
-## 📁 Onde editar cada coisa
-
-| Quero mudar... | Arquivo correto |
+| Conteúdo | Fonte |
 | --- | --- |
-| Nome, bio, profissão, frase principal e SEO | [`data/profile.ts`](data/profile.ts) |
-| Trabalhos, vídeos e thumbnails | [`data/showcase.json`](data/showcase.json) |
-| Redes e email | [`data/socials.ts`](data/socials.ts) |
-| Softwares que utilizo | [`data/skills.ts`](data/skills.ts) |
-| Serviços e valores | [`data/services.ts`](data/services.ts) |
-| Recados reais de clientes | [`data/comments.ts`](data/comments.ts) |
-| Vídeo do botão azul “Vídeo de apresentação” | [`data/media.ts`](data/media.ts) |
-| Cores, formas, responsividade e XP Luna | [`src/os/xp/xp.css`](src/os/xp/xp.css) |
-| Ícones e interação das janelas/menu | [`src/os/xp/XpDesktop.tsx`](src/os/xp/XpDesktop.tsx) |
-| Conteúdo interno de cada programa | [`src/os/xp/XPApps.tsx`](src/os/xp/XPApps.tsx) |
-| Ícones vetoriais locais | [`src/os/xp/XPIcon.tsx`](src/os/xp/XPIcon.tsx) |
-| Cadastro local de link Drive e capa | [`app/api/studio/upload/route.ts`](app/api/studio/upload/route.ts) |
-| Sincronizar mídias originais | [`scripts/sync-original-assets.mjs`](scripts/sync-original-assets.mjs) |
+| Identidade e bio | [data/profile.ts](data/profile.ts) |
+| Perfil Win7 e equipamento real | [data/win7-profile.ts](data/win7-profile.ts) |
+| Projetos | [data/showcase.json](data/showcase.json) |
+| Softwares | [data/skills.ts](data/skills.ts) |
+| Serviços e pacotes | [data/services.ts](data/services.ts) |
+| Recados | [data/comments.ts](data/comments.ts) |
+| Contatos Win7 | [data/win7-socials.ts](data/win7-socials.ts) |
+| Vídeo de apresentação | [data/media.ts](data/media.ts) |
+| Traduções | [lib/locale-dictionary.ts](lib/locale-dictionary.ts) |
+| Identidade de compartilhamento | [data/site.ts](data/site.ts) |
+| Desktop, janelas e aplicativos | [src/os/win7/](src/os/win7/) |
+| Formulário do Estúdio | [src/os/win7/studio/](src/os/win7/studio/) |
 
-## 🖼️ Acervo preservado
+## Verificar e publicar
 
-A sincronização mantém os caminhos originais de `profile.jpg`, `scarfaceThumb.png`, `thumbs/ThumbBizu.png`, `avatars/megluuh.jpg`, SVGs de projetos e cursores. Vídeos não são mais sincronizados. A galeria **Thumbnails** lista automaticamente todas as imagens de `public/images/thumbs/` — inclusive as enviadas pelo Estúdio.
-
-### Papel de parede XP
-
-O fundo padrão `public/images/xp-hills.svg` é **uma arte original inspirada no clássico Bliss**. O botão direito no desktop permite alternar para `public/images/wallpaper.svg` do repositório anterior. O retrato fotográfico original do Windows XP **não é redistribuído** por razões de direitos de uso. Se você possuir um arquivo autorizado, pode substituir `xp-hills.svg` e ajustar o CSS para `.jpg` ou `.webp`.
-
-## 🗂️ Estrutura
-
-```text
-capimaso-portfolio/
-├── app/
-│   ├── page.tsx                 BIOS e Boot Manager
-│   ├── layout.tsx               Documento, SEO e estrutura mínima
-│   ├── xp/                      Rota e layout isolado do XP
-│   ├── win7/                    Rota do desktop Windows 7
-│   ├── studio/page.tsx          Estúdio privado local
-│   └── api/studio/upload/route.ts
-├── src/
-│   ├── boot/                    BIOS, seletor e CSS Modules
-│   ├── os/xp/                   Desktop, apps, imagens, ícones e xp.css
-│   ├── os/win7/                 Shell Aero, taskbar, menu e gerenciador
-│   └── shared/                  Contexto de idioma
-├── components/                  Legado preservado e exports de compatibilidade
-├── data/                        Informações editáveis
-├── lib/                         Leitura de mídia / helpers
-├── public/
-│   ├── images/                  Wallpapers, capas, avatar, thumbs/
-│   ├── icons/                   Cursores originais
-│   └── assets/win7/             Ícones, wallpaper, sprite Orb e cursores reais
-├── docs/references/             Capturas de referência do Windows 7
-├── PLANS.md                     Plano aprovado e ordem de implementação
-├── ASSETS_NEEDED.md             Inventário de recursos e pendências
-├── scripts/sync-original-assets.mjs
-├── docs/CODEX-GUIDE.md
-├── MUDANCAS.md
-├── docs/ANALISE-DO-ORIGINAL.md
-├── AGENTS.md                    Instruções autônomas para Codex
-└── package.json
+```sh
+npm run check
+npm run typecheck
+npm run test:win7
+npm run test:photos
+npm run test:sounds
+npm run test:player
+npm run test:studio
+npm run test:metadata
+npm run build
 ```
 
-## 🎨 Diretrizes visuais
+`check` funciona offline, sem instalar dependências. `test:studio` usa diretório
+temporário isolado e não altera o acervo. `npm run probe:videos` é um diagnóstico
+opcional de rede, separado dos testes: não salva vídeos nem lê credenciais.
 
-- **Windows XP Luna Blue**, Tahoma 11–12 px, fundos creme `#ECE9D8`, sombras discretas; sem glassmorphism, blur exagerado ou card de SaaS.
-- Barra de tarefas azul, botão Iniciar verde, cantos arredondados **somente no topo da janela**; menu Iniciar em duas colunas, Explorador com painel de tarefas à esquerda.
-- Respeitar a distinção de formatos: **9:16 para vídeos curtos** e **16:9 para vídeos longos**.
-- Priorizar legibilidade, navegação por teclado, botões reais e comportamento consistente em telas pequenas.
+Para produção: `npm run build` e `npm start`, ou build Next.js na hospedagem.
+Antes do build, configure `SITE_URL` com o endereço público real, por exemplo
+`https://seu-dominio.com` (sem caminho, parâmetros ou fragmento). A configuração
+fica no servidor e é documentada em [.env.example](.env.example).
+Ela define a URL canônica, Open Graph/Twitter e o único endereço do sitemap.
+Título e descrição de compartilhamento acompanham a página inicial; a imagem
+usa o wallpaper Win7 original existente.
 
-## ✅ Checklist de publicação
+Sem `SITE_URL`, o site continua funcionando, mas omite URL canônica, imagens
+sociais e URLs do sitemap, sem inventar domínio nem publicar `localhost`.
+Uma configuração inválida interrompe o build com mensagem clara, sem exibir
+seu valor. Depois de alterar o domínio, refaça o build. `/robots.txt` permite
+o portfólio e exclui Estúdio/APIs do rastreamento; `/sitemap.xml` lista só `/`.
+As rotas antigas continuam redirecionando e o Estúdio permanece local.
 
-- [ ] Rodei `npm install` e `npm run dev`.
-- [ ] As imagens antigas aparecem (ou executei `npm run assets:sync`).
-- [ ] Abri trabalhos, recados, serviços e contatos.
-- [ ] Testei um curto do **Google Drive** no Windows Media Player.
-- [ ] Verifiquei a capa do Short em formato vertical.
-- [ ] Conferi as URLs de YouTube dos vídeos longos.
-- [ ] Rodei `npm run build`.
-- [ ] Dei commit e push nas mídias + `data/showcase.json`.
+Configure as variáveis do Drive no servidor de destino quando usar fotografias.
+Nenhum deploy é executado automaticamente.
 
----
+`predev` e `prebuild` recuperam imagens originais ausentes, sem sobrescrever as
+existentes ou baixar vídeos. Para repetir: `npm run assets:sync`. Preserve `public/`
+e o manifesto ao atualizar. Assets antigos e fontes XP/boot permanecem no
+repositório como legado, sem rotas, imports ou CSS na aplicação ativa.
 
-<div align="center">
-
-**CAPIMASO • Meu computador, meus cortes, meu jeito.**
-
-`[ iniciar ]` `📁` `🎞️` `💾` — Interface inspirada no Windows XP, não afiliada à Microsoft.
-
-</div>
-
-### Atualizações sobre projetos existentes
-
-Na versão 2.1.1 o arquivo de traduções é `lib/locale-dictionary.ts`. Se você havia copiado versões anteriores por cima, pode ter sobrado `lib/i18n.tsx` antigo; esse arquivo não é mais usado pelo desktop atual. Após copiar os arquivos novos, execute `npm run check` e `npm run build`.
+Consulte [MUDANCAS.md](MUDANCAS.md), [guia de manutenção](docs/CODEX-GUIDE.md),
+[plano](PLANS.md) e [verificação de reprodução](docs/WMP12-PLAYBACK-VERIFICATION.md).
+Pendências de conteúdo: capas melhores para os dois curtos cuja prévia do Drive
+veio preta, adiadas pelo proprietário. Não preencher dados por suposição.

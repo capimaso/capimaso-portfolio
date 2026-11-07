@@ -108,9 +108,10 @@ export default function Explorer({ onOpen, onView, initialTrail }: Props) {
       <nav className={`has-scrollbar ${styles.explorerSidebar}`} aria-label={t('Outros lugares')}>
         <strong>{t('Favoritos')}</strong>
         <button type="button" onClick={() => navigate({ trail: [] })}><Win7Icon name="photos" size={16} />{t('Fotografias')}</button>
-        <button type="button" onClick={() => onOpen('about')}><Win7Icon name="about" size={16} />{t('Sobre')}</button>
+        <button type="button" onClick={() => onOpen('about')}><Win7Icon name="about" size={16} />{t('Meu perfil')}</button>
         <button type="button" onClick={() => onOpen('contact')}><Win7Icon name="contact" size={16} />{t('Contato')}</button>
-        <button type="button" onClick={() => onOpen('games')}><Win7Icon name="games" size={16} />{t('Games')}</button>
+        <button type="button" onClick={() => onOpen('videos')}><Win7Icon name="videos" size={16} />{t('Vídeos')}</button>
+        <button type="button" onClick={() => onOpen('thumbnails')}><Win7Icon name="thumbnails" size={16} />{t('Thumbnails')}</button>
       </nav>
       <div className={`has-scrollbar ${styles.explorerBody}`} aria-busy={loading || more}>
         <h1>{data?.folder.name || trail.at(-1)?.name || t('Fotografias')}</h1>

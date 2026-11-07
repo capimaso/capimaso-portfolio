@@ -7,5 +7,6 @@ import { soundsMap } from '@/src/lib/sounds-map';
 /** Only shipped files reach the browser; absent sounds cause no media requests. */
 export function availableWin7Sounds(publicDirectory = path.join(process.cwd(), 'public')): Win7Sound[] {
   return (Object.keys(soundsMap) as Win7Sound[]).filter(name =>
-    statSync(path.join(publicDirectory, soundsMap[name]), { throwIfNoEntry: false })?.isFile());
+    // The injectable root is used by tests; trace only shipped sounds via next.config.
+    statSync(/* turbopackIgnore: true */ path.join(/* turbopackIgnore: true */ publicDirectory, soundsMap[name]), { throwIfNoEntry: false })?.isFile());
 }

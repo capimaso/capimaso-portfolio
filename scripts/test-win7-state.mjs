@@ -18,6 +18,32 @@ const { windowReducer: reduce, initialWindows, activeWindow, fitBounds } = await
 const area = { width: 1440, height: 860 };
 const open = (state, id) => reduce(state, { type: 'open', id, area });
 
+test('media destinations restore one viewer and preserve geometry without changing the photo viewer', () => {
+  let state = reduce(initialWindows, { type: 'open', id: 'videoPlayer', area, media: { kind: 'video', id: 'scarface' } });
+  const bounds = { x: 80, y: 60, width: 700, height: 520 };
+  state = reduce(state, { type: 'bounds', id: 'videoPlayer', bounds });
+  state = reduce(state, { type: 'minimize', id: 'videoPlayer' });
+  state = reduce(state, { type: 'open', id: 'videoPlayer', area, media: { kind: 'video', id: 'megluuh' } });
+  assert.equal(state.windows.length, 1);
+  assert.equal(state.windows[0].minimized, false);
+  assert.deepEqual(state.windows[0].bounds, bounds);
+  assert.deepEqual(state.windows[0].media, { kind: 'video', id: 'megluuh' });
+  const selection = { images: [{ id: 'photo' }], index: 0, path: [] };
+  state = reduce(state, { type: 'open', id: 'photoViewer', area, selection });
+  state = reduce(state, { type: 'open', id: 'thumbnailViewer', area, media: { kind: 'thumbnail', src: '/images/thumbs/ThumbBizu.png' } });
+  state = reduce(state, { type: 'open', id: 'thumbnailViewer', area, media: { kind: 'thumbnail', src: '/images/thumbs/another.png' } });
+  assert.equal(state.windows.length, 3);
+  assert.deepEqual(state.windows.find(win => win.id === 'photoViewer').selection, selection);
+  assert.equal(state.windows.find(win => win.id === 'thumbnailViewer').media.src, '/images/thumbs/another.png');
+});
+
+test('portfolio folders are searchable in both languages and cancelled games are absent', () => {
+  for (const query of ['vídeos', 'videos', 'curtos', 'longos', 'shorts']) assert.equal(searchPrograms(query, value => value)[0].id, 'videos');
+  for (const query of ['thumbnails', 'thumbs', 'miniaturas']) assert.equal(searchPrograms(query, value => value)[0].id, 'thumbnails');
+  for (const query of ['games', 'jogos', 'solitaire', 'purble']) assert.deepEqual(searchPrograms(query, value => value, true), []);
+  assert.equal(searchPrograms('', value => value, true).some(app => ['videoPlayer', 'thumbnailViewer'].includes(app.id)), false);
+});
+
 test('opening an existing app restores and focuses a single window', () => {
   let state = open(open(initialWindows, 'photos'), 'contact');
   state = reduce(state, { type: 'minimize', id: 'photos' });

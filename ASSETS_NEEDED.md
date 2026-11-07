@@ -29,6 +29,11 @@ substituem wallpaper limpo ou recursos individuais.
 
 ## Pendentes
 
+- WMP12: 38 ICO inspecionados em `WMP12 Icons/`. Três capturas do proprietário
+  definem o modo Em reprodução; moldura/barra implementadas com CSS e controles
+  em SVG. Sprites originais da barra não foram fornecidos. Ver
+  [prova de reprodução](docs/WMP12-PLAYBACK-VERIFICATION.md).
+
 - Ícone original da Calculadora do Windows 7: não encontrado no catálogo recebido;
   o atalho usa temporariamente o ícone real de pasta já disponível.
 
@@ -39,8 +44,6 @@ substituem wallpaper limpo ou recursos individuais.
 | Cursor de seleção de texto | public/assets/win7/cursor/ | Não encontrado; fallback default |
 | Sons Win7 | public/assets/win7/sounds/ | Recebidos e mapeados com nomes Microsoft; sem renomear arquivos |
 | Sons XP | Equivalente XP | Não incorporados nesta rodada |
-| Cartas, versos e tabuleiro Solitaire | public/assets/win7/games/solitaire/ | Ícone presente; artes internas ausentes |
-| Menu, cenários e peças Purble Place | public/assets/win7/games/purble-place/ | Ícone presente; artes internas ausentes |
 | Procedência dos recursos recebidos | Este inventário e ASSETS.md | Áudios usados têm origem imediata e hashes registrados; fonte externa/licença não informadas |
 
 Busca: arquivos locais, recursos originais fornecidos pelo proprietário e

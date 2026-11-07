@@ -42,7 +42,7 @@ export default function Taskbar({ startOpen, onStart, windows, activeId, onOpen,
   return <footer className={`window glass active ${styles.taskbar}`} aria-label={t('Barra de tarefas')} data-taskbar>
     <StartOrb open={startOpen} onToggle={onStart} />
     <div className={styles.pinned}>
-      {(['photos', 'games'] as const).filter(id => !windows.some(win => win.id === id)).map(id => <button
+      {(['photos', 'videos'] as const).filter(id => !windows.some(win => win.id === id)).map(id => <button
         type="button" key={id} title={t(applications.find(app => app.id === id)!.label)} onClick={() => onOpen(id)}>
         <Win7Icon name={id} />
       </button>)}

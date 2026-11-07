@@ -1,0 +1,58 @@
+/* Windows 7 property-sheet layout for the owner's existing portfolio content. */
+.profile { min-height: 100%; padding: 18px; color: #222; background: #f0f0f0; font-size: 12px; line-height: 1.6; }
+.identity { display: flex; align-items: center; gap: 16px; padding: 0 0 18px; }
+.identity img { padding: 3px; object-fit: cover; background: #fff; border: 1px solid #9baab8; border-radius: 3px; box-shadow: 0 1px 2px #0002; }
+.identity > div { min-width: 0; }
+.identity h1 { margin: 0; font-size: 21px; font-weight: normal; color: #234568; overflow-wrap: anywhere; }
+.identity p { margin: 2px 0; }
+.availability { color: #385a3d; font-size: 11px; }
+.availability::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #51824a; margin-right: 6px; }
+.tabs { display: flex; align-items: end; overflow-x: auto; padding: 2px 2px 0; }
+.tabs button { flex: 0 0 auto; position: relative; border: 1px solid #a3a3a3; border-bottom: 0; border-radius: 3px 3px 0 0; padding: 4px 12px; background: linear-gradient(#f6f6f6, #e3e3e3); color: #222; }
+.tabs button::before, .tabs button::after { content: none; }
+.tabs button[aria-selected='true'] { background: #fff; padding-top: 6px; z-index: 1; box-shadow: 0 1px #fff; }
+.tabs button:focus-visible { outline: 1px dotted #222; outline-offset: -4px; }
+.panel { min-height: 270px; border: 1px solid #a3a3a3; padding: 18px; background: #fff; overflow-wrap: anywhere; }
+.panel[hidden] { display: none; }
+.panel h2 { margin: 0 0 12px; color: #234568; font-size: 16px; font-weight: normal; }
+.panel h3 { font-size: 12px; margin: 0; }
+.panel p { margin: 0 0 16px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 5px; }
+.actions button { display: flex; align-items: center; gap: 7px; padding: 5px 10px; }
+.actions img { flex-shrink: 0; }
+.software { list-style: none; padding: 0; margin: 0; }
+.software li { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid #e0e6ec; }
+.software li > div { flex: 1; min-width: 0; }
+.software p { margin: 0; color: #52606c; }
+.software li > span { font-size: 11px; color: #52606c; }
+.prices { width: 100%; border-collapse: collapse; margin: 10px 0 22px; font-size: 12px; }
+.prices caption { text-align: left; font-weight: 600; padding-bottom: 8px; color: #234568; }
+.prices th { font-weight: 600; background: #f4f7fa; }
+.prices th, .prices td { padding: 8px; border-bottom: 1px solid #d9e2eb; text-align: left; vertical-align: top; white-space: normal; overflow-wrap: anywhere; }
+.prices td:last-child { white-space: nowrap; }
+.prices strong { font-weight: 600; }
+.prices small { display: block; color: #52606c; }
+.comment { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #d9e2eb; }
+.comment > img { object-fit: cover; flex-shrink: 0; border: 1px solid #a6b6c7; padding: 2px; }
+.comment > div { flex: 1; min-width: 0; }
+.comment header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+.comment a { color: #1b4c7b; }
+.comment time { color: #667584; font-size: 11px; }
+.comment p { margin: 5px 0 0; }
+.equipment { margin: 0; }
+.equipment > div { display: flex; gap: 20px; border-bottom: 1px solid #d9e2eb; padding: 10px 0; }
+.equipment dt { color: #52606c; min-width: 90px; }
+.equipment dd { margin: 0; }
+@media (max-width: 719px) {
+  .profile { padding: 12px; }
+  .identity { gap: 12px; }
+  .identity img { width: 64px; height: 64px; }
+  .identity h1 { font-size: 18px; }
+  .panel { padding: 12px; }
+  .tabs button { min-height: 44px; padding-left: 10px; padding-right: 10px; }
+  .actions button { min-height: 44px; }
+  .prices th, .prices td { padding: 7px 4px; }
+  .software li { flex-wrap: wrap; }
+  .software li > div { flex-basis: calc(100% - 50px); }
+  .software li > span { margin-left: 44px; }
+}

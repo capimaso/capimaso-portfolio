@@ -38,5 +38,35 @@
     "video": "https://www.youtube.com/watch?v=Mj67WzDsaP4&t=1s",
     "thumbnail": "",
     "software": "Premiere Pro"
+  },
+  {
+    "id": "dono-da-bublitz",
+    "title": "Dono da Bublitz",
+    "description": "",
+    "category": "Vídeo curto",
+    "format": "short",
+    "video": "https://drive.google.com/file/d/1CCXeRL79m2LboFzz8dcHJtIZUit2gMdQ/view?usp=drive_link",
+    "thumbnail": "/images/posters/dono-da-bublitz.jpg",
+    "software": ""
+  },
+  {
+    "id": "corte-pib-1",
+    "title": "1 Corte PIB",
+    "description": "",
+    "category": "Vídeo curto",
+    "format": "short",
+    "video": "https://drive.google.com/file/d/1MQAwdGLuJtV1AzzA__ZGqplRzniMo-qA/view?usp=drive_link",
+    "thumbnail": "/images/posters/corte-pib-1.jpg",
+    "software": ""
+  },
+  {
+    "id": "investiu-mkt-1",
+    "title": "Investiu MKT 1",
+    "description": "",
+    "category": "Vídeo curto",
+    "format": "short",
+    "video": "https://drive.google.com/file/d/1xgffQ_5sBciW8jneG9tyCRDx7lrZoeUz/view?usp=drive_link",
+    "thumbnail": "/images/posters/investiu-mkt-1.jpg",
+    "software": ""
   }
 ]

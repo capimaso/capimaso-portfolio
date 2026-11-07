@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { useT } from '@/src/shared/LanguageContext';
 import { profile } from '@/data/profile';
@@ -119,12 +118,12 @@ export default function StartMenu({ open, onOpen, onBrowse, onClose }: { open: b
         <span className={styles.previewIcon} aria-hidden="true"><Win7Icon name={previewIcon} size={64} /></span>
       </div>
       <strong className={styles.userName}>{profile.name}</strong>
-      {(['photos', 'games', 'about', 'contact', 'controlPanel'] as const).map(id => <button type="button" key={id} {...previewEvents(id)} onClick={() => onOpen(id)}>
+      {(['photos', 'videos', 'thumbnails', 'about', 'contact', 'controlPanel'] as const).map(id => <button type="button" key={id} {...previewEvents(id)} onClick={() => onOpen(id)}>
         {t(applications.find(app => app.id === id)!.label)}
       </button>)}
       <div className={styles.startSeparator} />
-      <Link href="/xp" className={styles.otherSystem}>Windows XP</Link>
-      <Link href="/" className={styles.restart}>{t('Reiniciar')}</Link>
+      {/* A document navigation also restarts the session when already at /. */}
+      <a href="/" className={styles.restart}>{t('Reiniciar')}</a>
     </div>
   </section>;
 }

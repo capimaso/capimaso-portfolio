@@ -202,11 +202,11 @@
 .menuPortrait:not([data-start-preview='profile']) .userPicture { opacity: 0; }
 .menuPortrait:not([data-start-preview='profile']) .previewIcon { opacity: 1; }
 .userName { padding: 4px 8px 12px; font-weight: 600; text-shadow: 0 1px 2px #000; }
-.startRight > button, .otherSystem { display: block; border: 1px solid transparent; border-radius: 3px; min-height: 39px; padding: 9px 7px; background: none; color: #fff; text-align: left; text-decoration: none; }
-.startRight > button, .otherSystem { position: relative; z-index: 0; }
-.startRight > button::before, .desktop .otherSystem::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: linear-gradient(#ffffff30, #ffffff08 50%, #071f3333 51%); opacity: 0; pointer-events: none; }
-.startRight > button:hover, .otherSystem:hover { border-color: #ffffff70; box-shadow: inset 0 0 0 1px #0003; }
-.startRight > button:hover::before, .desktop .otherSystem:hover::before { opacity: 1; }
+.startRight > button { display: block; border: 1px solid transparent; border-radius: 3px; min-height: 39px; padding: 9px 7px; background: none; color: #fff; text-align: left; text-decoration: none; }
+.startRight > button { position: relative; z-index: 0; }
+.startRight > button::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: linear-gradient(#ffffff30, #ffffff08 50%, #071f3333 51%); opacity: 0; pointer-events: none; }
+.startRight > button:hover { border-color: #ffffff70; box-shadow: inset 0 0 0 1px #0003; }
+.startRight > button:hover::before { opacity: 1; }
 .startSeparator { height: 1px; background: #ffffff30; margin: 7px 3px; box-shadow: 0 1px #0003; }
 .restart { margin-top: auto; align-self: flex-start; border: 1px solid #173044; border-radius: 3px; padding: 4px 16px; background: linear-gradient(#cadbe780, #9cb1c030 50%, #24435d80 51%); box-shadow: inset 0 0 0 1px #ffffff70; color: white; text-decoration: none; }
 .restart:hover { background-color: #ffffff50; }
@@ -253,13 +253,13 @@
 /* Declare transitions on the controls AND the layers that paint their glow.
    Gradients switch discretely; opacity makes their hover genuinely fade. */
 .desktop :is(.pinned button, .task, .languageSwitch button, .showDesktop,
-  .programs button, .allPrograms, .startRight > button, .otherSystem, .restart,
+  .programs button, .allPrograms, .startRight > button, .restart,
   .windowButtons button),
 .desktop :is(.pinned button, .task, .languageSwitch button, .showDesktop,
-  .programs button, .allPrograms, .startRight > button, .otherSystem, .restart,
+  .programs button, .allPrograms, .startRight > button, .restart,
   .windowButtons button)::before,
 .desktop :is(.pinned button, .task, .languageSwitch button, .showDesktop,
-  .programs button, .allPrograms, .startRight > button, .otherSystem, .restart,
+  .programs button, .allPrograms, .startRight > button, .restart,
   .windowButtons button)::after {
   transition: background-color .2s ease, background-image .2s ease, opacity .2s ease;
 }
@@ -279,7 +279,7 @@
 .nw { top: -1px; left: -1px; cursor: url('/assets/win7/cursor/Diagonal%20Resize%201.cur'), nwse-resize; }
 .se { bottom: -1px; right: -1px; cursor: url('/assets/win7/cursor/Diagonal%20Resize%201.cur'), nwse-resize; }
 
-/* Real portfolio content; the photo library and games remain upcoming features. */
+/* Explorer surfaces shared by the portfolio libraries. */
 .explorer { height: 100%; display: flex; flex-direction: column; }
 .addressBar { display: flex; align-items: center; gap: 10px; padding: 7px 10px; min-height: 33px; background: linear-gradient(#fff, #e8eef5); border-bottom: 1px solid #a9b9ce; font-size: 11px; }
 .addressBar strong { font-weight: normal; }
@@ -293,19 +293,12 @@
 .explorerBody h1 { color: #1e4270; font-size: 20px; font-weight: normal; margin: 0 0 18px; }
 .emptyLibrary { display: flex; align-items: center; flex-direction: column; padding: 30px 8px; text-align: center; color: #666; }
 .explorerStatus { min-height: 26px; padding: 4px 14px; background: #fff; border: 0; color: #68747f; font-size: 11px; text-align: left; }
-.about, .contact { padding: 24px; color: #222; line-height: 1.7; }
-.about header { display: flex; gap: 18px; align-items: center; border-bottom: 1px solid #d9e2ed; padding-bottom: 18px; }
-.about header img { object-fit: cover; border: 1px solid #8a9ba8; padding: 2px; }
-.about h1, .contact h1 { color: #1e4270; font-size: 20px; font-weight: normal; margin: 0; }
-.about header p { margin: 3px 0 0; }
+.contact { padding: 24px; color: #222; line-height: 1.7; }
+.contact h1 { color: #1e4270; font-size: 20px; font-weight: normal; margin: 0; }
 .contactRow { display: flex; gap: 8px; align-items: center; border-bottom: 1px solid #dce4ed; padding: 14px 0; }
 .contactRow > div { display: flex; flex: 1; min-width: 0; flex-direction: column; overflow-wrap: anywhere; }
 .contactRow a, .contactRow button { color: #173e6d; background: linear-gradient(#fff, #e6edf4); border: 1px solid #a6b4c3; border-radius: 2px; padding: 3px 10px; text-decoration: none; }
-.gamesList { display: flex; flex-wrap: wrap; gap: 28px; padding: 20px 0; }
-.gameItem { display: flex; width: 110px; align-items: center; flex-direction: column; gap: 8px; text-align: center; }
-.gameItem strong { font-weight: normal; }
-.gameItem span { font-size: 11px; color: #687886; }
-.noScript { position: absolute; top: 10px; left: 90px; padding: 15px; background: #fff; color: #111; }
+.noScript { position: fixed; z-index: 10000; top: 10px; left: 10px; right: 10px; margin: 0; padding: 15px; background: #fff; color: #111; font: 14px/1.4 'Segoe UI', Tahoma, sans-serif; }
 .notepad { display: block; resize: none; width: 100%; height: 100%; min-height: 100%; border: 0; padding: 5px; background: #fff; color: #111; font: 14px/1.4 Consolas, monospace !important; user-select: text; }
 .calculator { padding: 12px; height: 100%; background: linear-gradient(#edf4fc, #d8e4f2); display: flex; flex-direction: column; gap: 12px; }
 .calculator output { display: block; padding: 10px; border: 1px solid #93a6bd; border-radius: 3px; background: linear-gradient(#e8effb, #fff); text-align: right; font: 24px/1.4 Consolas, monospace; overflow-wrap: anywhere; user-select: text; }
@@ -410,7 +403,7 @@
   .startLeft, .startRight { min-width: 0; }
   .startRight { padding-top: 8px; overflow-y: auto; overscroll-behavior: contain; }
   .menuPortrait { display: none; }
-  .startRight > button, .otherSystem, .restart, .allPrograms { min-height: 44px; }
+  .startRight > button, .restart, .allPrograms { min-height: 44px; }
   .restart { display: flex; align-items: center; }
   .searchBox { order: -1; padding: 5px; }
   .desktop .searchBox input { height: 44px; font-size: 16px; }
@@ -424,12 +417,11 @@
   .windowContent input { min-height: 44px; }
   .desktop input { font-size: 16px; }
   .desktop .notepad { font-size: 16px !important; }
-  .about header > div { min-width: 0; }
   .explorerSidebar { width: 115px; }
   .explorerSidebar button { padding-left: 8px; font-size: 11px; }
   .explorerToolbar > span:last-child { display: none; }
   .explorerBody { padding: 14px; }
-  .contact, .about { padding: 16px; }
+  .contact { padding: 16px; }
   .contactRow { flex-wrap: wrap; }
   .contactRow > div { flex-basis: 100%; }
   .photosGrid { grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); }
@@ -446,9 +438,9 @@
 @media (max-height: 430px) {
   .startRight { padding-top: 5px; overflow-y: auto; }
   .menuPortrait { display: none; }
-  .startRight > button, .otherSystem { min-height: 30px; padding: 5px; }
+  .startRight > button { min-height: 30px; padding: 5px; }
   .userName { padding-bottom: 5px; }
 }
 @media (max-width: 719px) and (max-height: 430px) {
-  .startRight > button, .otherSystem { min-height: 44px; }
+  .startRight > button { min-height: 44px; }
 }

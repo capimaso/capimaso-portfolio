@@ -5,6 +5,10 @@ export const win7Assets = {
   personalization: icon('Filetypes, Devices, Miscellaneous', 'imageres_151'),
   sound: icon('Filetypes, Devices, Miscellaneous', 'audiosrv_203'),
   photos: icon('Special Folders', 'imageres_113'),
+  videos: icon('Libraries', 'imageres_1005'),
+  thumbnails: icon('Libraries', 'imageres_1003'),
+  videoPlayer: icon('Windows Media Player', 'player'),
+  thumbnailViewer: icon('Libraries', 'imageres_1003'),
   folder: icon('Standard Folders', 'imageres_3'),
   calculator: icon('Standard Folders', 'imageres_3'), // Original Calculator icon not supplied; use the existing folder fallback.
   notepad: icon('Default Programs', 'notepad_2'),

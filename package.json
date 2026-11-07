@@ -13,11 +13,15 @@
     "check": "node scripts/check-project.mjs",
     "test:win7": "node --test scripts/test-win7-state.mjs",
     "test:photos": "node --test scripts/test-photos-api.mjs",
-    "test:sounds": "node --test scripts/test-win7-sounds.mjs"
+    "test:sounds": "node --test scripts/test-win7-sounds.mjs",
+    "test:player": "node --test scripts/test-win7-player.mjs",
+    "test:studio": "node --test scripts/test-studio-upload.mjs",
+    "test:metadata": "node --test scripts/test-site-metadata.mjs",
+    "probe:videos": "node scripts/probe-video-sources.mjs"
   },
   "dependencies": {
     "7.css": "0.21.1",
-    "next": "16.3.6",
+    "next": "16.4.5",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },

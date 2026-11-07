@@ -1,11 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { profile } from '@/data/profile';
+import { site } from '@/data/site';
 
 export const metadata: Metadata = {
-  title: `${profile.brand} | Video Editor`,
-  description: 'Tiago (CAPIMASO): video editing for gaming, creators, Reels, Shorts and long-form video.',
-  openGraph: { title: `${profile.brand} | Portfolio`, description: 'Tiago (CAPIMASO): video editing for gaming, creators, Reels, Shorts and long-form video.', type: 'website', images: ['/images/og.svg'] },
+  title: site.title,
   icons: { icon: '/icons/favicon.svg' }
 };
 

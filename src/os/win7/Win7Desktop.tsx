@@ -16,8 +16,9 @@ import SoundManagerProvider, { useSoundManager } from './SoundManager';
 import type { Win7Sound } from '@/src/lib/win7-sounds';
 import DesktopSettingsProvider, { useDesktopSettings } from './DesktopSettings';
 import { useDesktopSelection } from './useDesktopSelection';
+import MediaCatalogProvider, { type MediaCatalog, type MediaSelection } from './MediaCatalog';
 
-export default function Win7Desktop({ availableSounds = [] }: { availableSounds?: Win7Sound[] }) {
+export default function Win7Desktop({ availableSounds = [], catalog }: { availableSounds?: Win7Sound[]; catalog: MediaCatalog }) {
   const [language, setLanguage] = useState<Language>('en');
   useEffect(() => {
     try {
@@ -32,7 +33,7 @@ export default function Win7Desktop({ availableSounds = [] }: { availableSounds?
     try { localStorage.setItem('capimaso-xp-language', next); } catch {}
   }
   return <LanguageProvider language={language}><SoundManagerProvider available={availableSounds}>
-    <Session onLanguage={changeLanguage} />
+    <MediaCatalogProvider catalog={catalog}><Session onLanguage={changeLanguage} /></MediaCatalogProvider>
   </SoundManagerProvider></LanguageProvider>;
 }
 
@@ -108,6 +109,11 @@ function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {
     manager.open('photoViewer', selection);
   }, [manager.open]);
 
+  const viewMedia = useCallback((media: MediaSelection) => {
+    setStartOpen(false);
+    manager.openMedia(media);
+  }, [manager.openMedia]);
+
   function navigate(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     if (event.key === 'Enter') { event.preventDefault(); open(applications[index].id); return; }
     let next: number;
@@ -147,13 +153,12 @@ function Desktop({ onLanguage }: { onLanguage: (language: Language) => void }) {
     {selection.box && <div className={styles.selectionBox} style={selection.box} data-desktop-selection aria-hidden="true" />}
     <div ref={workspace} className={styles.workspace}>
       <WindowManager windows={state.windows} activeId={activeId} compact={compact} area={area}
-        dispatch={dispatch} onOpen={open} onClose={manager.close} onView={view} />
+        dispatch={dispatch} onOpen={open} onClose={manager.close} onView={view} onMedia={viewMedia} />
     </div>
     <StartMenu open={startOpen} onOpen={open} onBrowse={folder => { setStartOpen(false); manager.browse(folder); }}
       onClose={() => { setStartOpen(false); root.current?.querySelector<HTMLButtonElement>('[data-start-button]')?.focus({ preventScroll: true }); }} />
     <Taskbar startOpen={startOpen} onStart={() => setStartOpen(value => !value)} windows={state.windows}
       activeId={activeId} onOpen={open} onTask={manager.task}
       onShowDesktop={manager.showDesktop} onLanguage={onLanguage} />
-    <noscript><p className={styles.noScript}>{t('Ative o JavaScript para usar as janelas.')} <a href="/">{t('Voltar ao Boot Manager')}</a></p></noscript>
   </main>;
 }

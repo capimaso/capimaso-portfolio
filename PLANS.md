@@ -1,6 +1,33 @@
-# CAPIMASO Dual Boot — arquitetura baseada em referências verificadas
+# CAPIMASO Windows 7 — arquitetura e histórico
 
 ## 1. Objetivo e estado
+
+Atualização de 06/11/2026: o destino é um portfólio somente Win7, conforme
+[MUDANCAS.md](MUDANCAS.md). Jogos foram cancelados. Vídeos (curtos/longos) e
+Thumbnails já migraram para pastas Win7 com dados compartilhados com o XP;
+o player usa as fontes atuais. WMP12 Em reprodução implementado com as três
+capturas do proprietário: controles YouTube por API oficial e Drive nativo.
+Uma fonte independente dos provedores ainda depende de validação.
+Meu perfil migrado para abas Win7 com apresentação/intro, softwares, serviços e
+recados; contatos de vídeo e fotografia reunidos. Equipamento inclui a câmera
+Fujifilm FinePix S2800HD confirmada pelo proprietário. Três novos curtos Drive
+adicionados com posters originais; troca das duas capas pretas adiada.
+Consolidação concluída: `/` abre o Win7; `/xp` e `/win7` redirecionam para a
+raiz. BIOS e seletor saíram da navegação. Estúdio usa Win7 somente em dev,
+com página 404/API 403 em produção; novas capas vão para `public/images/posters/`.
+Dados, assets e preferências existentes preservados. Fontes XP/boot ficam
+inativas como legado, sem imports ou CSS nas entradas atuais.
+
+Preparação para publicação: origem real via `SITE_URL` antes do build,
+canonical/Open Graph/Twitter alinhados na home e imagem original Win7.
+`/robots.txt` exclui Estúdio/APIs; sitemap inclui só a raiz. Sem origem,
+URLs públicas são omitidas sem fallback localhost. Domínio aguarda informação
+do proprietário; capas continuam adiadas. Nenhum deploy realizado.
+
+Prova WMP12 registrada em [docs/WMP12-PLAYBACK-VERIFICATION.md](docs/WMP12-PLAYBACK-VERIFICATION.md).
+O download público dos dois curtos retornou HTML; nenhuma fonte nativa foi
+validada. A origem dos arquivos continua pendente; a referência visual foi recebida.
+`npm run probe:videos` permite repetir o diagnóstico sem credenciais.
 
 Rodada concluída: base scoped 7.css, hook central de janelas, gestos separados
 e busca integrada a apps/pastas implementados. Validação em
@@ -14,19 +41,23 @@ Rodada posterior: Painel de Controle em ícones grandes com Personalização e S
 funcionais; avatar dinâmico do Iniciar após 500 ms de hover/foco com fade de
 200 ms. Contato de fotografia atualizado para @capimaso.jpg, preservando o XP.
 
-Preservar Tiago / CAPIMASO, o XP e todo o conteúdo existente. Consolidar o Windows 7
+Preservar Tiago / CAPIMASO e todo o conteúdo existente. Manter o Windows 7
 com 7.css e separação entre estado, gestos, apresentação e aplicativos. Stack:
 Next.js App Router, React e TypeScript. Sem Vue, styled-components, Tailwind ou
 outro motor de DOM. Zero imagens geradas por IA.
 
 | Rota | Responsabilidade | Estado |
 | --- | --- | --- |
-| / | BIOS pulável + Boot Manager com teclado/mouse/toque e links reais | Implementado |
-| /xp | Portfólio Luna de vídeos | Preservar integralmente |
-| /win7 | Desktop Aero e fotografias públicas do Drive | Refatoração incremental |
-| /studio | Estúdio XP, upload somente em desenvolvimento | Preservar |
+| / | Logon público e desktop Aero com todo o portfólio | Implementado |
+| /xp | Endereço antigo | Redirect permanente para / |
+| /win7 | Endereço antigo | Redirect permanente para / |
+| /studio | Estúdio Win7, upload somente em desenvolvimento | 404 em produção |
 | /api/photos | Listagem normalizada e paginada | Preservar contrato |
 | /api/photos/[id]/image | Proxy de miniaturas, originais e downloads | Preservar segurança |
+
+O restante deste documento conserva o histórico de arquitetura e referências da
+implementação. Orientações sobre manter duas interfaces são substituídas pelo
+estado acima e pelo [guia atual](docs/CODEX-GUIDE.md).
 
 ## 2. Fontes estudadas em 22/10/2026
 
@@ -66,7 +97,8 @@ ou código venham a ser incorporados. Não executar instaladores nativos das fon
   window-geometry.ts: movimento/resize sem dependência de DOM.
 - program-catalog.ts: catálogo local, aliases e filtro EN/PT.
 - seven.css: import oficial scoped em camada; win7.module.css: layout/adaptações.
-- apps/: Explorer, PhotoViewer e acessórios existentes; apps/games/: futuro.
+- apps/: Explorer/PhotoViewer do Drive, MediaExplorer/MediaViewers do portfólio
+  local e acessórios existentes. MediaCatalog recebe dados serializados do servidor.
 - apps/ControlPanel.tsx: visão de ícones grandes conforme config.png, com
   Personalização e Som. DesktopSettings.tsx: wallpapers restritos aos dois assets
   recebidos, preferência local exclusiva do Win7; logon permanece Harmony.
@@ -166,7 +198,7 @@ existente, incluindo ancestrais para validação; teclado e mouse funcionam igua
 ## 6. Assets e futuro
 
 Preservar Harmony, Orb e cursores recebidos, sem editar binários para acertar CSS.
-Ausentes em ASSETS_NEEDED.md, incluindo ícone da Calculadora e jogos.
+Ausentes em ASSETS_NEEDED.md, incluindo ícone da Calculadora.
 Buscar primeiro no acervo local, depois [Win7 Icons](https://win7icons.visnalize.com/)
 e [nandomp4](https://www.nandomp4.com/). Não inventar recursos ou personagens.
 
@@ -179,15 +211,9 @@ Control Panel implementado com dois ajustes: Personalização aplica Harmony ou
 Desktop Logo e persiste a escolha em chave local do Win7; Som assina o estado
 global de mute do SoundManager, pausa áudio corrente e bloqueia todos os eventos
 até desmutar. Só esses ajustes funcionais aparecem na grade; demais itens do
-Windows nativo não são simulados. Games permanece identificado como pendente.
-
-Solitaire futuro: Klondike 52 cartas, sete colunas, uma carta por compra,
-alternância de cores/fundações, reciclar, revelar, desfazer, reiniciar e vitória;
-mouse/toque/teclado, seleção/destino alternativo ao arraste, confirmação ao
-reiniciar. Minimizar preserva estado. Purble Place: menu das três modalidades;
-Purble Pairs 4×4 com oito pares apenas com assets suficientes, comparação,
-bloqueio durante animação, tentativas, reinício e vitória. Sem arte, registrar
-limitação e manter indisponível. Sons opcionais após ativação explícita.
+Windows nativo não são simulados. Games foi removido da interface; Solitaire e
+Purble Place foram cancelados pelo proprietário. Os assets recebidos permanecem
+preservados, mas não há implementação de jogos prevista.
 
 ## 7. Execução e aceite
 
@@ -203,7 +229,7 @@ limitação e manter indisponível. Sons opcionais após ativação explícita.
 6. npm run check, npm run typecheck, npm run build, testes de fotos/janelas e
    navegador. Conferir hashes de dados/assets e ausência de chave no frontend;
    documentar ganhos observados e limitações. Não fazer deploy automaticamente.
-7. Jogos permanecem futuros. Logon, Control Panel (wallpaper e mute) e infraestrutura
+7. Jogos cancelados. Logon, Control Panel (wallpaper e mute) e infraestrutura
    de sons estão concluídos. Seis eventos (startup MP3, logon, Ding, navegação,
    minimizar e erro WAV) usam src/lib/sounds-map.ts; nomes, variantes e bytes
    originais preservados. Startup tenta tocar no logon, com fallback na interação

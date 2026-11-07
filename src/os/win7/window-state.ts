@@ -1,11 +1,12 @@
 import { windowApplications as applications, type AppId, type AppWindow, type Bounds, type WorkArea } from './types';
 import type { PhotoFolder, PhotoSelection } from '@/src/lib/photos';
 import { fitBounds } from './window-geometry';
+import type { MediaSelection } from './MediaCatalog';
 export { fitBounds } from './window-geometry';
 
 export type WindowState = { windows: AppWindow[]; desktopRestore: AppId[] };
 export type WindowAction =
-  | { type: 'open'; id: AppId; area: WorkArea; selection?: PhotoSelection; folder?: PhotoFolder[] }
+  | { type: 'open'; id: AppId; area: WorkArea; selection?: PhotoSelection; folder?: PhotoFolder[]; media?: MediaSelection }
   | { type: 'focus' | 'close' | 'minimize' | 'maximize' | 'task'; id: AppId }
   | { type: 'bounds'; id: AppId; bounds: Bounds }
   | { type: 'fit'; area: WorkArea }
@@ -25,11 +26,11 @@ export function windowReducer(state: WindowState, action: WindowAction): WindowS
   switch (action.type) {
     case 'open': {
       if (windows.some(win => win.id === action.id)) return { windows: focus(windows.map(win => win.id === action.id
-        ? { ...win, ...(action.selection ? { selection: action.selection } : {}), ...(action.folder ? { folder: action.folder } : {}) } : win), action.id), desktopRestore: [] };
+        ? { ...win, ...(action.selection ? { selection: action.selection } : {}), ...(action.folder ? { folder: action.folder } : {}), ...(action.media ? { media: action.media } : {}) } : win), action.id), desktopRestore: [] };
       const app = applications.find(app => app.id === action.id)!;
       const offset = (windows.length % 5) * 26;
       const bounds = fitBounds({ x: 120 + offset, y: 55 + offset, width: app.width, height: app.height }, action.area);
-      return { windows: [...windows, { id: action.id, bounds, minimized: false, maximized: false, ...(action.selection ? { selection: action.selection } : {}), ...(action.folder ? { folder: action.folder } : {}) }], desktopRestore: [] };
+      return { windows: [...windows, { id: action.id, bounds, minimized: false, maximized: false, ...(action.selection ? { selection: action.selection } : {}), ...(action.folder ? { folder: action.folder } : {}), ...(action.media ? { media: action.media } : {}) }], desktopRestore: [] };
     }
     case 'focus': {
       const next = focus(windows, action.id);

@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useT } from '@/src/shared/LanguageContext';
-import { profile } from '@/data/profile';
 import { win7Socials as socials } from '@/data/win7-socials';
 import { applications, type AppId } from '../types';
 import Win7Icon from '../Win7Icon';
@@ -13,19 +12,23 @@ import PhotoViewer from './PhotoViewer';
 import SystemTools from './SystemTools';
 import { useSoundManager } from '../SoundManager';
 import ControlPanel from './ControlPanel';
+import type { MediaSelection } from '../MediaCatalog';
+import MediaExplorer from './MediaExplorer';
+import { ThumbnailViewer, VideoPlayer } from './MediaViewers';
+import Profile from './Profile';
 
-export default function AppContent({ id, onOpen, onView, selection, folder }: { id: AppId; onOpen: (id: AppId) => void; onView: (selection: PhotoSelection) => void; selection?: PhotoSelection; folder?: PhotoFolder[] }) {
+export default function AppContent({ id, onOpen, onView, selection, folder, media, onMedia }: { id: AppId; onOpen: (id: AppId) => void; onView: (selection: PhotoSelection) => void; selection?: PhotoSelection; folder?: PhotoFolder[]; media?: MediaSelection; onMedia: (selection: MediaSelection) => void }) {
   const t = useT();
   const sounds = useSoundManager();
   const [notice, setNotice] = useState('');
+  if (id === 'videos' || id === 'thumbnails') return <MediaExplorer id={id} onOpen={onOpen} onMedia={onMedia} />;
+  if (id === 'videoPlayer') return <VideoPlayer id={media?.kind === 'video' ? media.id : undefined} onMedia={onMedia} />;
+  if (id === 'thumbnailViewer') return <ThumbnailViewer key={media?.kind === 'thumbnail' ? media.src : ''} src={media?.kind === 'thumbnail' ? media.src : undefined} onMedia={onMedia} />;
   if (id === 'controlPanel') return <ControlPanel />;
   if (id === 'calculator' || id === 'notepad') return <SystemTools id={id} />;
   if (id === 'photos') return <Explorer onOpen={onOpen} onView={onView} initialTrail={folder} />;
   if (id === 'photoViewer') return selection ? <PhotoViewer selection={selection} /> : null;
-  if (id === 'about') return <article className={styles.about}>
-    <header><img src="/images/profile.jpg" width={72} height={72} alt={profile.brand} /><div><h1>{profile.name} / {profile.brand}</h1><p>{t(profile.role)}</p></div></header>
-    <p>{t(profile.bio)}</p><p>{t(profile.status)}</p>
-  </article>;
+  if (id === 'about') return <Profile onOpen={onOpen} onMedia={onMedia} />;
   if (id === 'contact') return <section className={styles.contact}>
     <h1>{t('Contato')}</h1>
     {socials.map(social => <div className={styles.contactRow} key={social.id}>
@@ -50,11 +53,6 @@ export default function AppContent({ id, onOpen, onView, selection, folder }: { 
       <div className={styles.explorerBody}>
         <h1>{t(applications.find(app => app.id === id)!.label)}</h1>
         {id === 'recycle' && <div className={styles.emptyLibrary}><Win7Icon name="recycle" size={64} /><p>{t('Lixeira vazia')}</p></div>}
-        {id === 'games' && <><p>{t('Os jogos estarão disponíveis em uma próxima atualização.')}</p><div className={styles.gamesList}>
-          {(['solitaire', 'purble'] as const).map(game => <div key={game} className={styles.gameItem}>
-            <Win7Icon name={game} size={64} /><strong>{game === 'solitaire' ? 'Solitaire' : 'Purble Place'}</strong><span>{t('Em breve')}</span>
-          </div>)}
-        </div></>}
       </div>
     </div>
     <footer className={styles.explorerStatus}>CAPIMASO</footer>

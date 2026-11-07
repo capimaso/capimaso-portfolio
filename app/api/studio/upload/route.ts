@@ -7,7 +7,7 @@ import { googleDriveEmbed } from '@/lib/google-drive.mjs';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 const ROOT = process.cwd();
-const POSTER_DIR = join(ROOT,'public','images','thumbs');
+const POSTER_DIR = join(ROOT,'public','images','posters');
 const DATA_FILE = join(ROOT,'data','showcase.json');
 const MAX_POSTER=8*1024*1024;
 const response=(error:string,code=400)=>NextResponse.json({error},{status:code});
@@ -40,7 +40,7 @@ export async function POST(request:Request){
   const coverPath=join(POSTER_DIR,coverName);
   await writeFile(coverPath,picture,{flag:'wx'});
   const previous: ShowcaseItem[]=JSON.parse(await readFile(DATA_FILE,'utf8'));
-  const entry: ShowcaseItem={id,title,description,category,format:'short',video,thumbnail:`/images/thumbs/${coverName}`,software:'Premiere Pro'};
+  const entry: ShowcaseItem={id,title,description,category,format:'short',video,thumbnail:`/images/posters/${coverName}`,software:'Premiere Pro'};
   const tmp=`${DATA_FILE}.${randomUUID()}.tmp`;
   await writeFile(tmp,JSON.stringify([entry,...previous],null,2)+'\n');
   await rename(tmp,DATA_FILE);
