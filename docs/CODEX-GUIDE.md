@@ -70,6 +70,12 @@ preservados. Não inventar câmera/lente: a aba Equipamento fica oculta sem dado
 Explorer. Catálogo e galeria são lidos no servidor e passados por `MediaCatalog`;
 não importar filesystem no cliente. Thumbnails lê `public/images/thumbs/`.
 Capas novas ficam em `public/images/posters/`; não mover arquivos anteriores.
+`src/server/video-covers.ts` aplica capas opcionais de `public/images/posters/custom/`
+pelo ID estável, inclusive `intro`, sem alterar o manifesto ou os assets antigos.
+Aceita PNG/JPG/JPEG/WebP/AVIF e arquivos regulares; sem capa usa o caminho anterior.
+Nunca importar esse helper de filesystem no cliente. Títulos seguem em
+`data/showcase.json` (introdução em `data/media.ts`); instruções e nomes prontos
+estão em `public/images/posters/custom/LEIA-ME.md`.
 
 `WmpPlayer.tsx` segue as três referências recebidas, modo Em reprodução.
 `useYouTubePlayer.ts` oferece controles reais pela API oficial, carregada por
@@ -132,7 +138,7 @@ Estúdio. `app/sitemap.ts` inclui só a raiz canônica, sem redirects legados.
 Alterar `SITE_URL` requer rebuild; testar com `npm run test:metadata`.
 
 Executar `npm run check`, `npm run typecheck`, `npm run build` e testes relevantes:
-`test:win7`, `test:photos`, `test:sounds`, `test:player`, `test:studio`, `test:metadata`.
+`test:win7`, `test:photos`, `test:sounds`, `test:player`, `test:studio`, `test:metadata`, `test:media`.
 O último executa a gravação em diretório temporário isolado, preservando os dados
 do repositório. Conferir redirecionamentos por HTTP sem JavaScript, reinício já
 na raiz, preferências EN/PT/wallpaper e 375/768/1440 px. Nunca publicar fixtures.

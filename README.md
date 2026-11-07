@@ -51,6 +51,23 @@ no celular, um toque abre em tela cheia acima da taskbar. Janelas podem ser
 movidas/redimensionadas no desktop; setas na barra de título movem e
 Shift+setas redimensionam. Minimizar conserva estado e reprodução.
 
+## Trocar capas e nomes dos vídeos
+
+- **Capas dos vídeos:** coloque JPG/PNG/JPEG/WebP/AVIF em
+  [public/images/posters/custom/](public/images/posters/custom/), com o ID como
+  nome: `corte-pib-1.jpg`, `investiu-mkt-1.jpg`, etc. A capa é encontrada
+  automaticamente, preservando a imagem anterior como fallback.
+- **Nome exibido:** edite só `title` no vídeo correspondente em
+  [data/showcase.json](data/showcase.json). Mantenha IDs e links.
+- **Galeria Thumbnails:** coloque as imagens em
+  [public/images/thumbs/](public/images/thumbs/); o nome do arquivo é o nome
+  exibido. Essa galeria é independente das capas dos vídeos.
+
+Veja a [tabela com todos os nomes de arquivos e proporções](public/images/posters/custom/LEIA-ME.md).
+Atualize a página no dev; na Vercel, novos arquivos e títulos exigem deploy.
+O título público da aba é `capimaso`; o favicon usa o primeiro frame do Orb
+original, com a sprite original preservada.
+
 ## Adicionar um Reel/Short
 
 1. Envie o vídeo ao Drive e compartilhe como **Qualquer pessoa com o link → Leitor**.
@@ -112,6 +129,7 @@ npm run test:sounds
 npm run test:player
 npm run test:studio
 npm run test:metadata
+npm run test:media
 npm run build
 ```
 

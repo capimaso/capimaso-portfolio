@@ -1,3 +1,19 @@
+## Nome, Orb e edição simples das capas — 07/11/2026
+
+- Título público da aba e compartilhamento alterado para `capimaso`.
+  Favicon passa a usar o primeiro frame do Orb original em um SVG que embute
+  a sprite recebida, sem redesenhar nem modificar o PNG ou excluir o ícone antigo.
+- Pasta `public/images/posters/custom/` pronta para capas pelo ID do vídeo:
+  basta adicionar a imagem; nomes continuam no campo `title` do manifesto.
+  Incluída tabela de nomes/proporções e instruções para todos os vídeos/intro.
+  Capas anteriores, links, IDs e dados existentes preservados como fallback.
+- Galeria Thumbnails continua automática em `public/images/thumbs/`, separada
+  das capas. Novas imagens/títulos ficam disponíveis na Vercel após novo deploy.
+- Check, seis testes de metadados/capas, build e typecheck aprovados. Edge em
+  1440 e 375 px confirmou título, favicon e fallback; cópia temporária isolada
+  confirmou detecção automática da capa e foi removida. Orb decodificado e
+  bytes da sprite embutida comparados com o original, sem alterações no PNG.
+
 ## Preparação do deploy na main — 07/11/2026
 
 - Publicação autorizada pelo proprietário pelo fluxo Git/Vercel já existente.

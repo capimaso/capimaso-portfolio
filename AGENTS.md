@@ -58,6 +58,10 @@ Read this file FIRST when editing this repository, even without prior chat conte
 - `src/os/win7/apps/`: active portfolio and system-like apps.
 - `src/os/win7/studio/`: local Win7 upload form, using CSS Modules and useT.
 - `data/showcase.json`: list of work. Only edits here for new/updated projects.
+  Edit `title` to rename a video; keep stable IDs and provider links. Optional
+  covers in `public/images/posters/custom/<id>.(png|jpg|jpeg|webp|avif)` override
+  the original poster through server-only `src/server/video-covers.ts`.
+  Keep original assets/manifest paths as fallback; see that folder's LEIA-ME.
 - `app/studio/page.tsx`: server guard; renders the local form only in development, returns 404 in production. Never expose a public admin shortcut.
 - `app/api/studio/upload/route.ts`: DEV-ONLY disk persistence. Do not enable on production without authentication+storage.
 - `scripts/sync-original-assets.mjs`: recover original public assets without overwriting.
@@ -81,7 +85,7 @@ Read this file FIRST when editing this repository, even without prior chat conte
 
 <!-- BEGIN:nextjs-agent-rules -->
 
-# This is NOT the Next.js you know
+## This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
 

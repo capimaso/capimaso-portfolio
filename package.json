@@ -17,6 +17,7 @@
     "test:player": "node --test scripts/test-win7-player.mjs",
     "test:studio": "node --test scripts/test-studio-upload.mjs",
     "test:metadata": "node --test scripts/test-site-metadata.mjs",
+    "test:media": "node --test scripts/test-video-covers.mjs",
     "probe:videos": "node scripts/probe-video-sources.mjs"
   },
   "dependencies": {

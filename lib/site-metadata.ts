@@ -24,7 +24,7 @@ export function homeMetadata(origin?: URL): Metadata {
     description,
     alternates: origin ? { canonical: origin.href } : undefined,
     openGraph: {
-      title: site.title, description, type: 'website', siteName: profile.brand,
+      title: site.title, description, type: 'website', siteName: site.title,
       locale: 'en_US', alternateLocale: ['pt_BR'], url: origin?.href,
       images: image ? [{ url: image, alt: site.title }] : undefined,
     },
