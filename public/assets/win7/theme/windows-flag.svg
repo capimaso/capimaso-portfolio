@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <defs>
+    <linearGradient id="red" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7b569"/><stop offset=".5" stop-color="#ed5024"/><stop offset="1" stop-color="#b82d14"/></linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#acc83c"/><stop offset=".5" stop-color="#8cbe28"/><stop offset="1" stop-color="#427b20"/></linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#63cef1"/><stop offset=".5" stop-color="#2b9bd2"/><stop offset="1" stop-color="#1163a9"/></linearGradient>
+    <linearGradient id="yellow" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe981"/><stop offset=".5" stop-color="#ffcf36"/><stop offset="1" stop-color="#e89b18"/></linearGradient>
+  </defs>
+  <g transform="rotate(12 24 24)" stroke="#fff" stroke-opacity=".12" stroke-width=".6">
+    <path d="M7 8c6-3 11-3 17 0v16c-6-3-11-3-17 0z" fill="url(#red)"/>
+    <path d="M26 9c6 3 11 3 17 0v16c-6 3-11 3-17 0z" fill="url(#green)"/>
+    <path d="M7 26c6-3 11-3 17 0v16c-6-3-11-3-17 0z" fill="url(#blue)"/>
+    <path d="M26 27c6 3 11 3 17 0v16c-6 3-11 3-17 0z" fill="url(#yellow)"/>
+  </g>
+</svg>

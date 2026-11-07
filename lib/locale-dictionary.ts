@@ -1,6 +1,16 @@
 /** Single source of truth for interface translations; English is the initial language. */
 export type Language = 'en' | 'pt';
 export const translations: Record<string,string> = {
+ 'Todos os direitos reservados.':'All rights reserved.',
+ 'Facilidade de Acesso':'Ease of Access',
+ 'Ajustes de leitura para esta tela de entrada.':'Reading adjustments for this sign-in screen.',
+ 'Aumentar o texto':'Make text larger',
+ 'Ativar alto contraste':'Turn on high contrast',
+ 'Silenciar sons do sistema':'Mute system sounds',
+ 'Desligar':'Shut down',
+ 'Opções de desligamento':'Shutdown options',
+ 'Sessão do portfólio encerrada.':'Portfolio session ended.',
+ 'Ligar':'Power on',
  'Imagens':'Pictures',
  'Iniciando o Windows':'Starting Windows',
  'Pular inicialização':'Skip startup',

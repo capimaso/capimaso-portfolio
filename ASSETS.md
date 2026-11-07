@@ -1,5 +1,17 @@
 # Origem dos assets — CAPIMASO
 
+## Logon Windows 7 — 07/11/2026
+
+- [Bandeira vetorial](public/assets/win7/theme/windows-flag.svg): recriação em
+  SVG baseada na referência visual de logon enviada pelo proprietário;
+  não é um recurso binário extraído do Windows. Sem fonte externa em runtime.
+- [Facilidade de Acesso](public/assets/win7/icons/Accessibility/accessibilitycpl_1.ico):
+  ícone original do acervo recebido, preservado sem conversão ou alteração.
+- A marca usa texto Segoe UI Light/Segoe UI disponível no sistema, sem
+  redistribuir fontes proprietárias. A foto continua sendo a imagem original
+  [profile.jpg](public/images/profile.jpg).
+
+
 ## Sons do Windows 7 — 22/10/2026
 
 Fonte imediata: arquivos reais adicionados pelo proprietário em

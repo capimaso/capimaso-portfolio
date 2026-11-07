@@ -32,6 +32,12 @@ não exige senha; seu campo visual não é enviado ou armazenado. Enter ou a set
 abre o desktop após a transição de 700 ms. Reiniciar no Iniciar recarrega a
 entrada e repete a inicialização, preservando preferências do navegador.
 
+O logon segue o Windows 7 Ultimate: foto CAPIMASO ampliada, marca com bandeira
+e copyright, Segoe UI e botões nos cantos. Facilidade de Acesso permite aumentar
+o texto e ativar contraste nesta tela, além de silenciar o áudio do sistema
+(também respeitado pelo desktop). Desligar encerra a sessão visual do portfólio;
+Ligar e Reiniciar recarregam a página e repetem o boot. EN/PT continua disponível.
+
 ## Conteúdo e navegação
 
 - **Imagens:** pasta do desktop com o ícone de biblioteca de imagens. Dentro

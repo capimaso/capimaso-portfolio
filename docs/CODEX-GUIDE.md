@@ -25,6 +25,12 @@ layout e adaptações locais. Segoe UI/Tahoma, Orb e cursores originais.
 - `Win7Desktop.tsx`: idioma, sessão, logon e composição. O campo visual do logon
   não é autenticação e nunca é lido/enviado/armazenado. Entrada por Enter/seta,
   Harmony no logon e cobertura preta com Busy.cur durante 700 ms antes do desktop.
+- `Logon.tsx` / `logon.module.css`: foto de 132 px com moldura de 148 px,
+  Windows 7 Ultimate, copyright e Segoe UI. Diálogo nativo de Facilidade de
+  Acesso (Esc e retorno de foco): texto maior e contraste restritos ao logon;
+  mute usa o SoundManager compartilhado. Menu de energia usa Popover API.
+  Desligar encerra só a sessão visual, com foco em Ligar; Ligar/Reiniciar são
+  navegações de documento para `/`, repetindo o boot. Não executar comandos do SO.
 - `window-state.ts`: abertura, foco, geometria, minimizar e restaurar.
   `useWindowManager.ts` adapta estado/área útil; `WindowChrome.tsx` usa classes
   oficiais do 7.css, `useWindowGesture.ts` trata ponteiro/teclado e cleanup.

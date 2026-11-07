@@ -1,3 +1,24 @@
+## Logon Windows 7 Ultimate — 07/11/2026
+
+- Logon ajustado à referência recebida: foto original CAPIMASO de 132 px dentro
+  de moldura Aero de 148 px, campo centralizado com seta à direita, Segoe UI
+  regular no nome e Light na marca Windows 7 Ultimate. Rodapé com bandeira SVG
+  recriada, edição e © 2009 Microsoft Corporation; nenhum avatar foi substituído.
+- Facilidade de Acesso no canto inferior esquerdo, com ícone original do acervo:
+  diálogo nativo com texto maior e alto contraste para o logon, e mute real do
+  SoundManager compartilhado com o desktop. Esc fecha e devolve o foco ao botão.
+- Botão vermelho dividido no canto inferior direito: Desligar encerra a sessão
+  visual, mostra Ligar e transfere o foco; a seta abre opções de Reiniciar e
+  Desligar. Ligar/Reiniciar recarregam `/` e repetem a inicialização.
+- EN/PT movido ao canto superior esquerdo. Layout adaptado ao celular, alvos
+  de toque ampliados e rolagem vertical em telas baixas; senha continua apenas
+  visual, sem leitura, armazenamento ou envio.
+- Check, build, typecheck e 25 testes de sons/janelas aprovados. Edge em EN/PT,
+  com seis tamanhos de tela de 320 a 1440 px, verificou imagens e marca,
+  texto/contraste/mute, teclado e foco, menu de energia, reiniciar, desligar/ligar
+  e entrada no desktop, sem erros de página ou rolagem horizontal. Texto ampliado
+  também conferido em celular de pouca altura, sem sobrepor os controles.
+
 ## Ajustes de Imagens, títulos e inicialização — 07/11/2026
 
 - Desktop e Iniciar reorganizados com Imagens, usando o ícone original da
