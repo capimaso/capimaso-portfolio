@@ -1,5 +1,21 @@
 # WMP12 — prova de fonte de reprodução — 06/11/2026
 
+## Produção ativada — 09/11/2026
+
+As duas variáveis do Drive foram salvas como Secret em Production. Após a
+verificação de identidade pelo proprietário, o redeploy
+`27BHqerqQua8aC9TnYjVDDkFHAqy` ficou Ready no domínio público real
+[capimaso-portfolio.vercel.app](https://capimaso-portfolio.vercel.app).
+
+API de fotos 200 com três pastas; miniatura e original decodificaram no navegador
+na navegação Explorer → Photo Viewer. Os cinco streams de curtos retornaram
+206/video-mp4 com Range válido. Em 1440 px/EN e 375 px/PT, Stefany no vídeo nativo
+passou nos testes de reprodução, master × volume individual, prioridade do
+mute/volume zero, preservação ao minimizar, teclado, fullscreen e cleanup ao
+fechar. Falha de API simulada voltou ao Drive `/preview`, sem transporte falso.
+Nenhum erro de página ou overflow horizontal. Essa validação resolve a pendência
+de produção e a rodada de UI interrompida descritas na seção seguinte.
+
 ## API oficial e curtos nativos — 09/11/2026
 
 Esta prova substitui a limitação dos downloads públicos abaixo. Metadados e

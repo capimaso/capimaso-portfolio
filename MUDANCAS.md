@@ -1,3 +1,16 @@
+## Drive ativado e verificado em produção — 09/11/2026
+
+- `GOOGLE_DRIVE_API_KEY` e `DRIVE_FOLDER_ID` configurados como Secret apenas
+  em Production na Vercel; nenhum valor foi incluído no Git. Após a verificação
+  de identidade do proprietário, redeploy da main concluído com sucesso.
+- No endereço público, `/api/photos` responde 200 e lista as três pastas reais.
+  Explorer e Photo Viewer abriram miniatura e fotografia original no navegador.
+- Os cinco streams de curtos respondem 206/video-mp4 com Content-Range correto. No Edge
+  em 1440 px/EN e 375 px/PT, Stefany reproduziu no WMP12 com volumes geral e
+  individual, prioridade do mute, teclado, minimizar/restaurar e tela cheia.
+  Fechar liberou a mídia; falha simulada voltou ao `/preview`. Sem erros de página
+  ou rolagem horizontal. A pendência de configuração descrita abaixo foi resolvida.
+
 ## Curtos com WMP12 e diagnóstico de fotografias — 09/11/2026
 
 - Os cinco curtos agora usam vídeo nativo com controles WMP12 reais: play/pausa,
