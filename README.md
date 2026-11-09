@@ -45,8 +45,10 @@ Ligar e Reiniciar recarregam a página e repetem o boot. EN/PT continua disponí
 - **Fotografias:** Explorer com pastas reais do Drive, histórico, breadcrumbs,
   miniaturas e paginação. Photo Viewer tem anterior/próximo, zoom e download.
 - **Vídeos:** pastas de curtos (9:16) e longos (16:9). WMP12 Em reprodução usa
-  controles reais via API YouTube nos longos; os curtos mantêm `/preview` do
-  Drive e reprodução manual. Marcas/avisos dos provedores podem aparecer.
+  controles reais via API YouTube nos longos e vídeo nativo com streaming oficial
+  da API Drive nos curtos. Curtos começam pausados/mudos, com play, pausa, parar,
+  progresso, seek e volume próprios. Falha de rede/codec/configuração retorna ao
+  `/preview` original. Marcas/avisos dos embeds de fallback podem aparecer.
 - **Thumbnails:** lista automaticamente as imagens de `public/images/thumbs/`,
   com visualizador e download. Capas novas de vídeos ficam em `public/images/posters/`.
 - **Meu perfil:** apresentação/intro, Premiere Pro, After Effects, Photoshop,
@@ -57,10 +59,10 @@ Ligar e Reiniciar recarregam a página e repetem o boot. EN/PT continua disponí
 - **Painel de Controle:** wallpapers Harmony/Desktop Logo e mute global.
   Bandeja com volume, idioma, relógio e Mostrar área de trabalho.
 
-O volume da bandeja controla sons do sistema e vídeos YouTube via API:
+O volume da bandeja controla sons do sistema, curtos nativos e vídeos YouTube:
 saída = volume geral × volume próprio do WMP12. Silenciar o geral mantém o
 vídeo silenciado mesmo ao mexer no volume local, sem apagar esse ajuste.
-O `/preview` do Drive e o fallback sem API usam os controles internos do
+O `/preview` de fallback do Drive e o fallback sem API usam os controles internos do
 provedor e não permitem esse controle geral externo.
 
 Jogos foram cancelados. Calculadora e Bloco de notas continuam disponíveis pela
@@ -119,6 +121,14 @@ somente imagens raster e hosts Google; não é um proxy arbitrário de vídeos.
 Atualizar recarrega a pasta; cache de listagem de 60 s. Sem configuração,
 o desktop e o conteúdo de vídeos/perfil continuam disponíveis.
 
+A mesma `GOOGLE_DRIVE_API_KEY`, somente no servidor, habilita os curtos no
+WMP12 por [rota de streaming](app/api/videos/[id]/stream/route.ts). Essa rota é
+separada da galeria e aceita apenas IDs de projetos curtos cadastrados, nunca
+URLs ou IDs arbitrários do Drive. Verifica MIME/permissão de download, encaminha
+Range para a API oficial e transmite bytes sem gravar arquivos. Respostas Range
+são limitadas a 4 MiB. HEAD consulta só metadados; não há extração de streams de
+embeds nem alteração dos links originais. Sem chave, o Drive nativo é o fallback.
+
 ## Onde editar
 
 | Conteúdo | Fonte |
@@ -145,6 +155,7 @@ npm run test:win7
 npm run test:photos
 npm run test:sounds
 npm run test:player
+npm run test:video-stream
 npm run test:studio
 npm run test:metadata
 npm run test:media
@@ -170,7 +181,8 @@ seu valor. Depois de alterar o domínio, refaça o build. `/robots.txt` permite
 o portfólio e exclui Estúdio/APIs do rastreamento; `/sitemap.xml` lista só `/`.
 As rotas antigas continuam redirecionando e o Estúdio permanece local.
 
-Configure as variáveis do Drive no servidor de destino quando usar fotografias.
+Configure as variáveis do Drive no servidor de destino para fotografias e
+`GOOGLE_DRIVE_API_KEY` também para os controles WMP12 dos curtos.
 Se a produção retornar `not_configured` em `/api/photos`, defina
 `GOOGLE_DRIVE_API_KEY` e `DRIVE_FOLDER_ID` no projeto Vercel em Settings →
 Environment Variables → Production e faça Redeploy. O arquivo local não é

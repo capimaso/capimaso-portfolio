@@ -1,3 +1,24 @@
+## Curtos com WMP12 e diagnóstico de fotografias — 09/11/2026
+
+- Os cinco curtos agora usam vídeo nativo com controles WMP12 reais: play/pausa,
+  parar, progresso/seek, tempo, mute, volume individual e master da bandeja.
+  Começam pausados/mudos e preservam 9:16. Longos continuam com a API YouTube.
+- Nova rota server-only `/api/videos/[project-id]/stream`: allowlist do catálogo,
+  metadados/download público verificados, MIME de vídeo, Range limitado a 4 MiB,
+  HEAD sem baixar vídeo e resposta transmitida sem disco/buffer do arquivo todo.
+  Não aceita IDs/URLs livres nem amplia a raiz da galeria. Links e capas mantidos.
+- Falha de chave/rede/codec ou timeout restaura o `/preview` original do Drive;
+  fechar/trocar/falhar libera a mídia e a assinatura de áudio.
+- Prova real no Edge aprovou os cinco arquivos: metadados, reprodução, pausa,
+  seek distante, volume e parar. 27 testes offline de streaming/fotos/player,
+  check, typecheck e build aprovados. Detalhes no documento de reprodução.
+- Fotos: a API local lista as três pastas e entrega miniaturas reais. Em produção
+  `/api/photos` ainda retorna 503 `not_configured`, pela ausência das variáveis
+  `GOOGLE_DRIVE_API_KEY` e/ou `DRIVE_FOLDER_ID`. Ambas existem localmente; não
+  foram expostas nem versionadas. Configurações da Vercel abertas, exigindo login.
+  O original de uma foto e nova rodada de UI receberam limite temporário 429
+  do Google; nenhuma tentativa de contornar esse bloqueio foi feita.
+
 ## Logon Windows 7 Ultimate — 07/11/2026
 
 - Logon ajustado à referência recebida: foto original CAPIMASO de 132 px dentro

@@ -1,5 +1,41 @@
 # WMP12 — prova de fonte de reprodução — 06/11/2026
 
+## API oficial e curtos nativos — 09/11/2026
+
+Esta prova substitui a limitação dos downloads públicos abaixo. Metadados e
+`files.get?alt=media` pela API oficial, com chave somente no servidor, responderam
+corretamente para os cinco curtos públicos. Não houve scraping do `/preview`,
+extração de tokens, troca de links ou gravação de vídeos locais.
+Referência: [downloads e Range na API oficial](https://developers.google.com/workspace/drive/api/guides/manage-downloads).
+
+No Edge, todos os cinco carregaram metadados e reproduziram com HTMLVideoElement:
+
+| ID | Resolução | Duração | Seek testado |
+| --- | --- | --- | --- |
+| scarface | 2160×3840 | 30,15 s | 18 s |
+| stefany | 1080×1920 | 61,93 s | 37 s |
+| dono-da-bublitz | 1080×1920 | 30,58 s | 18 s |
+| corte-pib-1 | 1080×1920 | 40,94 s | 24 s |
+| investiu-mkt-1 | 1080×1920 | 33,40 s | 20 s |
+
+Em todos: início pausado/mudo, controles nativos do navegador ocultos, reprodução
+real, pausa, seek distante, volume próprio de 50% resultando em 40% com master
+80%, e parar/voltar ao zero pelo WMP12. Nenhum iframe estava presente nessa prova.
+
+Implementação: [serviço](../src/server/drive/videos.ts),
+[rota](../app/api/videos/[id]/stream/route.ts) e
+[hook nativo](../src/os/win7/apps/useNativeVideoPlayer.ts).
+Range de até 4 MiB, HEAD sem mídia, allowlist por projeto e rejeição de HTML,
+redirects e Range ignorado. Chave ausente, erro de rede/codec ou metadados sem
+resposta em 25 s restauram o `/preview` original, sem botões de transporte falsos.
+
+`test:video-stream` tem 10 testes offline para allowlist, chave ausente, headers
+seguros, Range parcial/aberto/sufixo/416, HEAD/cache, MIME/permissão, erros do
+provedor e transmissão. `test:photos` (10) e `test:player` (7) continuam aprovados.
+Rodadas adicionais de UI/master/mobile foram interrompidas por resposta temporária
+429/HTML do Google; não foram contornadas ou consideradas reprodução aprovada.
+Produção ainda exige configurar a chave na Vercel; galeria também exige a raiz.
+
 ## Nova prova dos curtos — 07/11/2026
 
 Novo pedido Range encontrou 206/video-mp4 em Dono da Bublitz e Investiu MKT,

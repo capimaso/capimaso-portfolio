@@ -16,7 +16,7 @@ Read this file FIRST when editing this repository, even without prior chat conte
 2. Run `npm install` and `npm run dev` if possible; don't assume missing original assets are safe to delete.
 3. Data edits normally belong in `data/*`, not component JSX.
 4. Keep media dimensions: short poster portrait, long poster landscape.
-5. Video short = Google Drive file link with embedded `/preview` player; long = YouTube URL; intro = `data/media.ts`. Do not add local video binaries.
+5. Video short = Google Drive file link, streamed through the catalog-only server API into WMP12; `/preview` is the fallback. Long = YouTube URL; intro = `data/media.ts`. Do not add local video binaries.
 
 ## Architecture
 - `/` opens Win7 startup, public logon and desktop in `src/os/win7/`, isolated with CSS Modules.
@@ -41,13 +41,19 @@ Read this file FIRST when editing this repository, even without prior chat conte
   `MediaCatalog.tsx` receives the shared showcase and thumbnail list from the
   server page. `MediaViewers.tsx` routes videos to `WmpPlayer.tsx` and keeps a
   separate local thumbnail viewer. WMP12 Now Playing uses the official YouTube
-  IFrame API for real transport controls; Drive keeps native `/preview` controls.
-  `apps/video-audio.ts` combines the tray master volume/mute with each YouTube
+  IFrame API for long videos and `useNativeVideoPlayer.ts`/HTMLVideoElement for
+  Drive shorts, with real WMP12 transport controls. `/api/videos/[id]/stream`
+  accepts only showcase project IDs, checks public Drive metadata/download access,
+  and streams official API byte ranges (at most 4 MiB per Range response).
+  Never accept arbitrary Drive IDs/URLs or save video binaries. Missing key,
+  decode/network failure or timeout restores the original Drive `/preview`.
+  `apps/video-audio.ts` combines the tray master volume/mute with each native or YouTube
   player's own settings. Preserve individual slider values, muted autoplay,
-  master mute priority and cleanup on close/change/failure. Drive/native fallback
+  master mute priority and cleanup on close/change/failure. Drive/YouTube fallback
   iframes have no external master-volume integration; do not fake that control.
   Never claim that this removes provider branding. See `test:player` and the
-  playback verification document before changing media sources.
+  playback verification document before changing media sources. Also run
+  `test:video-stream` for the catalog allowlist, Range and safe response behavior.
 - The Win7-only migration is implemented. Keep existing links working through
   redirects, and preserve all migrated portfolio data. See `MUDANCAS.md`.
 - Win7 `apps/Profile.tsx` reuses profile, skills, services and guestbook data in
@@ -58,6 +64,8 @@ Read this file FIRST when editing this repository, even without prior chat conte
 - Drive credentials are server-only environment variables. Never print or commit
   `.env.local`. Keep listing/proxy access within the configured public root;
   client paths are hints and must be verified against Drive folder listings.
+  The separate video stream allowlist is restricted to explicit catalog shorts;
+  it must never broaden the photography root or accept client-supplied providers.
 - Win7 original wallpaper/Orb/cursors live in `public/assets/win7/`; cursor
   directory is singular (`cursor/`). Orb is 106x318, three vertical frames.
 - `src/os/win7/Win7Desktop.tsx`: public logon/session and desktop composition.
@@ -86,7 +94,9 @@ Read this file FIRST when editing this repository, even without prior chat conte
 - UI é bilíngue (`en` padrão e `pt`) com dicionário em `lib/locale-dictionary.ts` e contexto em `src/shared/LanguageContext.tsx`. Usar `useT` nos componentes; o servidor pode usar `tr` para conteúdo inicial sem JavaScript.
 - Preservar a chave de idioma `capimaso-xp-language` para compatibilidade com preferências existentes; o nome histórico não significa dependência do XP.
 - Wallpapers Win7: `src/os/win7/DesktopSettings.tsx`, chave `capimaso-win7-wallpaper`; imagens do navegador não são conteúdo público.
-- Player deve preservar proporção 16:9 / 9:16. YouTube mantém autoplay mudo; Google Drive inicia pelo controle do próprio player, sem autoplay forçado.
+- Player deve preservar proporção 16:9 / 9:16. YouTube mantém autoplay mudo;
+  curtos nativos começam pausados/mudos e iniciam pelo WMP12. Drive `/preview`
+  de fallback mantém início manual e não oferece volume externo fictício.
 - Ícones e cursores Win7 são originais de `public/assets/win7/`. Manter CSS scoped e CSS Modules; não importar o reset global do 7.css.
 - Reiniciar usa navegação de documento para `/`, repetindo a inicialização e voltando ao logon mesmo quando já estiver na raiz.
 

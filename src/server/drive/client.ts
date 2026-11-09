@@ -27,7 +27,7 @@ export function parsePath(path: string | null): string[] | undefined {
 }
 
 export function driveConfig(): DriveConfig {
-  const apiKey = process.env.GOOGLE_DRIVE_API_KEY?.trim();
+  const apiKey = driveApiKey();
   let root = process.env.DRIVE_FOLDER_ID?.trim();
   let resourceKey = process.env.DRIVE_FOLDER_RESOURCE_KEY?.trim();
   if (!apiKey || !root) throw new DriveError('not_configured', 503);
@@ -43,6 +43,12 @@ export function driveConfig(): DriveConfig {
   return { root, apiKey, resourceKey };
 }
 
+export function driveApiKey() {
+  const key = process.env.GOOGLE_DRIVE_API_KEY?.trim();
+  if (!key) throw new DriveError('not_configured', 503);
+  return key;
+}
+
 export function providerError(status: number, reason?: string): DriveError {
   if (status === 429 || reason?.toLowerCase().includes('ratelimit') || reason === 'dailyLimitExceeded') return new DriveError('rate_limited', 429);
   if (status === 404) return new DriveError('not_found', 404);
@@ -51,15 +57,15 @@ export function providerError(status: number, reason?: string): DriveError {
   return new DriveError('unavailable', 502);
 }
 
-export async function driveRequest(config: DriveConfig, path: string, params: Record<string, string>, keys: Map<string, string>) {
+export async function driveRequest(config: Pick<DriveConfig, 'apiKey'>, path: string, params: Record<string, string>, keys: Map<string, string>, options: { range?: string; signal?: AbortSignal } = {}) {
   const url = new URL(`https://www.googleapis.com/drive/v3/${path}`);
   url.search = new URLSearchParams({ supportsAllDrives: 'true', ...params }).toString();
   let response: Response;
   try {
     response = await fetch(url, {
-      headers: { 'X-Goog-Api-Key': config.apiKey,
+      headers: { 'X-Goog-Api-Key': config.apiKey, ...(options.range ? { Range: options.range } : {}),
         ...(keys.size ? { 'X-Goog-Drive-Resource-Keys': [...keys].map(([id, key]) => `${id}/${key}`).join(',') } : {}) },
-      cache: 'no-store', redirect: 'manual', signal: AbortSignal.timeout(params.alt === 'media' ? 60_000 : 15_000),
+      cache: 'no-store', redirect: 'manual', signal: AbortSignal.any([AbortSignal.timeout(params.alt === 'media' ? 60_000 : 15_000), ...(options.signal ? [options.signal] : [])]),
     });
   } catch { throw new DriveError('unavailable', 502); }
   if (!response.ok && !(response.status >= 300 && response.status < 400)) {

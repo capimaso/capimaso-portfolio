@@ -6,6 +6,7 @@ import { googleDriveEmbed } from '@/lib/google-drive.mjs';
 import { youtubeEmbed, type ShowcaseItem } from '@/lib/showcase';
 import { useMediaCatalog, type MediaSelection } from '../MediaCatalog';
 import { useYouTubePlayer } from './useYouTubePlayer';
+import { useNativeVideoPlayer } from './useNativeVideoPlayer';
 import { playerTime } from './youtube-api';
 import styles from './wmp.module.css';
 
@@ -16,7 +17,9 @@ export default function WmpPlayer({ item, onMedia }: { item: ShowcaseItem; onMed
   const index = playlist.findIndex(video => video.id === item.id);
   const drive = item.format === 'short' ? googleDriveEmbed(item.video) : null;
   const youtube = item.format === 'long' ? youtubeEmbed(item.video) : null;
-  const player = useYouTubePlayer(youtube, item.title);
+  const youtubePlayer = useYouTubePlayer(youtube, item.title);
+  const nativePlayer = useNativeVideoPlayer(drive ? `/api/videos/${encodeURIComponent(item.id)}/stream` : null);
+  const player = drive ? nativePlayer : youtubePlayer;
   const { state } = player;
   const root = useRef<HTMLElement>(null);
   const listToggle = useRef<HTMLButtonElement>(null);
@@ -24,7 +27,7 @@ export default function WmpPlayer({ item, onMedia }: { item: ShowcaseItem; onMed
   const [fullscreen, setFullscreen] = useState(false);
   const [notice, setNotice] = useState('');
   const fallback = youtube && state.failed ? `${youtube}&autoplay=1&mute=1&playsinline=1` : null;
-  const controllable = Boolean(youtube && !state.failed);
+  const controllable = Boolean((youtube || drive) && !state.failed);
 
   useEffect(() => {
     const update = () => setFullscreen(document.fullscreenElement === root.current);
@@ -61,8 +64,10 @@ export default function WmpPlayer({ item, onMedia }: { item: ShowcaseItem; onMed
         title={t('Mostrar lista')} aria-label={t('Mostrar lista')} onClick={() => setShowList(value => !value)}><Glyph name="list" /></button>
     </header>
     <div className={styles.screen}>
-      {youtube && !state.failed && <div className={styles.landscape} ref={player.mount} data-youtube-mount />}
-      {(drive || fallback) && <iframe className={drive ? styles.portrait : styles.landscape} src={drive || fallback!}
+      {youtube && !state.failed && <div className={styles.landscape} ref={youtubePlayer.mount} data-youtube-mount />}
+      {drive && !state.failed && <video ref={nativePlayer.video} className={styles.portrait} playsInline preload="metadata"
+        poster={item.thumbnail || undefined} aria-label={t(item.title)} />}
+      {((drive && state.failed) || fallback) && <iframe className={drive ? styles.portrait : styles.landscape} src={drive || fallback!}
         title={t(item.title)} allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowFullScreen
         referrerPolicy="strict-origin-when-cross-origin" />}
       {!drive && !youtube && <p>{t('Vídeo ainda não configurado.')}</p>}
@@ -104,7 +109,7 @@ export default function WmpPlayer({ item, onMedia }: { item: ShowcaseItem; onMed
           title={t(fullscreen ? 'Sair da tela cheia' : 'Tela cheia')} onClick={() => void toggleFullscreen()}><Glyph name="fullscreen" /></button>
       </div>
       <div className={styles.status} role="status">
-        {notice || (state.failed ? t('Use os controles do vídeo ou abra o original.') : drive ? t('Use os controles do vídeo.') : youtube && !state.ready ? t('Carregando...') : '')}
+        {notice || (state.failed ? t('Use os controles do vídeo ou abra o original.') : !state.ready && (drive || youtube) ? t('Carregando...') : '')}
         <a href={item.video} target="_blank" rel="noopener noreferrer">{t('Abrir vídeo original')}</a>
       </div>
     </div>

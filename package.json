@@ -15,6 +15,7 @@
     "test:photos": "node --test scripts/test-photos-api.mjs",
     "test:sounds": "node --test scripts/test-win7-sounds.mjs",
     "test:player": "node --test scripts/test-win7-player.mjs",
+    "test:video-stream": "node --test scripts/test-video-stream.mjs",
     "test:studio": "node --test scripts/test-studio-upload.mjs",
     "test:metadata": "node --test scripts/test-site-metadata.mjs",
     "test:media": "node --test scripts/test-video-covers.mjs",

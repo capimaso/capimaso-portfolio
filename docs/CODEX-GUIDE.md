@@ -92,8 +92,11 @@ estão em `public/images/posters/custom/LEIA-ME.md`.
 `youtube-api.ts` com timeout/retry. Autoplay mudo e fallback nativo em falha.
 Durante seek, manter destino até confirmação/expiração, evitando reversão por
 eventos atrasados de buffering. Não extrair streams nem prometer eliminar marca.
-Drive mantém `/preview` manual e controles internos; sem controles externos
-fictícios. Preservar 9:16 e 16:9, estado ao minimizar e cleanup ao fechar/trocar.
+Curtos usam `useNativeVideoPlayer.ts` e HTMLVideoElement, começando pausados e
+mudos, com o mesmo transporte WMP12. A fonte é `/api/videos/<project-id>/stream`,
+restrita ao catálogo, API Drive oficial e chave server-only. Sem fonte/codec,
+erro ou timeout de metadados volta ao `/preview` manual com controles internos.
+Preservar 9:16 e 16:9, estado ao minimizar e cleanup ao fechar/trocar.
 Ver [prova de reprodução](WMP12-PLAYBACK-VERIFICATION.md).
 
 ## Idioma e áudio
@@ -114,10 +117,11 @@ receber o recurso real), com fallback visual, pular, erro/fim/timeout e moviment
 reduzido. Sem BIOS ou seletor de sistemas, e sem binários de vídeo no Git.
 Volume inicial 80%, mute compartilhado com Painel de Controle e Ding após ajuste
 da bandeja. Ausência/falha/autoplay bloqueado permanecem silenciosos. Novos sons
-exigem reiniciar dev/rebuild. O volume/mute da bandeja é o master: no YouTube,
+exigem reiniciar dev/rebuild. O volume/mute da bandeja é o master: em curtos e YouTube,
 `apps/video-audio.ts` aplica master × volume próprio do WMP12 sem alterar o
 slider local. Mute geral domina o local, e as preferências locais sobrevivem a
-ajustes do master e minimizar. Autoplay continua mudo por vídeo. Desconectar
+ajustes do master e minimizar. YouTube mantém autoplay mudo; curtos são manuais
+e começam mudos. Desconectar
 remove a assinatura ao fechar/trocar/falhar. Drive `/preview` e fallback nativo
 sem API continuam com controles internos; não oferecem volume master externo.
 
@@ -130,6 +134,17 @@ não confiar somente em `files.get.parents`. Proxy limitado à árvore configura
 MIME raster e hosts Google. Downloads preservam nome/bytes; cache de 60 s,
 Refresh explícito e erros com retry. Não fabricar acervo nem ampliar esse proxy
 para aceitar URLs arbitrárias de vídeo.
+
+`src/server/drive/videos.ts` é uma rota separada por allowlist dos curtos no
+catálogo. Não muda a raiz/autorização de fotos. Resolve somente links já
+registrados, confere metadados públicos e `canDownload`, aceita apenas MIME de
+vídeo e usa `files.get?alt=media` oficial, com chave em header server-only.
+Range inválido/múltiplo retorna 416; intervalos são limitados a 4 MiB, mantendo
+offsets e tamanho total reais. HEAD não baixa mídia. Corpo é transmitido como
+stream sem cópias em disco/buffer do arquivo completo. HTML, redirects e Range
+ignorado não são tratados como vídeo. Não usar scraping, tokens do iframe ou
+novas URLs de hospedagem inventadas. `GOOGLE_DRIVE_API_KEY` precisa existir na
+Vercel em Production, e fotos precisam também de `DRIVE_FOLDER_ID`.
 
 `app/studio/page.tsx` faz a guarda server-side e carrega
 `src/os/win7/studio/Studio.tsx`. O formulário usa Win7/CSS Modules/useT, prévia
@@ -153,7 +168,7 @@ Estúdio. `app/sitemap.ts` inclui só a raiz canônica, sem redirects legados.
 Alterar `SITE_URL` requer rebuild; testar com `npm run test:metadata`.
 
 Executar `npm run check`, `npm run typecheck`, `npm run build` e testes relevantes:
-`test:win7`, `test:photos`, `test:sounds`, `test:player`, `test:studio`, `test:metadata`, `test:media`.
+`test:win7`, `test:photos`, `test:sounds`, `test:player`, `test:video-stream`, `test:studio`, `test:metadata`, `test:media`.
 O último executa a gravação em diretório temporário isolado, preservando os dados
 do repositório. Conferir redirecionamentos por HTTP sem JavaScript, reinício já
 na raiz, preferências EN/PT/wallpaper e 375/768/1440 px. Nunca publicar fixtures.
